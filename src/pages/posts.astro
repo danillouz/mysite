@@ -1,0 +1,52 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "../config"
+import Head from "../components/Head.astro"
+import Header from "../components/Header.astro"
+import Footer from "../components/Footer.astro"
+
+const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
+  const pubDateA = a.frontmatter.pubDate
+  const pubDateB = b.frontmatter.pubDate
+  return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
+})
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <Head title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <section>
+        <ul>
+          {
+            posts.map((post) => {
+              return (
+                <li>
+                  <a href={post.url}>{post.frontmatter.title}</a>
+
+                  <time datetime={post.frontmatter.pubDate}>
+                    {new Date(post.frontmatter.pubDate).toLocaleDateString(
+                      "en-us",
+                      {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )}
+                  </time>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
