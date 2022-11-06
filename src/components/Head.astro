@@ -2,6 +2,8 @@
 // Import global CSS here so that it's included on all pages that use <Head />.
 import "../styles/global.css"
 
+import { RSS_TITLE } from "../config"
+
 export interface Props {
   title: string
   description: string
@@ -25,6 +27,14 @@ const {
   <title>{title}</title>
   <meta name="title" content={title} />
   <meta name="description" content={description} />
+
+  <!-- RSS metadata -->
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={`RSS feed for ${RSS_TITLE}`}
+    href={new URL("/feed.xml", Astro.url)}
+  />
 
   <!-- Open Graph metadata -->
   <meta property="og:type" content="website" />
