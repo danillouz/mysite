@@ -1,7 +1,6 @@
 ---
-import Head from "../components/Head.astro"
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
+import { FULL_NAME } from "../config"
+import Page from "./Page.astro"
 
 export interface Props {
   content: {
@@ -26,39 +25,29 @@ const {
 } = Astro.props
 ---
 
-<html lang="en">
-  <head>
-    <Head title={title} description={description} />
-  </head>
+<Page title={title} description={description}>
+  <article
+    class="mx-auto px-6 my-20 prose prose-slate prose-headings:font-serif dark:prose-invert"
+  >
+    {
+      heroImage && (
+        <img width={720} height={360} src={heroImage} alt={heroImageAlt} />
+      )
+    }
 
-  <body>
-    <Header />
+    <h1>{title}</h1>
+    <p>{pubDate && <time>{pubDate}</time>} by <strong>{FULL_NAME}</strong></p>
+    <p>{description}</p>
 
-    <main>
-      <article>
-        {
-          heroImage && (
-            <img width={720} height={360} src={heroImage} alt={heroImageAlt} />
-          )
-        }
+    {
+      updatedDate && (
+        <p>
+          Last updated <time>{updatedDate}</time>
+        </p>
+      )
+    }
 
-        <h1>{title}</h1>
-
-        {pubDate && <time>{pubDate}</time>}
-
-        {
-          updatedDate && (
-            <div>
-              Last updated <time>{updatedDate}</time>
-            </div>
-          )
-        }
-
-        <hr />
-        <slot />
-      </article>
-    </main>
-
-    <Footer />
-  </body>
-</html>
+    <hr />
+    <slot />
+  </article>
+</Page>

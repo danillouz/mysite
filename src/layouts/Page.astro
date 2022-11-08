@@ -1,0 +1,87 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION, RSS_TITLE, FULL_NAME } from "../config"
+import NavLink from "../components/NavLink.astro"
+
+export interface Props {
+  title?: string
+  description?: string
+  socialImage?: string
+}
+
+const {
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  socialImage = "/placeholder-social.jpg",
+} = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global metadata -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Primary metadata -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <!-- RSS metadata -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`RSS feed for ${RSS_TITLE}`}
+      href={new URL("/feed.xml", Astro.url)}
+    />
+
+    <!-- Open Graph metadata -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(socialImage, Astro.url)} />
+
+    <!-- Twitter metadata -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(socialImage, Astro.url)} />
+  </head>
+
+  <body
+    class="flex flex-col min-h-screen bg-white dark:bg-slate-900 transition-colors duration-500"
+  >
+    <header
+      class="flex items-center justify-between w-full sticky top-0 px-4 bg-white dark:bg-slate-900 shadow-sm transition-colors duration-500"
+    >
+      <div class="flex items-center space-x-4">
+        <span
+          class="inline-block py-1 text-black dark:text-white text-sm font-bold"
+          >{FULL_NAME}</span
+        >
+
+        <nav class="flex items-center">
+          <NavLink href="/">Home</NavLink>
+          <NavLink href="/posts">Posts</NavLink>
+        </nav>
+      </div>
+
+      <div>
+        <a
+          class="py-1 text-black dark:text-white text-sm"
+          href="/feed.xml"
+          target="_blank">RSS feed</a
+        >
+      </div>
+    </header>
+
+    <main
+      class="flex-1 bg-slate-50 dark:bg-slate-800 transition-colors duration-500"
+    >
+      <slot />
+    </main>
+  </body>
+</html>

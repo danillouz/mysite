@@ -1,8 +1,6 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "../config"
-import Head from "../components/Head.astro"
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
+import { RSS_TITLE, RSS_DESCRIPTION } from "../config"
+import Page from "../layouts/Page.astro"
 
 const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
   const pubDateA = a.frontmatter.pubDate
@@ -11,42 +9,32 @@ const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
 })
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <Head title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
+<Page title={RSS_TITLE} description={RSS_DESCRIPTION}>
+  <section
+    class="mx-auto px-6 my-20 prose prose-slate prose-headings:font-serif dark:prose-invert"
+  >
+    <h1>Posts</h1>
+    <ul>
+      {
+        posts.map((post) => {
+          return (
+            <li>
+              <a href={post.url}>{post.frontmatter.title}</a>
 
-  <body>
-    <Header />
-
-    <main>
-      <section>
-        <ul>
-          {
-            posts.map((post) => {
-              return (
-                <li>
-                  <a href={post.url}>{post.frontmatter.title}</a>
-
-                  <time datetime={post.frontmatter.pubDate}>
-                    {new Date(post.frontmatter.pubDate).toLocaleDateString(
-                      "en-us",
-                      {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      }
-                    )}
-                  </time>
-                </li>
-              )
-            })
-          }
-        </ul>
-      </section>
-    </main>
-
-    <Footer />
-  </body>
-</html>
+              <time datetime={post.frontmatter.pubDate}>
+                {new Date(post.frontmatter.pubDate).toLocaleDateString(
+                  "en-us",
+                  {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  }
+                )}
+              </time>
+            </li>
+          )
+        })
+      }
+    </ul>
+  </section>
+</Page>

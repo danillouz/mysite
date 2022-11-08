@@ -1,9 +1,10 @@
 import { defineConfig } from "astro/config"
-import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
+import tailwind from "@astrojs/tailwind"
+import mdx from "@astrojs/mdx"
 
-// See: https://astro.build/config
+// https://astro.build/config
 export default defineConfig({
   site: "https://www.danillouz.dev",
-  integrations: [mdx(), sitemap()],
+  integrations: [sitemap(), tailwind(), mdx()],
 })
