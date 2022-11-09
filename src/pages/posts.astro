@@ -1,6 +1,6 @@
 ---
 import { RSS_TITLE, RSS_DESCRIPTION } from "../config"
-import Page from "../layouts/Page.astro"
+import PageLayout from "../layouts/Page.astro"
 
 const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
   const pubDateA = a.frontmatter.pubDate
@@ -9,9 +9,9 @@ const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
 })
 ---
 
-<Page title={RSS_TITLE} description={RSS_DESCRIPTION}>
+<PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
   <section
-    class="mx-auto px-6 my-20 prose prose-slate prose-headings:font-serif dark:prose-invert"
+    class="mx-auto px-6 my-10 sm:my-20 prose sm:prose-lg prose-slate prose-headings:font-serif dark:prose-invert"
   >
     <h1>Posts</h1>
     <ul>
@@ -37,4 +37,4 @@ const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
       }
     </ul>
   </section>
-</Page>
+</PageLayout>

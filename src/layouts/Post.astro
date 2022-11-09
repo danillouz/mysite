@@ -1,6 +1,6 @@
 ---
 import { FULL_NAME } from "../config"
-import Page from "./Page.astro"
+import PageLayout from "./Page.astro"
 
 export interface Props {
   content: {
@@ -25,9 +25,9 @@ const {
 } = Astro.props
 ---
 
-<Page title={title} description={description}>
+<PageLayout title={title} description={description}>
   <article
-    class="mx-auto px-6 my-20 prose prose-slate prose-headings:font-serif dark:prose-invert"
+    class="mx-auto px-6 my-10 sm:my-20 prose sm:prose-lg prose-slate prose-headings:font-serif dark:prose-invert"
   >
     {
       heroImage && (
@@ -36,7 +36,15 @@ const {
     }
 
     <h1>{title}</h1>
-    <p>{pubDate && <time>{pubDate}</time>} by <strong>{FULL_NAME}</strong></p>
+    <p>
+      {
+        pubDate && (
+          <>
+            Posted <time>{pubDate}</time>
+          </>
+        )
+      } by {FULL_NAME}
+    </p>
     <p>{description}</p>
 
     {
@@ -50,4 +58,4 @@ const {
     <hr />
     <slot />
   </article>
-</Page>
+</PageLayout>
