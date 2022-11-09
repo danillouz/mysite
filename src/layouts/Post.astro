@@ -3,24 +3,26 @@ import { FULL_NAME } from "../config"
 import PageLayout from "./Page.astro"
 
 export interface Props {
-  content: {
+  frontmatter: {
     title: string
     description: string
     pubDate?: string
     updatedDate?: string
     heroImage?: string
     heroImageAlt?: string
+    readingTime: string
   }
 }
 
 const {
-  content: {
+  frontmatter: {
     title,
     description,
     pubDate,
     updatedDate,
     heroImage,
     heroImageAlt,
+    readingTime, // Injected by `plugins/reading-time.mjs`
   },
 } = Astro.props
 ---
@@ -36,24 +38,28 @@ const {
     }
 
     <h1>{title}</h1>
-    <p>
+
+    <div class="flex flex-col italic">
       {
         pubDate && (
-          <>
-            Posted <time>{pubDate}</time>
-          </>
+          <span>
+            Posted <time>{pubDate}</time> by {FULL_NAME}
+          </span>
         )
-      } by {FULL_NAME}
-    </p>
-    <p>{description}</p>
+      }
 
-    {
-      updatedDate && (
-        <p>
-          Last updated <time>{updatedDate}</time>
-        </p>
-      )
-    }
+      {
+        updatedDate && (
+          <span>
+            Last updated <time>{updatedDate}</time>
+          </span>
+        )
+      }
+
+      <span>{readingTime}</span>
+    </div>
+
+    <p>{description}</p>
 
     <hr />
     <slot />
