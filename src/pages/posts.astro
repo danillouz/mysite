@@ -1,6 +1,6 @@
 ---
-import { RSS_TITLE, RSS_DESCRIPTION } from "../config"
-import PageLayout from "../layouts/Page.astro"
+import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
+import PageLayout from "@layouts/Page.astro"
 
 const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort((a, b) => {
   const pubDateA = a.frontmatter.pubDate

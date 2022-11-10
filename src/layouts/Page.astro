@@ -1,13 +1,13 @@
 ---
-import "../styles/base.css"
+import "@styles/base.css"
+import { SITE_TITLE, SITE_DESCRIPTION, RSS_TITLE, FULL_NAME } from "@config"
+import NavLink from "@components/NavLink.astro"
 
-import { SITE_TITLE, SITE_DESCRIPTION, RSS_TITLE, FULL_NAME } from "../config"
-import NavLink from "../components/NavLink.astro"
-
-export interface Props {
+interface Props {
   title?: string
   description?: string
   socialImage?: string
+  children: any
 }
 
 const {

@@ -1,8 +1,8 @@
 ---
-import { FULL_NAME } from "../config"
-import PageLayout from "./Page.astro"
+import { FULL_NAME } from "@config"
+import PageLayout from "@layouts/Page.astro"
 
-export interface Props {
+interface Props {
   frontmatter: {
     title: string
     description: string
@@ -12,6 +12,7 @@ export interface Props {
     heroImageAlt?: string
     readingTime: string
   }
+  children: any
 }
 
 const {

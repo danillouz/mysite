@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --check ./src",

@@ -1,5 +1,5 @@
-import { RSS_TITLE, RSS_DESCRIPTION } from "../config"
 import rss from "@astrojs/rss"
+import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
 
 // See: https://docs.astro.build/en/guides/rss/
 export const get = () =>
