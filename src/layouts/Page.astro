@@ -1,4 +1,6 @@
 ---
+import "../styles/base.css"
+
 import { SITE_TITLE, SITE_DESCRIPTION, RSS_TITLE, FULL_NAME } from "../config"
 import NavLink from "../components/NavLink.astro"
 
@@ -16,7 +18,7 @@ const {
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <!-- Global metadata -->
     <meta charset="utf-8" />
@@ -57,7 +59,7 @@ const {
     <header
       class="h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white dark:bg-slate-900 shadow-sm transition-colors duration-500"
     >
-      <div class="flex items-center sm:space-x-4">
+      <div class="flex items-center sm:gap-4">
         <span
           class="hidden sm:inline-block py-1 text-black dark:text-white text-sm font-bold"
           >{FULL_NAME}</span
@@ -71,7 +73,7 @@ const {
 
       <div>
         <a
-          class="flex items-center p-1 -mr-1 text-orange-600 dark:text-orange-400"
+          class="flex items-center p-1 -mr-1 text-black dark:text-white"
           href="/feed.xml"
           target="_blank"
           title="RSS feed"
