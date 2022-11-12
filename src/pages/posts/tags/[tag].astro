@@ -1,24 +1,44 @@
 ---
-import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
 import PageLayout from "@layouts/Page.astro"
 
+import type { MDXInstance } from "astro"
 import type { Frontmatter } from "@types"
 
-const posts = (await Astro.glob<Frontmatter>("./posts/*.mdx")).sort((a, b) => {
-  const pubDateA = a.frontmatter.publishedAt ?? new Date()
-  const pubDateB = b.frontmatter.publishedAt ?? new Date()
-  return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
-})
+interface Props {
+  posts: MDXInstance<Frontmatter>[]
+}
+
+export async function getStaticPaths({}) {
+  const posts = await Astro.glob<Frontmatter>("../*.mdx")
+  const tags = posts.map((p) => p.frontmatter.tags ?? []).flat()
+  const uniqueTags = Array.from(new Set(tags))
+  return uniqueTags.map((tag) => {
+    return {
+      params: {
+        tag,
+      },
+      props: {
+        posts: posts.filter((post) => {
+          const { tags = [] } = post.frontmatter
+          return tags.includes(tag)
+        }),
+      },
+    }
+  })
+}
+
+const { tag } = Astro.params
+const { posts } = Astro.props
 ---
 
-<PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
+<PageLayout title={`Dan's posts: ${String(tag)}`}>
   <section
     class="mx-auto px-6 my-10 sm:my-20 prose sm:prose-lg prose-slate prose-headings:font-serif dark:prose-invert"
   >
-    <h1>Posts</h1>
+    <h1>Posts &gt; tags &gt; {tag}</h1>
 
     <p>
-      <a href="/posts/tags">See all tags</a>
+      <a href="/posts/tags">All tags</a>
     </p>
 
     <ul>

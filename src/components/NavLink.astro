@@ -1,7 +1,8 @@
 ---
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  href?: string
+  href: string
   children: any
+  class?: string
 }
 
 const { href, class: className, ...props } = Astro.props
@@ -20,9 +21,9 @@ if (href) {
 <a
   href={href}
   class:list={[
-    className,
     "px-3 py-1 text-black dark:text-white text-sm",
     { "bg-slate-200 dark:bg-slate-600": isActive },
+    className,
   ]}
   aria-current={isActive ? "page" : undefined}
   {...props}

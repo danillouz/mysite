@@ -5,19 +5,15 @@
 /*
 See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes */
 @layer base {
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  article > :is(h2, h3, h4, h5, h6) {
     @apply flex items-center gap-2 md:flex-row-reverse md:justify-end md:-ml-8 scroll-mt-7;
   }
 
-  :is(h2, h3, h4, h5, h6) > a {
-    @apply p-1 opacity-0 text-red-500;
+  article > :is(h2, h3, h4, h5, h6) > a {
+    @apply p-1 opacity-0;
   }
 
-  :is(h2, h3, h4, h5, h6):hover > a {
+  article > :is(h2, h3, h4, h5, h6):hover > a {
     @apply opacity-100;
   }
 }

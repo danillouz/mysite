@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@config": ["src/config"],
+      "@types": ["src/types"],
       "@styles/*": ["src/styles/*"],
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"]
