@@ -1,13 +1,36 @@
 import rss from "@astrojs/rss"
 import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
 
+import type { Frontmatter } from "@types"
+
 // See: https://docs.astro.build/en/guides/rss/
-export const get = () =>
-  rss({
+
+const postImportResult: Record<
+  string,
+  { url: string; frontmatter: Frontmatter }
+> = import.meta.glob("./posts/**/*.mdx", {
+  eager: true,
+})
+const posts = Object.values(postImportResult)
+
+export const get = () => {
+  return rss({
     title: RSS_TITLE,
     description: RSS_DESCRIPTION,
     site: import.meta.env.SITE,
-    items: import.meta.glob("./posts/**/*.{md,mdx}"),
     stylesheet: "/rss.xsl",
-    customData: ``,
+    customData: `<language>en-us</language>`,
+    items: posts.map((post) => {
+      const {
+        url: link,
+        frontmatter: { title, description, publishedAt },
+      } = post
+      return {
+        link,
+        title,
+        description,
+        pubDate: publishedAt ? new Date(publishedAt) : new Date(),
+      }
+    }),
   })
+}

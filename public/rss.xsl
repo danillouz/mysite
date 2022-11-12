@@ -35,6 +35,9 @@
           h6 {
             font-family: serif;
           }
+          h3 {
+            margin: 0;
+          }
           a {
             color: #3273dc;
           }
@@ -47,18 +50,25 @@
       <body>
         <header>
           <h1>RSS feed for <xsl:value-of select="/rss/channel/title" /></h1>
+
           <p><xsl:value-of select="/rss/channel/description" /></p>
-          <a target="_blank">
-            <xsl:attribute name="href">
-              <xsl:value-of select="/rss/channel/link" />
-            </xsl:attribute>
-            Visit site
-          </a>
+
+          <p>
+            <a target="_blank">
+              <xsl:attribute name="href">
+                <xsl:value-of select="/rss/channel/link" />
+              </xsl:attribute>
+              Visit my site &#x2192;
+            </a>
+          </p>
         </header>
+
+        <hr/>
 
         <main>
           <div>
-            <h2>Recent posts</h2>
+            <h2>Posts</h2>
+
             <xsl:for-each select="/rss/channel/item">
               <div>
                 <h3>
@@ -69,15 +79,25 @@
                     <xsl:value-of select="title" />
                   </a>
                 </h3>
-                <small> Published: <xsl:value-of select="pubDate" /></small>
+
+                <small>Published at: <xsl:value-of select="pubDate" /></small>
+
+                <p>
+                  <xsl:value-of select="description" />
+                </p>
               </div>
             </xsl:for-each>
           </div>
         </main>
 
+        <hr/>
+
         <footer>
           <h2>What is this?</h2>
-          <p>This is an <strong>RSS feed</strong>, also known as a <strong>web feed</strong>.</p>
+
+          <p>
+            This is an <strong>RSS feed</strong>, also known as a <strong>web feed</strong>.
+          </p>
 
           <p>
             You can subscribe to this feed by copying the URL from the address bar into your
