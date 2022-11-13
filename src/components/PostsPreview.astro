@@ -1,0 +1,59 @@
+---
+import Time from "@components/Time.astro"
+
+import type { MDXInstance } from "astro"
+import type { Frontmatter } from "@types"
+
+interface Props {
+  posts: MDXInstance<Frontmatter>[]
+}
+
+const { posts } = Astro.props
+---
+
+<div class="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/50">
+  <div class="flex max-w-3xl flex-col space-y-16">
+    {
+      posts.map((post) => {
+        const {
+          url,
+          frontmatter: { title, description, publishedAt },
+        } = post
+
+        return (
+          <div class="md:grid md:grid-cols-4 md:items-baseline">
+            <div class="flex flex-col items-start relative md:col-span-3 group">
+              <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
+                <div class="z-0 absolute -inset-y-6 -inset-x-4 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-xl" />
+
+                <a href={url}>
+                  <span class="z-20 absolute -inset-y-6 -inset-x-4 sm:-inset-x-6 sm:rounded-xl" />
+
+                  <span class="z-10 relative">{title}</span>
+                </a>
+              </h2>
+
+              {publishedAt && (
+                <Time
+                  datetime={publishedAt}
+                  class="z-10 relative order-first mb-3 flex items-center text-sm md:hidden"
+                />
+              )}
+
+              <p class="z-10 relative mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                {description}
+              </p>
+            </div>
+
+            {publishedAt && (
+              <Time
+                datetime={publishedAt}
+                class="hidden z-10 md:block relative order-first mt-1 mb-3 items-center text-sm"
+              />
+            )}
+          </div>
+        )
+      })
+    }
+  </div>
+</div>

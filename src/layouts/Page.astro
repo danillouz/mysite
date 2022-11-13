@@ -56,14 +56,13 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
   </head>
 
   <body
-    class="flex flex-col min-h-screen bg-white dark:bg-slate-900 transition-colors duration-500"
+    class="flex flex-col min-h-screen bg-zinc-50 dark:bg-black transition-colors duration-500"
   >
     <header
-      class="h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white dark:bg-slate-900 shadow-sm transition-colors duration-500"
+      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white/90 text-zinc-800 dark:text-zinc-100 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10 transition-colors duration-500"
     >
       <div class="flex items-center sm:gap-4">
-        <span
-          class="hidden sm:inline-block py-1 text-black dark:text-white text-sm font-bold"
+        <span class="hidden sm:inline-block py-1 text-sm font-bold"
           >{FULL_NAME}</span
         >
 
@@ -75,7 +74,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
 
       <div>
         <a
-          class="flex items-center p-1 -mr-1 text-black dark:text-white"
+          class="flex items-center -mr-1 p-1"
           href="/feed.xml"
           target="_blank"
           title={rssTitle}
@@ -98,7 +97,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
     </header>
 
     <main
-      class="flex-1 bg-slate-50 dark:bg-slate-800 transition-colors duration-500"
+      class="flex-1 bg-white dark:bg-zinc-900 transition-colors duration-500 antialiased"
     >
       <slot />
     </main>

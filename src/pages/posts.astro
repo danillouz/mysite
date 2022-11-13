@@ -1,6 +1,8 @@
 ---
 import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
 import PageLayout from "@layouts/Page.astro"
+import PageContainer from "@components/PageContainer.astro"
+import PostsPreview from "@components/PostsPreview.astro"
 
 import type { Frontmatter } from "@types"
 
@@ -9,42 +11,30 @@ const posts = (await Astro.glob<Frontmatter>("./posts/*.mdx")).sort((a, b) => {
   const pubDateB = b.frontmatter.publishedAt ?? new Date()
   return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
 })
+
+const tags = posts.map((p) => p.frontmatter.tags ?? []).flat()
+const uniqueTags = Array.from(new Set(tags))
 ---
 
 <PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
-  <section
-    class="mx-auto px-6 my-10 sm:my-20 prose sm:prose-lg prose-slate prose-headings:font-serif dark:prose-invert"
-  >
-    <h1>Posts</h1>
+  <PageContainer>
+    <header class="page-header">
+      <h1 class="page-h1">
+        Writing about things I learned and find interesting
+      </h1>
 
-    <p>
-      <a href="/posts/tags">See all tags</a>
-    </p>
+      <p class="page-p mt-6">
+        So far I have written {posts.length} post(s), about {uniqueTags.length} topic(s).
+        See <a
+          class="text-slate-900 dark:text-white font-medium underline decoration-solid"
+          href="/posts/tags">all tags</a
+        > to discover posts by topic. Or browse all posts below in chronological
+        order.
+      </p>
+    </header>
 
-    <ul>
-      {
-        posts.map((post) => {
-          const {
-            url,
-            frontmatter: { title, publishedAt, readingTime },
-          } = post
-          return (
-            <li>
-              <a href={url}>{title}</a>
-              {publishedAt && (
-                <time datetime={publishedAt}>
-                  {new Date(publishedAt).toLocaleDateString("en-us", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </time>
-              )}
-              ({readingTime})
-            </li>
-          )
-        })
-      }
-    </ul>
-  </section>
+    <section class="page-section">
+      <PostsPreview posts={posts} />
+    </section>
+  </PageContainer>
 </PageLayout>

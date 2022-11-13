@@ -1,0 +1,28 @@
+---
+interface Props {
+  datetime: string
+  class?: string
+}
+
+const { datetime, class: className, ...props } = Astro.props
+---
+
+<time
+  datetime={datetime}
+  class:list={[
+    // Default color styles.
+    "text-zinc-400 dark:text-zinc-500",
+
+    // Custom styles.
+    className,
+  ]}
+  {...props}
+>
+  {
+    new Date(datetime).toLocaleDateString("en-us", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })
+  }
+</time>

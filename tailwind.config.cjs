@@ -6,6 +6,14 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            img: {
+              "border-radius": "0.75rem", // rounded-xl
+            },
+            pre: {
+              "border-radius": "0.75rem", // rounded-xl
+              border: "1px solid",
+              "border-color": "var(--tw-prose-quote-borders)",
+            },
             "code::before": {
               content: "none",
             },

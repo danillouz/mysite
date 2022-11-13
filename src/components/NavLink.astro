@@ -21,8 +21,13 @@ if (href) {
 <a
   href={href}
   class:list={[
-    "px-3 py-1 text-black dark:text-white text-sm",
-    { "bg-slate-200 dark:bg-slate-600": isActive },
+    // Base styles.
+    "px-3 py-1 text-sm",
+
+    // Active styles.
+    { "bg-zinc-200 dark:bg-zinc-700": isActive },
+
+    // Custom styles.
     className,
   ]}
   aria-current={isActive ? "page" : undefined}

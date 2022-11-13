@@ -1,5 +1,7 @@
 ---
 import PageLayout from "@layouts/Page.astro"
+import PageContainer from "@components/PageContainer.astro"
+import PostsPreview from "@components/PostsPreview.astro"
 
 import type { MDXInstance } from "astro"
 import type { Frontmatter } from "@types"
@@ -31,40 +33,23 @@ const { tag } = Astro.params
 const { posts } = Astro.props
 ---
 
-<PageLayout title={`Dan's posts: ${String(tag)}`}>
-  <section
-    class="mx-auto px-6 my-10 sm:my-20 prose sm:prose-lg prose-slate prose-headings:font-serif dark:prose-invert"
-  >
-    <h1>Posts &gt; tags &gt; {tag}</h1>
+<PageLayout title={`Dan's posts tagged ${String(tag)}`}>
+  <PageContainer>
+    <header class="page-header">
+      <h1 class="page-h1">
+        Posts tagged {tag}
+      </h1>
 
-    <p>
-      <a href="/posts/tags">All tags</a>
-    </p>
+      <p class="page-p mt-6">
+        So far I have written {posts.length} post(s) about this topic. See <a
+          class="text-slate-900 dark:text-white font-medium underline decoration-solid"
+          href="/posts/tags">all tags</a
+        > to discover posts about other topic(s).
+      </p>
+    </header>
 
-    <ul>
-      {
-        posts.map((post) => {
-          const {
-            url,
-            frontmatter: { title, publishedAt, readingTime },
-          } = post
-          return (
-            <li>
-              <a href={url}>{title}</a>
-              {publishedAt && (
-                <time datetime={publishedAt}>
-                  {new Date(publishedAt).toLocaleDateString("en-us", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </time>
-              )}
-              ({readingTime})
-            </li>
-          )
-        })
-      }
-    </ul>
-  </section>
+    <section class="page-section">
+      <PostsPreview posts={posts} />
+    </section>
+  </PageContainer>
 </PageLayout>

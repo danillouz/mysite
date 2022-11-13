@@ -3,17 +3,43 @@
 @tailwind utilities;
 
 /*
-See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes */
+See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
 @layer base {
-  article > :is(h2, h3, h4, h5, h6) {
-    @apply flex items-center gap-2 md:flex-row-reverse md:justify-end md:-ml-8 scroll-mt-7;
+  article :is(h2, h3, h4, h5, h6) {
+    @apply flex items-center gap-2 md:flex-row-reverse md:justify-end md:-ml-8;
   }
 
-  article > :is(h2, h3, h4, h5, h6) > a {
+  article :is(h2, h3, h4, h5, h6) > a {
     @apply p-1 opacity-0;
   }
 
-  article > :is(h2, h3, h4, h5, h6):hover > a {
+  article :is(h2, h3, h4, h5, h6):hover > a {
     @apply opacity-100;
+  }
+
+  article :is(h2, h3, h4, h5, h6),
+  sup a,
+  section[data-footnotes] li {
+    @apply scroll-mt-7;
+  }
+}
+
+/*
+See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes */
+@layer components {
+  .page-header {
+    @apply max-w-2xl;
+  }
+
+  .page-h1 {
+    @apply font-serif font-bold tracking-tight text-4xl sm:text-5xl text-zinc-800 dark:text-zinc-100;
+  }
+
+  .page-p {
+    @apply text-base text-zinc-600 dark:text-zinc-400;
+  }
+
+  .page-section {
+    @apply mt-16 sm:mt-20;
   }
 }
