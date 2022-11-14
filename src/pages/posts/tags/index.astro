@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@layouts/Page.astro"
-import PageContainer from "@components/PageContainer.astro"
+import Window from "@components/Window.astro"
 import Tag from "@components/Tag.astro"
 
 import type { Frontmatter } from "@types"
@@ -11,27 +11,29 @@ const uniqueTags = Array.from(new Set(tags))
 ---
 
 <PageLayout title="Dan's tags">
-  <PageContainer>
-    <header class="page-header">
-      <h1 class="page-h1">Discover posts by topic</h1>
+  <Window>
+    <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
+      <header class="page-header">
+        <h1 class="page-h1">Discover posts by topic</h1>
 
-      <p class="page-p mt-6">
-        Click a tag below to see all posts for that topic.
-      </p>
-    </header>
+        <p class="page-p mt-6">
+          Click a tag below to see all posts for that topic.
+        </p>
+      </header>
 
-    <section class="page-section">
-      <ul class="list-none flex flex-wrap items-center gap-2">
-        {
-          uniqueTags.map((tag) => {
-            return (
-              <li class="flex">
-                <Tag name={tag}>{tag}</Tag>
-              </li>
-            )
-          })
-        }
-      </ul>
-    </section>
-  </PageContainer>
+      <section class="page-section">
+        <ul class="list-none flex flex-wrap items-center gap-2">
+          {
+            uniqueTags.map((tag) => {
+              return (
+                <li class="flex">
+                  <Tag name={tag}>{tag}</Tag>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </section>
+    </div>
+  </Window>
 </PageLayout>

@@ -1,7 +1,7 @@
 ---
 import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
 import PageLayout from "@layouts/Page.astro"
-import PageContainer from "@components/PageContainer.astro"
+import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
 
 import type { Frontmatter } from "@types"
@@ -17,24 +17,27 @@ const uniqueTags = Array.from(new Set(tags))
 ---
 
 <PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
-  <PageContainer>
-    <header class="page-header">
-      <h1 class="page-h1">
-        Writing about things I learned and find interesting
-      </h1>
+  <Window>
+    <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
+      <header class="page-header">
+        <h1 class="page-h1">
+          Writing about things I learned and find interesting
+        </h1>
 
-      <p class="page-p mt-6">
-        So far I have written {posts.length} post(s), about {uniqueTags.length} topic(s).
-        See <a
-          class="text-slate-900 dark:text-white font-medium underline decoration-solid"
-          href="/posts/tags">all tags</a
-        > to discover posts by topic. Or browse all posts below in chronological
-        order.
-      </p>
-    </header>
+        <p class="page-p mt-6">
+          So far I have written {posts.length} post(s), about {
+            uniqueTags.length
+          } topic(s). See <a
+            class="text-slate-900 dark:text-white font-medium underline decoration-solid"
+            href="/posts/tags">all tags</a
+          > to discover posts by topic. Or browse all posts below in chronological
+          order.
+        </p>
+      </header>
 
-    <section class="page-section">
-      <PostsPreview posts={posts} />
-    </section>
-  </PageContainer>
+      <section class="page-section">
+        <PostsPreview posts={posts} />
+      </section>
+    </div>
+  </Window>
 </PageLayout>

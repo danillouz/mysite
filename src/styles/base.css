@@ -20,7 +20,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
   article :is(h2, h3, h4, h5, h6),
   sup a,
   section[data-footnotes] li {
-    @apply scroll-mt-7;
+    @apply scroll-mt-1;
   }
 }
 

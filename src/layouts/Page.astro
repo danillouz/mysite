@@ -59,7 +59,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
     class="flex flex-col min-h-screen bg-zinc-50 dark:bg-black transition-colors duration-500"
   >
     <header
-      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white/90 text-zinc-800 dark:text-zinc-100 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10 transition-colors duration-500"
+      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 shadow-sm shadow-zinc-800/5 transition-colors duration-500"
     >
       <div class="flex items-center sm:gap-4">
         <span class="hidden sm:inline-block py-1 text-sm font-bold"
@@ -96,9 +96,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
       </div>
     </header>
 
-    <main
-      class="flex-1 bg-white dark:bg-zinc-900 transition-colors duration-500 antialiased"
-    >
+    <main class="flex-1 transition-colors duration-500 antialiased">
       <slot />
     </main>
   </body>

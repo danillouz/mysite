@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@layouts/Page.astro"
-import PageContainer from "@components/PageContainer.astro"
+import Window from "@components/Window.astro"
 import Time from "@components/Time.astro"
 import Tag from "@components/Tag.astro"
 
@@ -26,63 +26,70 @@ const {
 ---
 
 <PageLayout title={title} description={description}>
-  <PageContainer>
-    <article class="mx-auto max-w-2xl">
-      <header class="flex flex-col">
-        <h1 class="page-h1 mt-6">
-          {title}
-        </h1>
+  <Window>
+    <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
+      <article class="mx-auto max-w-2xl">
+        <header class="flex flex-col">
+          <h1 class="page-h1 mt-6">
+            {title}
+          </h1>
 
-        <p class="order-first text-base text-zinc-400 dark:text-zinc-500">
-          {
-            publishedAt && (
-              <>
-                <Time datetime={publishedAt} /> &bull;
-              </>
-            )
-          }
-
-          {readingTime}
-
-          {
-            updatedAt && (
-              <>
-                &bull; last updated <Time datetime={updatedAt} />
-              </>
-            )
-          }
-        </p>
-      </header>
-
-      <div
-        class="mt-8 prose prose-zinc prose-headings:font-serif dark:prose-invert"
-      >
-        <p>{description}</p>
-
-        <div class="not-prose">
-          <ul class="list-none flex flex-wrap items-center gap-2">
+          <p class="order-first text-base text-zinc-400 dark:text-zinc-500">
             {
-              tags.map((tag) => {
-                return (
-                  <li class="flex">
-                    <Tag name={tag}>{tag}</Tag>
-                  </li>
-                )
-              })
+              publishedAt && (
+                <>
+                  <Time datetime={publishedAt} /> &bull;
+                </>
+              )
             }
-          </ul>
+
+            {readingTime}
+
+            {
+              updatedAt && (
+                <>
+                  &bull; last updated <Time datetime={updatedAt} />
+                </>
+              )
+            }
+          </p>
+        </header>
+
+        <div
+          class="mt-8 prose prose-zinc prose-headings:font-serif dark:prose-invert"
+        >
+          <p>{description}</p>
+
+          <div class="not-prose">
+            <ul class="list-none flex flex-wrap items-center gap-2">
+              {
+                tags.map((tag) => {
+                  return (
+                    <li class="flex">
+                      <Tag name={tag}>{tag}</Tag>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </div>
+
+          {
+            heroImage ? (
+              <img
+                width={720}
+                height={360}
+                src={heroImage}
+                alt={heroImageAlt}
+              />
+            ) : (
+              <hr />
+            )
+          }
+
+          <slot />
         </div>
-
-        {
-          heroImage ? (
-            <img width={720} height={360} src={heroImage} alt={heroImageAlt} />
-          ) : (
-            <hr />
-          )
-        }
-
-        <slot />
-      </div>
-    </article>
-  </PageContainer>
+      </article>
+    </div>
+  </Window>
 </PageLayout>

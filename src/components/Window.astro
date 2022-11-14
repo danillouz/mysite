@@ -1,0 +1,33 @@
+---
+interface Props {
+  children: any
+}
+---
+
+<figure
+  class="flex flex-col fixed inset-0 max-w-3xl lg:max-w-5xl md:mx-auto mt-[29px] md:mt-14 mb-28 md:rounded-lg bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/10 dark:ring-white/20"
+>
+  <div class="h-7 hidden md:flex md:items-center md:px-2">
+    <div class="flex items-center gap-2">
+      <span
+        class="h-3 w-3 rounded-full border border-zinc-900/20 dark:border-white/20"
+      ></span>
+
+      <span
+        class="h-3 w-3 rounded-full border border-zinc-900/20 dark:border-white/20"
+      ></span>
+
+      <span
+        class="h-3 w-3 rounded-full border border-zinc-900/20 dark:border-white/20"
+      ></span>
+    </div>
+  </div>
+
+  <div
+    class="flex-1 overflow-y-scroll md:border-t md:border-b border-zinc-900/10 dark:border-white/10"
+  >
+    <slot />
+  </div>
+
+  <div class="h-6 hidden md:flex"></div>
+</figure>

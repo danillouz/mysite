@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@layouts/Page.astro"
-import PageContainer from "@components/PageContainer.astro"
+import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
 
 import type { MDXInstance } from "astro"
@@ -34,22 +34,24 @@ const { posts } = Astro.props
 ---
 
 <PageLayout title={`Dan's posts tagged ${String(tag)}`}>
-  <PageContainer>
-    <header class="page-header">
-      <h1 class="page-h1">
-        Posts tagged {tag}
-      </h1>
+  <Window>
+    <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
+      <header class="page-header">
+        <h1 class="page-h1">
+          Posts tagged {tag}
+        </h1>
 
-      <p class="page-p mt-6">
-        So far I have written {posts.length} post(s) about this topic. See <a
-          class="text-slate-900 dark:text-white font-medium underline decoration-solid"
-          href="/posts/tags">all tags</a
-        > to discover posts about other topic(s).
-      </p>
-    </header>
+        <p class="page-p mt-6">
+          So far I have written {posts.length} post(s) about this topic. See <a
+            class="text-slate-900 dark:text-white font-medium underline decoration-solid"
+            href="/posts/tags">all tags</a
+          > to discover posts about other topic(s).
+        </p>
+      </header>
 
-    <section class="page-section">
-      <PostsPreview posts={posts} />
-    </section>
-  </PageContainer>
+      <section class="page-section">
+        <PostsPreview posts={posts} />
+      </section>
+    </div>
+  </Window>
 </PageLayout>
