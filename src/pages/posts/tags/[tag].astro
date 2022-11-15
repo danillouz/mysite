@@ -34,7 +34,13 @@ const { posts } = Astro.props
 ---
 
 <PageLayout title={`Dan's posts tagged ${String(tag)}`}>
-  <Window>
+  <Window
+    tabs={[
+      { href: "/posts", title: "Posts" },
+      { href: "/posts/tags", title: "Tags" },
+      { title: `Tags > ${tag}`, isActive: true },
+    ]}
+  >
     <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
       <header class="page-header">
         <h1 class="page-h1">

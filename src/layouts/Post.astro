@@ -26,7 +26,13 @@ const {
 ---
 
 <PageLayout title={title} description={description}>
-  <Window>
+  <Window
+    tabs={[
+      { href: "/posts", title: "Posts" },
+      { href: "/posts/tags", title: "Tags" },
+      { title: `Posts > ${title}`, isActive: true },
+    ]}
+  >
     <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
       <article class="mx-auto max-w-2xl">
         <header class="flex flex-col">
