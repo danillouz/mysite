@@ -25,24 +25,49 @@ const uniqueTags = Array.from(new Set(tags))
   >
     <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
       <header class="page-header">
-        <h1 class="page-h1">
+        <h1 class="page-heading">
           Writing about things I learned and find interesting
         </h1>
 
-        <p class="page-p mt-6">
-          So far I have written {posts.length} post(s), about {
-            uniqueTags.length
-          } topic(s). See <a
+        <p class="page-text mt-6">
+          See <a
             class="text-slate-900 dark:text-white font-medium underline decoration-solid"
-            href="/posts/tags">all tags</a
+            href="/posts/tags">tags</a
           > to discover posts by topic. Or browse all posts below in chronological
           order.
         </p>
       </header>
 
-      <section class="page-section">
+      <div class="page-main">
         <PostsPreview posts={posts} />
-      </section>
+      </div>
+    </div>
+
+    <div
+      slot="footer"
+      class="flex-1 flex items-center flex-row-reverse gap-5 px-2"
+    >
+      <div class="flex items-center gap-1 truncate">
+        <span class="inline-block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="w-4 h-4"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </span>
+
+        <span
+          class="inline-block truncate"
+          title={`${posts.length} ${posts.length > 1 ? "posts" : "post"}`}
+          >{posts.length} {posts.length > 1 ? "posts" : "post"}</span
+        >
+      </div>
     </div>
   </Window>
 </PageLayout>

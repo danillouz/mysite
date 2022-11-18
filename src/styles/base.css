@@ -31,15 +31,19 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
     @apply max-w-2xl;
   }
 
-  .page-h1 {
+  .page-heading {
     @apply font-serif font-bold tracking-tight text-4xl sm:text-5xl text-zinc-800 dark:text-zinc-100;
   }
 
-  .page-p {
+  .page-text {
     @apply text-base text-zinc-600 dark:text-zinc-400;
   }
 
-  .page-section {
+  .page-subtext {
+    @apply text-base text-zinc-500/80 dark:text-zinc-500/80;
+  }
+
+  .page-main {
     @apply mt-16 sm:mt-20;
   }
 }
