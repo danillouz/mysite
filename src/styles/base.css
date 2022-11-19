@@ -10,7 +10,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
   }
 
   article :is(h2, h3, h4, h5, h6) > a {
-    @apply p-1 opacity-0;
+    @apply p-1 md:opacity-0;
   }
 
   article :is(h2, h3, h4, h5, h6):hover > a {
