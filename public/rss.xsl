@@ -54,7 +54,7 @@
           <p><xsl:value-of select="/rss/channel/description" /></p>
 
           <p>
-            <a target="_blank">
+            <a target="_blank" rel="noopener noreferrer">
               <xsl:attribute name="href">
                 <xsl:value-of select="/rss/channel/link" />
               </xsl:attribute>
@@ -72,7 +72,7 @@
             <xsl:for-each select="/rss/channel/item">
               <div>
                 <h3>
-                  <a target="_blank">
+                  <a target="_blank" rel="noopener noreferrer">
                     <xsl:attribute name="href">
                       <xsl:value-of select="link" />
                     </xsl:attribute>
@@ -106,7 +106,7 @@
           </p>
 
           <p>
-            See <a href="https://aboutfeeds.com" target="_blank">about feeds</a> to learn more
+            See <a href="https://aboutfeeds.com" target="_blank" rel="noopener noreferrer">about feeds</a> to learn more
             about RSS feeds and readers.
           </p>
         </footer>

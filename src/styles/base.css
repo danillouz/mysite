@@ -22,6 +22,24 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
   section[data-footnotes] li {
     @apply scroll-mt-12;
   }
+
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 }
 
 /*
@@ -53,5 +71,13 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
 
   .page-subtext {
     @apply text-base text-zinc-500/80 dark:text-zinc-500/80;
+  }
+
+  .blink {
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
   }
 }

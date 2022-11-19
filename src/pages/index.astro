@@ -1,15 +1,100 @@
 ---
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
+import Prompt from "@components/Prompt.astro"
+import TerminalLink from "@components/TerminalLink.astro"
+
+const banner = `
+     █████                         ███████     █████████ 
+    ░░███                        ███░░░░░███  ███░░░░░███
+  ███████   ██████   ████████   ███     ░░███░███    ░░░ 
+ ███░░███  ░░░░░███ ░░███░░███ ░███      ░███░░█████████ 
+░███ ░███   ███████  ░███ ░███ ░███      ░███ ░░░░░░░░███
+░███ ░███  ███░░███  ░███ ░███ ░░███     ███  ███    ░███
+░░████████░░████████ ████ █████ ░░░███████░  ░░█████████ 
+ ░░░░░░░░  ░░░░░░░░ ░░░░ ░░░░░    ░░░░░░░     ░░░░░░░░░  
+                                                         
+                                                         
+                                                         
+                         ████        █████               
+                        ░░███      ███░░░███             
+             █████ █████ ░███     ███   ░░███            
+            ░░███ ░░███  ░███    ░███    ░███            
+             ░███  ░███  ░███    ░███    ░███            
+             ░░███ ███   ░███    ░░███   ███             
+              ░░█████    █████ ██ ░░░█████░              
+               ░░░░░    ░░░░░ ░░    ░░░░░░               
+`
 ---
 
 <PageLayout>
   <Window>
-    <div class="page-wrapper">
-      <header class="page-header">
-        <h1 class="page-heading">Hi, I'm Daniël</h1>
-        <p class="page-text mt-6">Welcome to my site!</p>
-      </header>
+    <div class="p-2 text-sm font-mono text-zinc-900 dark:text-zinc-50">
+      <p
+        class="text-zinc-700 dark:text-zinc-300 text-center whitespace-pre-wrap leading-none hidden md:block"
+      >
+        {banner}
+      </p>
+
+      <br class="hidden md:block" />
+
+      <p class="font-semibold">
+        <Prompt /> cat about.txt
+      </p>
+
+      <br />
+
+      <p>Hi, I'm Dan. Welcome to my site!</p>
+
+      <br />
+
+      <p>
+        I'm a self-taught software developer from the Netherlands.
+        <br />
+        And I'm currently working at <TerminalLink
+          href="https://www.framer.com/">Framer</TerminalLink
+        > as a backend engineer, helping build and scale sites.
+      </p>
+
+      <br />
+
+      <p>
+        <Prompt /> If you want to chat, send me an email to "hi" <i>at</i> "danillouz"
+        <i>dot</i> "dev".
+      </p>
+
+      <p>
+        <Prompt />
+      </p>
+
+      <p>
+        <Prompt />
+      </p>
+
+      <p class="font-semibold">
+        <Prompt /> ls links
+      </p>
+
+      <br />
+
+      <p class="flex items-center gap-6 flex-wrap">
+        <TerminalLink href="https://github.com/danillouz">GitHub</TerminalLink>
+
+        <TerminalLink href="https://stackoverflow.com/users/4455533/danillouz">
+          Stack Overflow
+        </TerminalLink>
+
+        <TerminalLink href="https://www.linkedin.com/in/danillouz/">
+          Linkedin
+        </TerminalLink>
+      </p>
+
+      <br />
+
+      <p>
+        <Prompt />
+        <span class="blink">_</span>
+      </p>
     </div>
   </Window>
 </PageLayout>
