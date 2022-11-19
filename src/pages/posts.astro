@@ -11,9 +11,6 @@ const posts = (await Astro.glob<Frontmatter>("./posts/*.mdx")).sort((a, b) => {
   const pubDateB = b.frontmatter.publishedAt ?? new Date()
   return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
 })
-
-const tags = posts.map((p) => p.frontmatter.tags ?? []).flat()
-const uniqueTags = Array.from(new Set(tags))
 ---
 
 <PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
@@ -23,7 +20,7 @@ const uniqueTags = Array.from(new Set(tags))
       { href: "/posts/tags", title: "Tags" },
     ]}
   >
-    <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
+    <div class="page-wrapper">
       <header class="page-header">
         <h1 class="page-heading">
           Writing about things I learned and find interesting
@@ -38,7 +35,7 @@ const uniqueTags = Array.from(new Set(tags))
         </p>
       </header>
 
-      <div class="page-main">
+      <div class="page-content">
         <PostsPreview posts={posts} />
       </div>
     </div>

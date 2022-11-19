@@ -8,7 +8,7 @@ const { tabs } = Astro.props
 ---
 
 <figure
-  class="flex flex-col fixed inset-0 max-w-3xl lg:max-w-5xl md:mx-auto mt-[29px] md:mt-14 mb-28 md:rounded-lg bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/10 dark:ring-white/20"
+  class="flex flex-col fixed inset-0 max-w-3xl lg:max-w-5xl md:mx-auto mt-[29px] md:mt-12 mb-[93px] md:mb-32 md:rounded-lg bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/10 dark:ring-white/20"
 >
   <div class="h-7 hidden md:flex md:items-center md:px-2">
     <div class="flex items-center gap-2">
@@ -86,7 +86,7 @@ const { tabs } = Astro.props
       "h-6 flex text-xs page-subtext",
 
       {
-        // Tab styles.
+        // Adjust styles when tabs are present.
         "border-t border-zinc-900/10 dark:border-white/10": Boolean(tabs),
       },
     ]}

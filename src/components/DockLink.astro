@@ -1,0 +1,52 @@
+---
+interface Props {
+  href: string
+  title: string
+  children: any
+  class?: string
+}
+
+const { href, title, class: className } = Astro.props
+
+let isActive = false
+if (href) {
+  const { pathname } = Astro.url
+  if (href === "/") {
+    isActive = pathname === href
+  } else {
+    isActive = pathname.includes(href)
+  }
+}
+---
+
+<a href={href} title={title} aria-current={isActive ? "page" : undefined}>
+  <div class="flex flex-col items-center gap-1">
+    <div
+      class:list={[
+        // Base styles.
+        "flex items-center justify-center w-12 h-12 mt-1 rounded-full nav-text",
+
+        // Color styles.
+        "bg-zinc-100/70 dark:bg-black/70 ring-1 ring-zinc-900/10 dark:ring-white/10 shadow-zinc-800/5",
+
+        // Custom styles.
+        className,
+      ]}
+    >
+      <slot />
+    </div>
+
+    <span class="inline-block font-medium nav-text">{title}</span>
+
+    <span
+      class:list={[
+        // Base styles.
+        "w-1 h-1 rounded-full",
+
+        {
+          // Active styles.
+          "bg-slate-900 dark:bg-slate-50": isActive,
+        },
+      ]}></span>
+  </div>
+</a>

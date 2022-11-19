@@ -17,7 +17,7 @@ const uniqueTags = Array.from(new Set(tags))
       { title: "Tags", isActive: true },
     ]}
   >
-    <div class="px-4 sm:px-8 lg:px-12 my-12 sm:my-24">
+    <div class="page-wrapper">
       <header class="page-header">
         <h1 class="page-heading">Discover posts by topic</h1>
 
@@ -26,7 +26,7 @@ const uniqueTags = Array.from(new Set(tags))
         </p>
       </header>
 
-      <div class="page-main">
+      <div class="page-content">
         <ul class="list-none flex flex-wrap items-center gap-2">
           {
             uniqueTags.map((tag) => {

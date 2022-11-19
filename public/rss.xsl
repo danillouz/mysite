@@ -101,12 +101,12 @@
 
           <p>
             You can subscribe to this feed by copying the URL from the address bar into your
-            favourite RSS reader. Your reader will then automatically fetch (new) articles from the
+            favourite RSS reader. Your reader will then automatically fetch (new) articles from my
             site!
           </p>
 
           <p>
-            Visit <a href="https://aboutfeeds.com" target="_blank">about feeds</a> to learn more
+            See <a href="https://aboutfeeds.com" target="_blank">about feeds</a> to learn more
             about RSS feeds and readers.
           </p>
         </footer>

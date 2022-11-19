@@ -1,7 +1,7 @@
 ---
 import "@styles/base.css"
 import { SITE_TITLE, SITE_DESCRIPTION, RSS_TITLE, FULL_NAME } from "@config"
-import NavLink from "@components/NavLink.astro"
+import DockLink from "@components/DockLink.astro"
 
 interface Props {
   title?: string
@@ -55,21 +55,12 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
     <meta property="twitter:image" content={new URL(socialImage, Astro.url)} />
   </head>
 
-  <body
-    class="flex flex-col min-h-screen bg-zinc-50 dark:bg-black transition-colors duration-500"
-  >
+  <body class="flex flex-col min-h-screen bg-zinc-50 dark:bg-black">
     <header
-      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 shadow-sm shadow-zinc-800/5 transition-colors duration-500"
+      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white nav-text dark:bg-zinc-900 ring-1 ring-zinc-900/10 dark:ring-white/20 shadow-sm shadow-zinc-800/5"
     >
       <div class="flex items-center sm:gap-4">
-        <span class="hidden sm:inline-block py-1 text-sm font-bold"
-          >{FULL_NAME}</span
-        >
-
-        <nav class="flex items-center">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/posts">Posts</NavLink>
-        </nav>
+        <span class="inline-block py-1 font-bold">{FULL_NAME}</span>
       </div>
 
       <div>
@@ -96,8 +87,39 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
       </div>
     </header>
 
-    <main class="flex-1 transition-colors duration-500 antialiased">
+    <main class="antialiased">
       <slot />
+
+      <nav
+        class="fixed left-0 right-0 bottom-0 md:bottom-2 flex items-center justify-center gap-5 px-2 py-1 mx-auto md:max-w-[12rem] bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-800/5 ring-0 md:ring-1 ring-zinc-900/10 dark:ring-white/20 md:rounded-lg"
+      >
+        <DockLink href="/" title="Home">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.25 6a3 3 0 013-3h13.5a3 3 0 013 3v12a3 3 0 01-3 3H5.25a3 3 0 01-3-3V6zm3.97.97a.75.75 0 011.06 0l2.25 2.25a.75.75 0 010 1.06l-2.25 2.25a.75.75 0 01-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06zm4.28 4.28a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </DockLink>
+
+        <DockLink href="/posts" title="Posts">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              d="M5.566 4.657A4.505 4.505 0 016.75 4.5h10.5c.41 0 .806.055 1.183.157A3 3 0 0015.75 3h-7.5a3 3 0 00-2.684 1.657zM2.25 12a3 3 0 013-3h13.5a3 3 0 013 3v6a3 3 0 01-3 3H5.25a3 3 0 01-3-3v-6zM5.25 7.5c-.41 0-.806.055-1.184.157A3 3 0 016.75 6h10.5a3 3 0 012.683 1.657A4.505 4.505 0 0018.75 7.5H5.25z"
+            ></path>
+          </svg>
+        </DockLink>
+      </nav>
     </main>
   </body>
 </html>

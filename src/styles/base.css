@@ -27,6 +27,14 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
 /*
 See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes */
 @layer components {
+  .nav-text {
+    @apply text-sm text-zinc-700 dark:text-zinc-200;
+  }
+
+  .page-wrapper {
+    @apply px-4 sm:px-8 lg:px-12 my-6 sm:my-12;
+  }
+
   .page-header {
     @apply max-w-2xl;
   }
@@ -35,15 +43,15 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
     @apply font-serif font-bold tracking-tight text-4xl sm:text-5xl text-zinc-800 dark:text-zinc-100;
   }
 
+  .page-content {
+    @apply mt-14 sm:mt-16;
+  }
+
   .page-text {
     @apply text-base text-zinc-600 dark:text-zinc-400;
   }
 
   .page-subtext {
     @apply text-base text-zinc-500/80 dark:text-zinc-500/80;
-  }
-
-  .page-main {
-    @apply mt-16 sm:mt-20;
   }
 }
