@@ -52,4 +52,15 @@ export default defineConfig({
       ],
     }),
   ],
+  markdown: {
+    syntaxHighlight: false,
+
+    // See: https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
+    shikiConfig: {
+      // See: https://github.com/shikijs/shiki/blob/main/docs/themes.md
+      // theme: "github-dark-dimmed",
+
+      wrap: false,
+    },
+  },
 })

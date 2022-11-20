@@ -3,8 +3,39 @@
 @tailwind utilities;
 
 /*
-See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
+See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
+*/
 @layer base {
+  :root {
+    /*
+    For using CSS vars see:
+    https://tailwindcss.com/docs/customizing-colors#using-css-variables
+    */
+
+    --color-bg-body: 250 250 250; /* zinc-50 */
+    --color-bg-body-inverted: 0 0 0; /* black */
+    --color-bg-primary: 255 255 255; /* white */
+    --color-bg-primary-inverted: 24 24 27; /* zinc-900 */
+    --color-bg-secondary: 244 244 245; /* zinc-100 */
+    --color-bg-secondary-inverted: 0 0 0; /* black */
+    --color-bg-hover: 250 250 250; /* zinc-50 */
+    --color-bg-hover-inverted: 39 39 42; /* zinc-800 */
+
+    --color-text-primary: 39 39 42; /* zinc-800 */
+    --color-text-primary-inverted: 244 244 245 /* zinc-100 */;
+    --color-text-secondary: 82 82 91; /* zinc-600 */
+    --color-text-secondary-inverted: 161 161 170; /* zinc-400 */
+    --color-text-tertiary: 113 113 122; /* zinc-500 */
+    --color-text-tertiary-inverted: 113 113 122; /* zinc-500 */
+    --color-text-link: 24 24 27; /* zinc-900 */
+    --color-text-link-inverted: 250 250 250; /* zinc-50 */
+    --color-text-special: 24 24 27; /* zinc-900 */
+    --color-text-special-inverted: 250 250 250; /* zinc-50 */
+
+    --color-border-primary: 228 228 231 /* zinc-200 */;
+    --color-border-primary-inverted: 63 63 70 /* zinc-700 */;
+  }
+
   article :is(h2, h3, h4, h5, h6) {
     @apply flex items-center gap-2 md:flex-row-reverse md:justify-end md:-ml-8;
   }
@@ -45,9 +76,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles*/
 /*
 See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes */
 @layer components {
-  .nav-text {
-    @apply text-sm text-zinc-700 dark:text-zinc-200;
-  }
+  /* Container styles */
 
   .page-wrapper {
     @apply px-4 sm:px-8 lg:px-12 my-6 sm:my-12;
@@ -57,21 +86,39 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
     @apply max-w-2xl;
   }
 
-  .page-heading {
-    @apply font-serif font-bold tracking-tight text-4xl sm:text-5xl text-zinc-800 dark:text-zinc-100;
-  }
-
   .page-content {
     @apply mt-14 sm:mt-16;
   }
 
+  /* Text styles */
+
+  .page-heading {
+    @apply font-serif font-bold tracking-tight text-4xl sm:text-5xl text-danos-primary dark:text-danos-primary-inverted;
+  }
+
+  .page-subheading {
+    @apply font-serif font-semibold tracking-tight text-base text-danos-primary dark:text-danos-primary-inverted;
+  }
+
   .page-text {
-    @apply text-base text-zinc-600 dark:text-zinc-400;
+    @apply text-base text-danos-secondary dark:text-danos-secondary-inverted;
   }
 
   .page-subtext {
-    @apply text-base text-zinc-500/80 dark:text-zinc-500/80;
+    @apply text-base text-danos-tertiary/80 dark:text-danos-tertiary-inverted/80;
   }
+
+  .nav-text {
+    @apply text-sm text-danos-primary dark:text-danos-primary-inverted;
+  }
+
+  /* Link styles */
+
+  .page-link {
+    @apply font-normal underline underline-offset-2 decoration-1 text-danos-link dark:text-danos-link-inverted;
+  }
+
+  /* Animation styles */
 
   .blink {
     animation-name: blink;

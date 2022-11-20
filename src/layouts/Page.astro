@@ -27,7 +27,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Primary metadata -->
+    <!-- 1 metadata -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
@@ -55,12 +55,14 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
     <meta property="twitter:image" content={new URL(socialImage, Astro.url)} />
   </head>
 
-  <body class="flex flex-col min-h-screen bg-zinc-50 dark:bg-black">
+  <body
+    class="flex flex-col min-h-screen bg-danos-body dark:bg-danos-body-inverted"
+  >
     <header
-      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-white nav-text dark:bg-zinc-900 ring-1 ring-zinc-900/10 dark:ring-white/20 shadow-sm shadow-zinc-800/5"
+      class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-danos-primary dark:bg-danos-primary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted nav-text"
     >
       <div class="flex items-center sm:gap-4">
-        <span class="inline-block py-1 font-bold">{FULL_NAME}</span>
+        <span class="inline-block py-1 font-semibold">{FULL_NAME}</span>
       </div>
 
       <div>
@@ -92,7 +94,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
       <slot />
 
       <nav
-        class="fixed left-0 right-0 bottom-0 md:bottom-2 flex items-center justify-center gap-5 px-2 py-1 mx-auto md:max-w-[12rem] bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-800/5 ring-0 md:ring-1 ring-zinc-900/10 dark:ring-white/20 md:rounded-lg"
+        class="fixed left-0 right-0 bottom-0 md:bottom-2 flex items-center justify-center gap-5 px-2 py-1 mx-auto md:max-w-[12rem] bg-danos-primary dark:bg-danos-primary-inverted border-t border-danos-primary dark:border-danos-primary-inverted md:border-none ring-0 md:ring-1 ring-danos-primary dark:ring-danos-primary-inverted md:rounded-sm"
       >
         <DockLink href="/" title="Home">
           <svg

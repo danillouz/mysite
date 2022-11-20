@@ -29,16 +29,20 @@ const banner = `
 
 <PageLayout>
   <Window>
-    <div class="p-2 text-sm font-mono text-zinc-900 dark:text-zinc-50">
+    <div class="p-2 font-mono text-sm page-text">
       <p
-        class="text-zinc-700 dark:text-zinc-300 text-center whitespace-pre-wrap leading-none hidden md:block"
+        aria-hidden="true"
+        class="hidden md:block whitespace-pre-wrap leading-none text-center text-danos-primary dark:text-danos-primary-inverted"
       >
         {banner}
       </p>
 
       <br class="hidden md:block" />
 
-      <p class="font-semibold">
+      <p
+        aria-hidden="true"
+        class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
+      >
         <Prompt /> cat about.txt
       </p>
 
@@ -48,11 +52,18 @@ const banner = `
 
       <br />
 
+      <p>I'm a self-taught software developer from the Netherlands.</p>
+
       <p>
-        I'm a self-taught software developer from the Netherlands.
-        <br />
-        And I'm currently working at <TerminalLink
-          href="https://www.framer.com/">Framer</TerminalLink
+        I love to design and build software that's reliable, easy to maintain,
+        and scales well.
+      </p>
+
+      <br />
+
+      <p>
+        Currently working at <TerminalLink href="https://www.framer.com/"
+          >Framer</TerminalLink
         > as a backend engineer, helping build and scale sites.
       </p>
 
@@ -71,7 +82,10 @@ const banner = `
         <Prompt />
       </p>
 
-      <p class="font-semibold">
+      <p
+        aria-hidden="true"
+        class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
+      >
         <Prompt /> ls links
       </p>
 

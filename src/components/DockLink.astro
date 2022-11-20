@@ -19,24 +19,26 @@ if (href) {
 }
 ---
 
-<a href={href} title={title} aria-current={isActive ? "page" : undefined}>
+<a
+  href={href}
+  title={title}
+  aria-current={isActive ? "page" : undefined}
+  class:list={[
+    // Base styles.
+    "nav-text",
+
+    // Custom styles.
+    className,
+  ]}
+>
   <div class="flex flex-col items-center gap-1">
     <div
-      class:list={[
-        // Base styles.
-        "flex items-center justify-center w-12 h-12 mt-1 rounded-full nav-text",
-
-        // Color styles.
-        "bg-zinc-100/70 dark:bg-black/70 ring-1 ring-zinc-900/10 dark:ring-white/10 shadow-zinc-800/5",
-
-        // Custom styles.
-        className,
-      ]}
+      class="flex items-center justify-center w-12 h-12 mt-1 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
     >
       <slot />
     </div>
 
-    <span class="inline-block font-medium nav-text">{title}</span>
+    <span class="inline-block">{title}</span>
 
     <span
       class:list={[
@@ -45,7 +47,7 @@ if (href) {
 
         {
           // Active styles.
-          "bg-slate-900 dark:bg-slate-50": isActive,
+          "bg-danos-primary-inverted dark:bg-danos-primary": isActive,
         },
       ]}></span>
   </div>

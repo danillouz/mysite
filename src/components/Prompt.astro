@@ -8,9 +8,10 @@ const { class: className } = Astro.props
 ---
 
 <span
+  aria-hidden="true"
   class:list={[
     // Base styles.
-    "after:content-['$'] after:text-zinc-400 after:dark:text-zinc-500 after:font-semibold",
+    "after:content-['$'] after:text-danos-tertiary/80 after:dark:text-danos-tertiary-inverted/80 after:font-semibold",
 
     // Custom styles.
     className,

@@ -8,20 +8,20 @@ const { tabs } = Astro.props
 ---
 
 <figure
-  class="flex flex-col fixed inset-0 max-w-3xl lg:max-w-5xl md:mx-auto mt-[29px] md:mt-12 mb-[93px] md:mb-32 md:rounded-lg bg-white dark:bg-zinc-900 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/10 dark:ring-white/20"
+  class="flex flex-col fixed inset-0 max-w-3xl lg:max-w-5xl md:mx-auto mt-[29px] md:mt-12 mb-[93px] md:mb-32 md:rounded-sm bg-danos-primary dark:bg-danos-primary-inverted ring-0 md:ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
 >
   <div class="h-7 hidden md:flex md:items-center md:px-2">
     <div class="flex items-center gap-2">
       <span
-        class="h-3 w-3 rounded-full border border-zinc-900/20 dark:border-white/20"
+        class="h-3 w-3 rounded-full border border-danos-primary dark:border-danos-primary-inverted"
       ></span>
 
       <span
-        class="h-3 w-3 rounded-full border border-zinc-900/20 dark:border-white/20"
+        class="h-3 w-3 rounded-full border border-danos-primary dark:border-danos-primary-inverted"
       ></span>
 
       <span
-        class="h-3 w-3 rounded-full border border-zinc-900/20 dark:border-white/20"
+        class="h-3 w-3 rounded-full border border-danos-primary dark:border-danos-primary-inverted"
       ></span>
     </div>
   </div>
@@ -31,27 +31,30 @@ const { tabs } = Astro.props
       // Base styles.
       "flex-1 overflow-y-scroll scroll-smooth",
 
+      // Adjust border styles when tabs are (not) present.
       {
-        // No tabs styles.
-        "md:border-t border-b border-zinc-900/10 dark:border-white/10":
+        "md:border-t border-b border-danos-primary dark:border-danos-primary-inverted":
           !Boolean(tabs),
+
+        "border-b border-danos-primary dark:border-danos-primary-inverted":
+          Boolean(tabs),
       },
     ]}
   >
     {
       tabs && (
-        <div class="z-30 sticky top-0 flex items-center bg-zinc-100/70 dark:bg-black/70 md:border-t border-b border-zinc-900/10 dark:border-white/10 p-1 backdrop-blur">
+        <div class="z-30 sticky top-0 flex items-center p-1 bg-danos-secondary/70 dark:bg-danos-secondary-inverted/70 md:border-t border-b border-danos-primary dark:border-danos-primary-inverted backdrop-blur">
           {tabs.map((tab) => {
             const { href, isActive = false, title } = tab
             return (
               <div
                 class:list={[
                   // Base styles.
-                  "h-9 flex items-center text-sm page-text truncate",
+                  "h-9 flex items-center truncate nav-text",
 
                   {
                     // Active styles.
-                    "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 ring-1 ring-zinc-900/10 dark:ring-white/20 shadow shadow-zinc-800/5":
+                    "bg-danos-primary dark:bg-danos-primary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted":
                       isActive,
                   },
                 ]}
@@ -59,14 +62,14 @@ const { tabs } = Astro.props
                 {href ? (
                   <a
                     href={href}
-                    class="px-5 py-2 truncate"
+                    class="px-3 md:px-6 py-2 truncate"
                     aria-current={isActive ? "page" : undefined}
                     title={title}
                   >
                     {title}
                   </a>
                 ) : (
-                  <span class="px-5 py-2 truncate" title={title}>
+                  <span class="px-3 md:px-6 py-2 truncate" title={title}>
                     {title}
                   </span>
                 )}
@@ -80,17 +83,7 @@ const { tabs } = Astro.props
     <slot />
   </div>
 
-  <div
-    class:list={[
-      // Base styles.
-      "h-6 flex text-xs page-subtext",
-
-      {
-        // Adjust styles when tabs are present.
-        "border-t border-zinc-900/10 dark:border-white/10": Boolean(tabs),
-      },
-    ]}
-  >
+  <div class="h-6 flex text-xs page-subtext">
     <slot name="footer" />
   </div>
 </figure>

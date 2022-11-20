@@ -27,11 +27,8 @@ const posts = (await Astro.glob<Frontmatter>("./posts/*.mdx")).sort((a, b) => {
         </h1>
 
         <p class="page-text mt-6">
-          See <a
-            class="text-slate-900 dark:text-white font-medium underline decoration-solid"
-            href="/posts/tags">tags</a
-          > to discover posts by topic. Or browse all posts below in chronological
-          order.
+          See <a class="page-link" href="/posts/tags">tags</a> to discover posts
+          by topic. Or browse all posts below in chronological order.
         </p>
       </header>
 

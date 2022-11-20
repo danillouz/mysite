@@ -11,7 +11,9 @@ interface Props {
 const { posts } = Astro.props
 ---
 
-<div class="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/50">
+<div
+  class="md:pl-6 md:border-l md:border-danos-primary md:dark:border-danos-primary-inverted"
+>
   <div class="flex max-w-3xl flex-col space-y-16">
     {
       posts.map((post) => {
@@ -23,11 +25,11 @@ const { posts } = Astro.props
         return (
           <div class="md:grid md:grid-cols-4 md:items-baseline">
             <div class="flex flex-col items-start relative md:col-span-3 group">
-              <h2 class="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                <div class="z-0 absolute -inset-y-6 -inset-x-4 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-xl" />
+              <h2 class="page-subheading">
+                <div class="z-0 absolute -inset-x-4 sm:-inset-x-6 -inset-y-6 sm:rounded-sm bg-danos-hover dark:bg-danos-hover-inverted/50 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition" />
 
                 <a href={url}>
-                  <span class="z-20 absolute -inset-y-6 -inset-x-4 sm:-inset-x-6 sm:rounded-xl" />
+                  <span class="z-20 absolute -inset-y-6 -inset-x-4 sm:-inset-x-6 sm:rounded-sm" />
 
                   <span class="z-10 relative">{title}</span>
                 </a>
