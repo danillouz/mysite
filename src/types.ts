@@ -23,4 +23,8 @@ export interface Frontmatter {
   // readingTime describes how long it takes to read the post.
   // Will be injected by `src/plugins/reading-time.mjs`.
   readingTime: string
+
+  // url of the post.
+  // For example: /posts/cool-post
+  url: string
 }

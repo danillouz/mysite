@@ -21,8 +21,20 @@ const {
     heroImage,
     heroImageAlt,
     readingTime,
+    url,
   },
 } = Astro.props
+
+const makeIssueLink = (baseUrl: string, postUrl: string): string => {
+  const postLink = new URL(postUrl, baseUrl)
+
+  const query = new URLSearchParams()
+  query.append("title", title)
+  query.append("body", `Hi! I read your [post](${postLink}) and ...`)
+
+  const url = new URL(`https://github.com/danillouz/mysite/issues/new?${query}`)
+  return url.toString()
+}
 ---
 
 <PageLayout title={title} description={description}>
@@ -94,6 +106,17 @@ const {
           }
 
           <slot />
+
+          <hr />
+
+          <p>
+            Thanks for reading! If you have any remarks, or ideas on how to
+            improve this post, please let me know on <a
+              href={makeIssueLink(Astro.url.toString(), url)}
+              target="_blank"
+              rel="noopener noreferrer">GitHub</a
+            >.
+          </p>
         </div>
       </article>
     </div>
