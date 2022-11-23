@@ -56,7 +56,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
   </head>
 
   <body
-    class="flex flex-col min-h-screen bg-danos-body dark:bg-danos-body-inverted"
+    class="flex flex-col min-h-screen bg-danos-body dark:bg-danos-body-inverted font-sans antialiased"
   >
     <header
       class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-danos-primary dark:bg-danos-primary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted nav-text"
@@ -90,7 +90,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
       </div>
     </header>
 
-    <main class="antialiased">
+    <main>
       <slot />
 
       <nav
