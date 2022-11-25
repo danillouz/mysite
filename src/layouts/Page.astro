@@ -13,7 +13,7 @@ interface Props {
 const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
-  socialImage = "/placeholder-social.jpg",
+  socialImage = "/social-light.png",
 } = Astro.props
 
 const rssTitle = `RSS feed for ${RSS_TITLE}`
@@ -25,12 +25,37 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
     <!-- Global metadata -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- 1 metadata -->
+    <!-- Site metadata -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+
+    <!-- Theme metadata -->
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+
+    <!-- zinc-900 -->
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#18181b"
+    />
+
+    <!-- Icon metadata -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple.png" />
+
+    <!-- teal-500 -->
+    <link rel="mask-icon" href="/safari.svg" color="#14b8a6" />
+
+    <!-- Manifest metadata -->
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- RSS metadata -->
     <link
