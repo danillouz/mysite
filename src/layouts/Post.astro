@@ -52,7 +52,7 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
             {title}
           </h1>
 
-          <p class="order-first text-base page-subtext">
+          <p class="order-first page-subtext">
             {
               publishedAt && (
                 <>
@@ -73,7 +73,9 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
           </p>
         </header>
 
-        <div class="mt-8 prose dark:prose-invert prose-danos">
+        <div
+          class="mt-8 prose prose-base dark:prose-invert prose-danos focus:prose-a:focusable"
+        >
           <p>{description}</p>
 
           <div class="not-prose">

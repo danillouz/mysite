@@ -67,7 +67,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
 
       <div>
         <a
-          class="flex items-center -mr-1 p-1"
+          class="flex items-center focusable"
           href="/feed.xml"
           target="_blank"
           rel="noopener noreferrer"
@@ -94,7 +94,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
       <slot />
 
       <nav
-        class="fixed left-0 right-0 bottom-0 md:bottom-2 flex items-center justify-center gap-5 px-2 py-1 mx-auto md:max-w-[12rem] bg-danos-primary dark:bg-danos-primary-inverted border-t border-danos-primary dark:border-danos-primary-inverted md:border-none ring-0 md:ring-1 ring-danos-primary dark:ring-danos-primary-inverted md:rounded-sm"
+        class="fixed left-0 right-0 bottom-0 md:bottom-2 flex items-center justify-center gap-4 px-2 py-1 mx-auto md:max-w-[12rem] bg-danos-primary dark:bg-danos-primary-inverted border-t border-danos-primary dark:border-danos-primary-inverted md:border-none ring-0 md:ring-1 ring-danos-primary dark:ring-danos-primary-inverted md:rounded-sm"
       >
         <DockLink href="/" title="Home">
           <svg

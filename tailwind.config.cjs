@@ -46,6 +46,9 @@ module.exports = {
           secondary: "rgb(var(--color-border-secondary) / <alpha-value>)",
           "secondary-inverted":
             "rgb(var(--color-border-secondary-inverted) / <alpha-value>)",
+          focus: "rgb(var(--color-focus-primary) / <alpha-value>)",
+          "focus-inverted":
+            "rgb(var(--color-focus-primary-inverted) / <alpha-value>)",
         },
       },
       borderColor: {

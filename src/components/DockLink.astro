@@ -19,36 +19,36 @@ if (href) {
 }
 ---
 
-<a
-  href={href}
-  title={title}
-  aria-current={isActive ? "page" : undefined}
-  class:list={[
-    // Base styles.
-    "nav-text",
+<div class="flex flex-col items-center gap-1">
+  <a
+    href={href}
+    title={title}
+    aria-current={isActive ? "page" : undefined}
+    class:list={[
+      // Base styles.
+      "mt-1 nav-text focusable rounded-full p-[2px]",
 
-    // Custom styles.
-    className,
-  ]}
->
-  <div class="flex flex-col items-center gap-1">
+      // Custom styles.
+      className,
+    ]}
+  >
     <div
-      class="flex items-center justify-center w-12 h-12 mt-1 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
+      class="flex items-center justify-center w-12 h-12 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
     >
       <slot />
     </div>
+  </a>
 
-    <span class="inline-block">{title}</span>
+  <span class="inline-block nav-text">{title}</span>
 
-    <span
-      class:list={[
-        // Base styles.
-        "w-1 h-1 rounded-full",
+  <span
+    class:list={[
+      // Base styles.
+      "w-1 h-1 rounded-full",
 
-        {
-          // Active styles.
-          "bg-danos-primary-inverted dark:bg-danos-primary": isActive,
-        },
-      ]}></span>
-  </div>
-</a>
+      {
+        // Active styles.
+        "bg-danos-primary-inverted dark:bg-danos-primary": isActive,
+      },
+    ]}></span>
+</div>

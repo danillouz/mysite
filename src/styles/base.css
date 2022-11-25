@@ -34,6 +34,9 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
 
     --color-border-primary: 228 228 231 /* zinc-200 */;
     --color-border-primary-inverted: 63 63 70 /* zinc-700 */;
+
+    --color-focus-primary: 20 184 166 /* teal-500 */;
+    --color-focus-primary-inverted: 45 212 191 /* teal-400 */;
   }
 
   article :is(h2, h3, h4, h5, h6) {
@@ -90,6 +93,11 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
     @apply mt-14 sm:mt-16;
   }
 
+  .scroll-x {
+    @apply overflow-y-hidden overflow-x-scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
   /* Text styles */
 
   .nav-text {
@@ -115,7 +123,13 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
   /* Link styles */
 
   .page-link {
-    @apply font-normal underline underline-offset-2 decoration-1 text-danos-link dark:text-danos-link-inverted;
+    @apply font-normal underline underline-offset-2 decoration-1 text-danos-link dark:text-danos-link-inverted focusable;
+  }
+
+  /* Focus styles */
+
+  .focusable {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-danos-focus dark:focus:ring-danos-focus-inverted;
   }
 
   /* Animation styles */
