@@ -110,32 +110,6 @@ module.exports = {
               "rgb(var(--color-border-primary-inverted))",
           },
         },
-
-        // For typography styles see:
-        // https://github.com/tailwindlabs/tailwindcss-typography/blob/master/src/styles.js
-        DEFAULT: {
-          css: {
-            a: {
-              fontWeight: "400",
-              "text-underline-offset": "2px", // underline-offset-2
-              "text-decoration-thickness": "1px", // decoration-1
-            },
-            img: {
-              "border-radius": "0.125rem", // rounded-sm
-            },
-            pre: {
-              "border-radius": "0.125rem", // rounded-sm
-              border: "1px solid",
-              "border-color": "var(--tw-prose-quote-borders)",
-            },
-            "code::before": {
-              content: "none",
-            },
-            "code::after": {
-              content: "none",
-            },
-          },
-        },
       },
     },
   },
