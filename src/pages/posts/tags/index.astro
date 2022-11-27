@@ -5,7 +5,7 @@ import Tag from "@components/Tag.astro"
 
 import type { Frontmatter } from "@types"
 
-const posts = await Astro.glob<Frontmatter>("../*.mdx")
+const posts = await Astro.glob<Frontmatter>("../**/*.mdx")
 const tags = posts.map((p) => p.frontmatter.tags ?? []).flat()
 const uniqueTags = Array.from(new Set(tags))
 ---

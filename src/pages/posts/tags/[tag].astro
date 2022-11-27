@@ -11,7 +11,7 @@ interface Props {
 }
 
 export async function getStaticPaths({}) {
-  const posts = await Astro.glob<Frontmatter>("../*.mdx")
+  const posts = await Astro.glob<Frontmatter>("../**/*.mdx")
   const tags = posts.map((p) => p.frontmatter.tags ?? []).flat()
   const uniqueTags = Array.from(new Set(tags))
   return uniqueTags.map((tag) => {
