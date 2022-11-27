@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config"
 import sitemap from "@astrojs/sitemap"
 import tailwind from "@astrojs/tailwind"
 import mdx from "@astrojs/mdx"
+import image from "@astrojs/image"
 import autolinkHeadings from "rehype-autolink-headings"
 import { h } from "hastscript"
 
@@ -51,7 +52,13 @@ export default defineConfig({
         ],
       ],
     }),
+
+    // See: https://docs.astro.build/en/guides/integrations-guide/image
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+    }),
   ],
+
   markdown: {
     syntaxHighlight: false,
 
