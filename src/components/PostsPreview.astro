@@ -14,7 +14,7 @@ const { posts } = Astro.props
 <div
   class="md:pl-6 md:border-l md:border-danos-primary md:dark:border-danos-primary-inverted"
 >
-  <div class="flex max-w-3xl flex-col space-y-16">
+  <div class="flex max-w-3xl flex-col space-y-12">
     {
       posts.map((post) => {
         const {
@@ -48,7 +48,7 @@ const { posts } = Astro.props
             {publishedAt && (
               <Time
                 datetime={publishedAt}
-                class="hidden z-10 md:block relative order-first mt-1 mb-3 items-center text-sm"
+                class="hidden z-10 md:block relative order-first items-center text-sm"
               />
             )}
           </div>

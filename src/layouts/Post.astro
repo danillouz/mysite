@@ -61,15 +61,15 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
               )
             }
 
-            {readingTime}
-
             {
               updatedAt && (
                 <>
-                  &bull; updated <Time datetime={updatedAt} />
+                  updated <Time datetime={updatedAt} /> &bull;
                 </>
               )
             }
+
+            {readingTime}
           </p>
         </header>
 
