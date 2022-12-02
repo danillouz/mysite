@@ -9,13 +9,13 @@ updatedAt: "November 27 2022"
 
 import { Image } from "@astrojs/image/components"
 
-One of the more suprising things I learned recently while working with AWS Lambda is how it interacts with the Node.js event loop.
+One of the more surprising things I learned recently while working with AWS Lambda is how it interacts with the Node.js event loop.
 
 Lambda is powered by a [virtualization technology](https://aws.amazon.com/blogs/aws/firecracker-lightweight-virtualization-for-serverless-computing). And to optimize performance it can freeze and thaw the execution context of your code so it can be reused.
 
 This will make your code run faster, but can impact the "expected" event loop behavior. We'll explore this in detail. But before we dive in, lets quickly refresh the Node.js concurrency model.
 
-If you're already familiar with the event loop, you can jump straight to the [AWS Lamba](#aws-lambda) section.
+If you're already familiar with the event loop, you can jump straight to the [AWS Lambda](#aws-lambda) section.
 
 ## Concurrency model
 

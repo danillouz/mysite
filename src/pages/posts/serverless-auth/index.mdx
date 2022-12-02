@@ -113,7 +113,7 @@ Content-Type: application/json
 
 When the Account API receives a request with the bearer token, it will have to verify the token with the help of Auth0. In order to do that, we first have to register our API with them:
 
-1. [Signup](https://auth0.com/signup) and setup your tenant.
+1. [Sign up](https://auth0.com/signup) and setup your tenant.
 2. In the Auth0 dashboard, navigate to "APIs" and click on "Create API".
 3. Follow the [instructions](https://auth0.com/docs/apis) and provide a "Name" and "Identifier". For example `Account API` and `https://api.danillouz.dev/account`[^3].
 4. Use `RS256` as the signing algorithm (more on that later).
@@ -876,7 +876,7 @@ Now the configured scope will be a claim on issued test tokens:
 }
 ```
 
-And therfore part of the `verifiedData`, so we can propagate it to downstream Lambda handlers like this:
+And therefore part of the `verifiedData`, so we can propagate it to downstream Lambda handlers like this:
 
 ```js
 const authResponse = {
@@ -917,7 +917,7 @@ Finally, add a release command to the `package.json`:
 }
 ```
 
-In order to upload the Lambda to AWS, [signup](https://portal.aws.amazon.com/billing/signup) and make sure you have your [credentials configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). Then release the Lambda with:
+In order to upload the Lambda to AWS, [sign up](https://portal.aws.amazon.com/billing/signup) and make sure you have your [credentials configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). Then release the Lambda with:
 
 ```sh
 npm run release
@@ -961,7 +961,7 @@ Now go to the AWS Console and visit the "Lambda" service. Find `lambda-authorize
 <figure>
   <Image
     src={import("./img/aws/lambda-authorizer-arn.png")}
-    alt="Image that shows where to find the Lambda Auhthorizer ARN in the AWS Lambda Console."
+    alt="Image that shows where to find the Lambda Authorizer ARN in the AWS Lambda Console."
   />
   <figcaption>Find the ARN of the Lambda Authorizer.</figcaption>
 </figure>
@@ -1438,6 +1438,6 @@ When the Lambda Authorizer throws an error or returns a "Deny" policy, APIG will
 
 ## In closing
 
-In this post I showed a way to implement "serverless auth" using a machine client. But you can use something like [Auth0 Lock](https://auth0.com/lock) and implement a user centric auth flow. This would allow users to signup and login to (for example) a web app, and get a token from Auth0. The web app can then use the token to send requests (on behalf of a user) to a protected API.
+In this post I showed a way to implement "serverless auth" using a machine client. But you can use something like [Auth0 Lock](https://auth0.com/lock) and implement a user centric auth flow. This would allow users to sign up and log in to (for example) a web app, and get a token from Auth0. The web app can then use the token to send requests (on behalf of a user) to a protected API.
 
 You can find all code at [github.com/danillouz/serverless-auth](https://github.com/danillouz/serverless-auth).
