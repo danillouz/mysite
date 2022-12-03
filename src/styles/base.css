@@ -57,6 +57,10 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply scroll-mt-12;
   }
 
+  sup a[aria-describedby="footnote-label"] {
+    @apply px-[2px] underline-offset-4;
+  }
+
   @keyframes blink {
     0% {
       opacity: 0;
@@ -105,7 +109,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
   }
 
   .page-heading {
-    @apply font-bold tracking-tight text-4xl sm:text-5xl text-danos-primary dark:text-danos-primary-inverted;
+    @apply font-bold tracking-tight text-4xl leading-tight sm:text-5xl sm:leading-tight text-danos-primary dark:text-danos-primary-inverted;
   }
 
   .page-subheading {
@@ -123,7 +127,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
   /* Link styles */
 
   .page-link {
-    @apply font-normal underline underline-offset-2 decoration-1 text-danos-link dark:text-danos-link-inverted focusable;
+    @apply font-normal underline underline-offset-[5px] decoration-1 text-danos-link dark:text-danos-link-inverted focusable;
   }
 
   /* Focus styles */

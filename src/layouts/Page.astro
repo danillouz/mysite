@@ -1,4 +1,5 @@
 ---
+import "@fontsource/merriweather"
 import "@styles/base.css"
 import { SITE_TITLE, SITE_DESCRIPTION, RSS_TITLE, FULL_NAME } from "@config"
 import DockLink from "@components/DockLink.astro"
@@ -81,7 +82,7 @@ const rssTitle = `RSS feed for ${RSS_TITLE}`
   </head>
 
   <body
-    class="flex flex-col min-h-screen bg-danos-body dark:bg-danos-body-inverted font-sans antialiased"
+    class="flex flex-col min-h-screen bg-danos-body dark:bg-danos-body-inverted font-serif antialiased"
   >
     <header
       class="z-40 h-7 flex items-center justify-between w-full sticky top-0 px-4 bg-danos-primary dark:bg-danos-primary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted nav-text"

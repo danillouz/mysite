@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme")
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,html,md,mdx,ts,tsx}"],
@@ -7,6 +9,9 @@ module.exports = {
       current: "currentColor",
     },
     extend: {
+      fontFamily: {
+        serif: ["Merriweather", ...defaultTheme.fontFamily.serif],
+      },
       backgroundColor: {
         danos: {
           body: "rgb(var(--color-bg-body) / <alpha-value>)",
