@@ -2,7 +2,6 @@
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import Prompt from "@components/Prompt.astro"
-import TerminalLink from "@components/TerminalLink.astro"
 
 const banner = `
      █████                         ███████     █████████ 
@@ -28,77 +27,92 @@ const banner = `
 
       <br class="hidden md:block" />
 
-      <p
-        aria-hidden="true"
-        class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
-      >
-        <Prompt /> cat about.txt
-      </p>
+      <div class="max-w-2xl">
+        <p
+          aria-hidden="true"
+          class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
+        >
+          <Prompt /> cat about.txt
+        </p>
 
-      <br />
+        <br />
 
-      <p>Hi, I'm Dan. Welcome to my site!</p>
+        <p>Hi! I'm Dan. Welcome to my site.</p>
 
-      <br />
+        <br />
 
-      <p>I'm a self-taught software developer from the Netherlands.</p>
+        <p>I'm a self-taught software developer from the Netherlands.</p>
 
-      <p>
-        I love to design and build software that's reliable, easy to maintain,
-        and scales well.
-      </p>
+        <br />
 
-      <br />
+        <p>
+          My background is in aviation, but I decided to make a career switch
+          from commercial pilot to developer. And I have been coding
+          professionally since 2012.
+        </p>
 
-      <p>
-        Currently working at <TerminalLink
-          href="https://www.framer.com/"
-          class="inline-block">Framer</TerminalLink
-        > as a backend engineer, helping build and scale sites.
-      </p>
+        <br />
 
-      <br />
+        <p>
+          I most enjoy working on the backend. And I love to design and build
+          software that's reliable, easy to maintain, and scales well.
+        </p>
 
-      <p>
-        <Prompt /> If you want to chat, send me an email to "hi" <i>at</i> "danillouz"
-        <i>dot</i> "dev".
-      </p>
+        <br />
 
-      <p>
-        <Prompt />
-      </p>
+        <p>
+          Currently I'm working at <a
+            href="https://www.framer.com"
+            class="page-link">Framer</a
+          > as a backend engineer, helping build and scale sites.
+        </p>
 
-      <p>
-        <Prompt />
-      </p>
+        <br />
 
-      <p
-        aria-hidden="true"
-        class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
-      >
-        <Prompt /> ls links
-      </p>
+        <p>
+          <Prompt /> If you want to chat, send me an email to "hi" <i>at</i> "danillouz"
+          <i>dot</i> "dev".
+        </p>
 
-      <br />
+        <p>
+          <Prompt />
+        </p>
 
-      <p class="flex items-center gap-6 flex-wrap">
-        <TerminalLink href="https://github.com/danillouz">GitHub</TerminalLink>
+        <p>
+          <Prompt />
+        </p>
 
-        <TerminalLink href="https://stackoverflow.com/users/4455533/danillouz">
-          Stack Overflow
-        </TerminalLink>
+        <p
+          aria-hidden="true"
+          class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
+        >
+          <Prompt /> ls links
+        </p>
 
-        <TerminalLink href="https://www.linkedin.com/in/danillouz/">
-          Linkedin
-        </TerminalLink>
-      </p>
+        <br />
 
-      <br />
+        <p class="flex items-center gap-6 flex-wrap">
+          <a href="https://github.com/danillouz" class="page-link">GitHub</a>
 
-      <p>
-        <Prompt />
-        <span class="blink">_</span>
-      </p>
+          <a
+            href="https://stackoverflow.com/users/4455533/danillouz"
+            class="page-link"
+          >
+            Stack Overflow
+          </a>
+
+          <a href="https://www.linkedin.com/in/danillouz" class="page-link">
+            Linkedin</a
+          >
+        </p>
+
+        <br />
+
+        <p>
+          <Prompt />
+          <span class="blink">_</span>
+        </p>
+      </div>
     </div>
   </Window>
 </PageLayout>
