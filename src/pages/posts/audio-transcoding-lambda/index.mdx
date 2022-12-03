@@ -1,7 +1,7 @@
 ---
 layout: "../../../layouts/Post.astro"
-title: "Transcoding audio with AWS Lambda"
-description: "How to transcode short audio files with Lambda and Amazon Elastic Transcoder or FFmpeg."
+title: "Audio transcoding with AWS Lambda"
+description: "Transcoding short audio files with Amazon Elastic Transcoder or FFmpeg."
 tags:
   [
     "audio",
@@ -16,7 +16,7 @@ tags:
     "tutorial",
   ]
 publishedAt: "October 27 2019"
-updatedAt: "December 2 2022"
+updatedAt: "December 3 2022"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -220,7 +220,7 @@ audio-transcoder
 
 Add the following to it:
 
-```
+```yaml
 service: audio-transcoder
 
 provider:
@@ -238,9 +238,8 @@ package:
 
 Add the Elastic Transcoder Pipeline ID, MP3 Preset ID and region (from [step 1](#1-create-a-pipeline) and [step 2](#2-choose-a-preset)) as environment variables:
 
-```
+```yaml
 provider:
-  ...
   environment:
     TRANSCODE_AUDIO_PIPELINE_ID: "1572538082044-xmgzaa"
     TRANSCODER_MP3_PRESET_ID: "1351620000001-300040"
@@ -249,21 +248,20 @@ provider:
 
 Use the Elastic Transcoder Pipeline ARN and MP3 Preset ARN (from [step 1](#1-create-a-pipeline) and [step 2](#2-choose-a-preset)) to configure the Lambda with the required IAM permissions, so it can create transcoder jobs:
 
-```
+```yaml
 provider:
-  ...
   iamRoleStatements:
     - Effect: Allow
       Action:
         - elastictranscoder:CreateJob
       Resource:
-        - YOUR_PIPELINE_ARN # Replace this with the ARN from step 1.
-        - YOUR_PRESET_ARN # Replace this with the ARN from step 2.
+        - YOUR_PIPELINE_ARN # Replace this with the ARN from step 1
+        - YOUR_PRESET_ARN # Replace this with the ARN from step 2
 ```
 
 And finally, add the Lambda function definition. This Lambda will be executed whenever an object is created in the input bucket:
 
-```
+```yaml
 functions:
   transcodeToMp3:
     handler: src/handler.transcodeToMp3
@@ -277,7 +275,7 @@ functions:
 
 You should now have a manifest that looks like this:
 
-```yml
+```yaml
 service: audio-transcoder
 
 provider:
@@ -523,7 +521,7 @@ lambda-layers
 
 Add the following to it:
 
-```yml
+```yaml
 service: lambda-layers
 
 provider:
@@ -617,9 +615,8 @@ We'll now be modifying the manifest file of the `audio-transcoder` project.
 
 First change the environment variables, and add the names of your input and output buckets:
 
-```
+```yaml
 provider:
-  ...
   environment:
     S3_INPUT_BUCKET_NAME: "raw.recordings"
     S3_OUTPUT_BUCKET_NAME: "transcoded.recordings"
@@ -627,9 +624,8 @@ provider:
 
 Then change the IAM permissions so the Lambda function can read from the input bucket and write to the output bucket:
 
-```
+```yaml
 provider:
-  ...
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -643,17 +639,16 @@ provider:
 
 Finally, change the Lambda function to use the FFmpeg layer with the ARN from the previous step:
 
-```
+```yaml
 functions:
   transcodeToMp3:
-    ...
     layers:
-      - YOUR_FFMPEG_LAYER_ARN # Replace this with the ARN from step 1.
+      - YOUR_FFMPEG_LAYER_ARN # Replace this with the ARN from step 1
 ```
 
 You should now have a manifest that looks like this:
 
-```yml
+```yaml
 service: audio-transcoder
 
 provider:
@@ -690,7 +685,7 @@ functions:
           event: "s3:ObjectCreated:*"
           existing: true
     layers:
-      - YOUR_FFMPEG_LAYER_ARN # Replace this with the ARN from step 1.
+      - YOUR_FFMPEG_LAYER_ARN # Replace this with the ARN from step 1
 ```
 
 ### 3. Update the Lambda function
@@ -766,13 +761,14 @@ const { spawnSync } = require("child_process")
 module.exports = {
   convertWebmToMp3(webmBlob) {
     spawnSync(
-      // "/opt/:LAYER_NAME/:BINARY_NAME"
-      "/opt/ffmpeg/ffmpeg",
+      "/opt/ffmpeg/ffmpeg", // "/opt/:LAYER_NAME/:BINARY_NAME"
       [
         // FFmpeg command arguments go here.
       ],
       { stdio: "inherit" }
     )
+
+    // Rest of the implementation goes here.
   },
 }
 ```
@@ -800,6 +796,8 @@ module.exports = {
     spawnSync("/opt/ffmpeg/ffmpeg", ["-i", input, output], {
       stdio: "inherit",
     })
+
+    // TODO: cleanup and return MP3 blob.
   },
 }
 ```
@@ -914,7 +912,7 @@ Here you should see the logs of the Lambda function:
   <figcaption>The Lambda function stops executing after ~6 seconds.</figcaption>
 </figure>
 
-The logs tell us that FFmpeg is executing (hooray!) but that it doesn't complete (booo!).
+The logs tell us that FFmpeg is executing (hooray!) but that it doesn't complete (boo!).
 
 In the middle of the transcoding process the logs just say `END`. And on the last line we see that the Lambda had a duration of `6006.17 ms`.
 
@@ -928,15 +926,10 @@ How do we solve this? By optimizing the Lambda function!
 
 First let's just set the timeout to a larger value. For example 180 seconds. This way we can see how long it would actually take to complete the transcoding process:
 
-```yml
-service: audio-transcoder
-...
+```yaml
 functions:
   transcodeToMp3:
-    handler: src/handler.transcodeToMp3
-    description: Transcode an audio file to MP3
     timeout: 180
-    ...
 ```
 
 Deploy again. When Serverless is done, upload another WebM audio file, and check the logs:
@@ -963,16 +956,10 @@ This is important because when you choose a higher memory setting, AWS will also
 
 By default a Lambda function has a memory setting of 128 MB. So lets increase it and compare results. A good strategy is usually to keep doubling memory and measure the duration. But for the sake of brevity, I'm jumping ahead to 2048 MB:
 
-```yml
-service: audio-transcoder
-...
+```yaml
 functions:
   transcodeToMp3:
-    handler: src/handler.transcodeToMp3
-    description: Transcode an audio file to MP3
-    timeout: 180
     memorySize: 2048
-    ...
 ```
 
 Deploy again. And when Serverless is done, upload another WebM audio file and check the logs:
@@ -991,7 +978,7 @@ Great, it's even faster now! Does this mean we can just keep increasing the memo
 
 For example, increasing the memory to 3008 MB (the maximum [memory limit](https://docs.aws.amazon.com/lambda/latest/dg/limits.html) at the time of this writing) will result in a similar runtime duration:
 
-##### Memory: 2048 MB
+##### Memory 2048 MB
 
 | Test run | Duration     | Billed Duration | Cold Start Duration |
 | :------- | :----------- | :-------------- | :------------------ |
@@ -1001,7 +988,7 @@ For example, increasing the memory to 3008 MB (the maximum [memory limit](https:
 | 4        | `3677,14 ms` | `3700 ms`       | -                   |
 | 5        | `3725,77 ms` | `3800 ms`       | -                   |
 
-##### Memory: 3008 MB
+##### Memory 3008 MB
 
 | Test run | Duration     | Billed Duration | Cold Start Duration |
 | :------- | :----------- | :-------------- | :------------------ |
@@ -1074,7 +1061,7 @@ We're using Lambda to schedule Amazon Elastic Transcoder jobs. So we also have t
 
 The Lambda [pricing](https://aws.amazon.com/lambda/pricing) page tells us we pay for the **number of requests** and the **duration** (which depends on memory setting).
 
-We get 1 million requests for free every month, and after that you pay `$0,20` per 1 million requests. Since we're only doing 1/10th of that in this example, I'm _not_ including **number of requests** in the calculations. I'm only focusing on **duration** costs here.
+We get 1 million requests for free every month, and after that you pay `$0,20` per 1 million requests. Since we're only doing 1/10th of that in this example, I'm _not_ including number of requests in the calculations. I'm only focusing on duration costs here.
 
 These are the Lambda durations (with 128 MB memory) for the accompanying transcoder test runs:
 
@@ -1171,6 +1158,15 @@ With free tier it would cost:
 > <cite>[Lambda pricing page](https://aws.amazon.com/lambda/pricing)</cite>
 
 Otherwise, data transferred into and out of Lambda functions will be charged at the [EC2 data transfer rates](https://aws.amazon.com/ec2/pricing/on-demand) as listed under the “Data transfer” section.
+
+### Putting it all together
+
+Costs of transcoding `100 000` 3 minute (2,8 MB) WebM audio files to MP3 per month:
+
+| Implementation            | Cost without free tier | Cost with free tier |
+| :------------------------ | :--------------------- | :------------------ |
+| Amazon Elastic Transcoder | ~ $64                  | ~ $64               |
+| FFmpeg and Lambda Layers  | ~ $13                  | ~ $6                |
 
 ## In closing
 

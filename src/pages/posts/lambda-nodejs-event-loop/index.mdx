@@ -4,7 +4,7 @@ title: "AWS Lambda and the Node.js event loop"
 description: "Lambda can freeze and thaw its execution context, which can impact Node.js event loop behavior."
 tags: ["aws", "event-loop", "lambda", "nodejs"]
 publishedAt: "May 30 2019"
-updatedAt: "November 27 2022"
+updatedAt: "December 3 2022"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -87,7 +87,7 @@ function main() {
   console.log("main end")
 }
 
-main() // Step 2.
+main() // Step 2
 ```
 
 3. While executing `main`, `console.log("main start")` is called, and pushed onto the call stack:
@@ -100,7 +100,7 @@ function work() {
 }
 
 function main() {
-  console.log("main start") // Step 3.
+  console.log("main start") // Step 3
   work()
   console.log("main end")
 }
@@ -131,7 +131,7 @@ function work() {
 
 function main() {
   console.log("main start")
-  work() // Step 5.
+  work() // Step 5
   console.log("main end")
 }
 
@@ -144,7 +144,7 @@ main()
 "use strict"
 
 function work() {
-  console.log("do work") // Step 6.
+  console.log("do work") // Step 6
 }
 
 function main() {
@@ -182,7 +182,7 @@ function work() {
 function main() {
   console.log("main start")
   work()
-  console.log("main end") // Step 9.
+  console.log("main end") // Step 9
 }
 
 main()
@@ -328,7 +328,7 @@ async function main() {
   console.log("main end")
 }
 
-exports.handler = main // This change allows Lambda to run `main`.
+exports.handler = main // This change allows Lambda to run `main`
 ```
 
 You can create a new function in the AWS Lambda console and paste in the code from above. Run it, sit back and enjoy:
@@ -417,7 +417,7 @@ async function main() {
   console.log("main end")
 }
 
-exports.handler = main // Step 2.
+exports.handler = main // Step 2
 ```
 
 <figure>
@@ -444,7 +444,7 @@ function timeout(ms) {
 }
 
 async function main() {
-  console.log("main start") // Step 3.
+  console.log("main start") // Step 3
   timeout(5e3)
   console.log("main end")
 }
@@ -486,7 +486,7 @@ function timeout(ms) {
 
 async function main() {
   console.log("main start")
-  timeout(5e3) // Step 5.
+  timeout(5e3) // Step 5
   console.log("main end")
 }
 
@@ -506,7 +506,7 @@ exports.handler = main
 "use strict"
 
 function timeout(ms) {
-  console.log("timeout start") // Step 6.
+  console.log("timeout start") // Step 6
 
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -549,7 +549,7 @@ exports.handler = main
 function timeout(ms) {
   console.log("timeout start")
 
-  // Step 8.
+  // Step 8
   return new Promise((resolve) => {
     setTimeout(() => {
       console.log(`timeout cb fired after ${ms} ms`)
@@ -620,7 +620,7 @@ function timeout(ms) {
 async function main() {
   console.log("main start")
   timeout(5e3)
-  console.log("main end") // Step 12.
+  console.log("main end") // Step 12
 }
 
 exports.handler = main
@@ -788,7 +788,7 @@ function timeout(ms) {
 
 async function main() {
   console.log("main start")
-  await timeout(5e3) // Use await.
+  await timeout(5e3) // Use await
   console.log("main end")
 }
 

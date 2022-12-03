@@ -1,7 +1,7 @@
 ---
 layout: "../../../layouts/Post.astro"
 title: "Serverless auth"
-description: "How to protect AWS API Gateway endpoints with AWS Lambda and Auth0."
+description: "Protecting AWS API Gateway endpoints with AWS Lambda and Auth0."
 tags:
   [
     "auth",
@@ -16,7 +16,7 @@ tags:
     "tutorial",
   ]
 publishedAt: "June 19 2019"
-updatedAt: "November 28 2022"
+updatedAt: "December 3 2022"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -51,7 +51,7 @@ In order to build an auth server you could use:
 - [OAuth 2.0](https://oauth.net/2): an authorization protocol.
 - [OpenID Connect](https://openid.net/connect) (OIDC): an authentication protocol. This is an "identity layer" built on top of OAuth 2.0.
 - [Token based authentication](https://auth0.com/learn/token-based-authentication-made-easy): a strategy that requires a client to send a signed bearer token when making requests to a protected API. The API will only respond to requests successfully when it receives a verified token.
-- [JSON Web Token](https://tools.ietf.org/html/rfc7519) (JWT): a way to send auth information (i.e. "claims") as JSON. A JWT contains a `Header`, `Payload` and `Signature` which are Base64 encoded and separated by a period (`.`). In effect, a JWT can be used as a bearer token[^1].
+- [JSON Web Token](https://tools.ietf.org/html/rfc7519) (JWT): a way to send auth information (i.e. "claims") as JSON. A JWT contains a `Header`, `Payload` and `Signature` which are Base64 encoded and separated by a period. In effect, a JWT can be used as a bearer token[^1].
 
 [^1]: You can see how a JWT looks like by visiting [jwt.io](https://jwt.io).
 
@@ -91,14 +91,14 @@ This API isn't very useful, but gives us something to work with in order to impl
 
 Request:
 
-```http
+```
 HTTP GET /profile
 Authorization: Bearer eyJ...lKw
 ```
 
 Response:
 
-```http
+```
 HTTP 200 OK
 Content-Type: application/json
 ```
@@ -156,9 +156,14 @@ You can also find these values under the "Quick Start" tab of the API details sc
 
 ## What's a Lambda Authorizer?
 
-I haven't explained what a Lambda Authorizer is yet. In short, it's a feature of APIG to control access to an API. The AWS [docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html) say:
+I haven't explained what a Lambda Authorizer is yet. In short, it's a feature of APIG to control access to an API.
 
 > A Lambda authorizer is useful if you want to implement a custom authorization scheme that uses a bearer token authentication strategy such as OAuth.
+>
+> <cite>
+>   [AWS
+>   docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
+> </cite>
 
 There are actually two types of Lambda Authorizers:
 
@@ -179,7 +184,7 @@ When a Lambda Authorizer is configured, and a client makes a request to APIG, AW
 
 Only when the token passes these checks should the Lambda Authorizer return an [IAM Policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) document with `Effect` set to `Allow`:
 
-```js
+```json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -196,7 +201,7 @@ It's this policy that tells APIG it's _allowed_ to invoke our downstream Lambda 
 
 Alternatively, the Lambda authorizer may _deny_ invoking the downstream handler by setting `Effect` to `Deny`:
 
-```js
+```json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -261,7 +266,7 @@ module.exports.authorizer = (event) => {
       ],
     },
     context: {
-      scope: "get:profile", // Custom info goes here.
+      scope: "get:profile", // Custom info goes here
     },
   }
 
@@ -273,11 +278,11 @@ But there's a caveat here. You can _not_ set a JSON serializable object or array
 
 ```js
 context: {
-  a: 'value', // OK.
-  b: 1, // OK.
-  c: true, // OK.
-  d: [9, 8, 7], // Will NOT be serialized.
-  e: { x: 'value', y: 99, z: false } // Will NOT be serialized.
+  a: 'value', // OK
+  b: 1, // OK
+  c: true, // OK
+  d: [9, 8, 7], // Will NOT be serialized
+  e: { x: 'value', y: 99, z: false } // Will NOT be serialized
 }
 ```
 
@@ -288,7 +293,7 @@ Any "valid" properties passed to the `context` object will be made available to 
 
 module.exports.handler = (event) => {
   const { authorizer } = event.requestContext
-  console.log(authorizer.scope) // Logs: "get:profile".
+  console.log(authorizer.scope) // Logs: "get:profile"
 }
 ```
 
@@ -394,7 +399,7 @@ lambda-authorizers
 
 Add the following to it:
 
-```yml
+```yaml
 service: lambda-authorizers
 
 provider:
@@ -416,9 +421,8 @@ package:
 
 Add the properties we got from the [Lambda Authorizer configuration](#lambda-authorizer-configuration) as environment variables. For example:
 
-```
+```yaml
 provider:
-  ...
   environment:
     JWKS_URI: "https://danillouz.eu.auth0.com/.well-known/jwks.json"
     TOKEN_ISSUER: "https://danillouz.eu.auth0.com/"
@@ -427,7 +431,7 @@ provider:
 
 And add the Lambda function definition:
 
-```
+```yaml
 functions:
   auth0VerifyBearer:
     handler: src/auth0.verifyBearer
@@ -436,7 +440,7 @@ functions:
 
 You should now have a manifest that looks like this:
 
-```yml
+```yaml
 service: lambda-authorizers
 
 provider:
@@ -804,7 +808,7 @@ The `authResponse.principalId` property must represent a unique (user) identifie
 ```json
 {
   "iss": "https://danillouz.eu.auth0.com/",
-  "sub": "FHgLVARPk8oXjsP5utP8wYAnZePPAkw1@clients", // Principal ID.
+  "sub": "FHgLVARPk8oXjsP5utP8wYAnZePPAkw1@clients", // Principal ID
   "aud": "https://api.danillouz.dev/account",
   "iat": 1560762850,
   "exp": 1560849250,
@@ -871,7 +875,7 @@ Now the configured scope will be a claim on issued test tokens:
   "iat": 1560762850,
   "exp": 1560849250,
   "azp": "FHgLVARPk8oXjsP5utP8wYAnZePPAkw1",
-  "scope": "get:profile", // Scope is now a claim.
+  "scope": "get:profile", // Scope is now a claim
   "gty": "client-credentials"
 }
 ```
@@ -892,7 +896,7 @@ const authResponse = {
     ],
   },
   context: {
-    scope: verifiedData.scope, // Propagate scope downstream.
+    scope: verifiedData.scope, // Propagate scope downstream
   },
 }
 ```
@@ -928,7 +932,6 @@ Serverless: Packaging service...
 Serverless: Excluding development dependencies...
 Serverless: Creating Stack...
 Serverless: Checking Stack create progress...
-.....
 Serverless: Stack create finished...
 Serverless: Uploading CloudFormation file to S3...
 Serverless: Uploading artifacts...
@@ -936,9 +939,9 @@ Serverless: Uploading service lambda-authorizers.zip file to S3...
 Serverless: Validating template...
 Serverless: Updating Stack...
 Serverless: Checking Stack update progress...
-...............
 Serverless: Stack update finished...
 Service Information
+
 service: lambda-authorizers
 stage: prod
 region: eu-central-1
@@ -1022,7 +1025,7 @@ account-api
 
 Add the Lambda function definition for the `GET /profile` endpoint handler:
 
-```yml
+```yaml
 service: account-api
 
 provider:
@@ -1144,7 +1147,6 @@ Serverless: Packaging service...
 Serverless: Excluding development dependencies...
 Serverless: Creating Stack...
 Serverless: Checking Stack create progress...
-.....
 Serverless: Stack create finished...
 Serverless: Uploading CloudFormation file to S3...
 Serverless: Uploading artifacts...
@@ -1152,9 +1154,9 @@ Serverless: Uploading service account-api.zip file to S3...
 Serverless: Validating template...
 Serverless: Updating Stack...
 Serverless: Checking Stack update progress...
-..............................
 Serverless: Stack update finished...
 Service Information
+
 service: account-api
 stage: prod
 region: eu-central-1
@@ -1186,7 +1188,7 @@ It should return:
 
 Now we know the endpoint is working, we'll protect it by adding a custom `authorizer` property in the `serverless.yaml` manifest:
 
-```
+```yaml
 custom:
   authorizer:
     arn: LAMBDA_AUTHORIZER_ARN
@@ -1207,7 +1209,7 @@ Let's go over the `authorizer` properties:
 
 You should now have a manifest that looks like this:
 
-```yml
+```yaml
 service: account-api
 
 custom:
@@ -1374,7 +1376,7 @@ Awesome! We successfully secured our API with a token based authentication strat
 
 On a final note, when your API needs to return [CORS headers](https://serverless.com/blog/cors-api-gateway-survival-guide), make sure to add a [custom APIG Response](https://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html) as well:
 
-```yml
+```yaml
 service: account-api
 
 custom:
