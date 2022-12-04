@@ -22,7 +22,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-bg-hover-inverted: 39 39 42; /* zinc-800 */
 
     --color-text-primary: 39 39 42; /* zinc-800 */
-    --color-text-primary-inverted: 244 244 245 /* zinc-100 */;
+    --color-text-primary-inverted: 244 244 245; /* zinc-100 */
     --color-text-secondary: 82 82 91; /* zinc-600 */
     --color-text-secondary-inverted: 161 161 170; /* zinc-400 */
     --color-text-tertiary: 113 113 122; /* zinc-500 */
@@ -32,11 +32,11 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-text-special: 24 24 27; /* zinc-900 */
     --color-text-special-inverted: 250 250 250; /* zinc-50 */
 
-    --color-border-primary: 228 228 231 /* zinc-200 */;
-    --color-border-primary-inverted: 63 63 70 /* zinc-700 */;
+    --color-border-primary: 228 228 231; /* zinc-200 */
+    --color-border-primary-inverted: 63 63 70; /* zinc-700 */
 
-    --color-focus-primary: 20 184 166 /* teal-500 */;
-    --color-focus-primary-inverted: 45 212 191 /* teal-400 */;
+    --color-focus-primary: 20 184 166; /* teal-500 */
+    --color-focus-primary-inverted: 45 212 191; /* teal-400 */
   }
 
   article :is(h2, h3, h4, h5, h6) {
