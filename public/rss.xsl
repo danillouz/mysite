@@ -40,7 +40,8 @@
               --color-text-primary: 39 39 42; /* zinc-800 */
               --color-text-secondary: 82 82 91; /* zinc-600 */
               --color-text-tertiary: 113 113 122; /* zinc-500 */
-              --color-text-link: 24 24 27; /* zinc-900 */
+              --color-text-link: 39 39 42; /* zinc-800 */
+              --color-text-special: 39 39 42; /* zinc-800 */
               --color-border-primary: 228 228 231; /* zinc-200 */
               --color-focus-primary: 20 184 166; /* teal-500 */
             }
@@ -50,10 +51,11 @@
             :root {
               --color-bg-body: 0 0 0; /* black */
               --color-bg-primary: 24 24 27; /* zinc-900 */
-              --color-text-primary: 244 244 245; /* zinc-100 */
+              --color-text-primary: 228 228 231; /* zinc-200 */
               --color-text-secondary: 161 161 170; /* zinc-400 */
               --color-text-tertiary: 113 113 122; /* zinc-500 */
-              --color-text-link: 250 250 250; /* zinc-50 */
+              --color-text-link: 228 228 231; /* zinc-200 */
+              --color-text-special: 228 228 231; /* zinc-200 */
               --color-border-primary: 63 63 70; /* zinc-700 */
               --color-focus-primary: 45 212 191; /* teal-400 */
             }
@@ -168,17 +170,13 @@
 
           .cmd {
             font-weight: 600;
-            color: rgb(var(--color-text-primary));
+            color: rgb(var(--color-text-special));
           }
 
           .prompt::after {
             content: "$";
             font-weight: 600;
             color: rgb(var(--color-text-tertiary) / 0.8);
-          }
-
-          .prompt-meta {
-            color: rgb(var(--color-text-tertiary));
           }
 
           .blink {
