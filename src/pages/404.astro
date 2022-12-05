@@ -1,0 +1,73 @@
+---
+import PageLayout from "@layouts/Page.astro"
+import Window from "@components/Window.astro"
+import Prompt from "@components/Prompt.astro"
+
+const banner = `
+                   █████ █████     █████    █████ █████                       
+                  ░░███ ░░███    ███░░░███ ░░███ ░░███                        
+                   ░███  ░███ █ ███   ░░███ ░███  ░███ █                      
+                   ░███████████░███    ░███ ░███████████                      
+                   ░░░░░░░███░█░███    ░███ ░░░░░░░███░█                      
+                         ░███░ ░░███   ███        ░███░                       
+                         █████  ░░░█████░         █████                       
+                        ░░░░░     ░░░░░░         ░░░░░                        
+                                                                              
+                                                                              
+ ███████████                                 ██████   █████           █████   
+░░███░░░░░███                               ░░██████ ░░███           ░░███    
+ ░███    ░███  ██████    ███████  ██████     ░███░███ ░███   ██████  ███████  
+ ░██████████  ░░░░░███  ███░░███ ███░░███    ░███░░███░███  ███░░███░░░███░   
+ ░███░░░░░░    ███████ ░███ ░███░███████     ░███ ░░██████ ░███ ░███  ░███    
+ ░███         ███░░███ ░███ ░███░███░░░      ░███  ░░█████ ░███ ░███  ░███ ███
+ █████       ░░████████░░███████░░██████     █████  ░░█████░░██████   ░░█████ 
+░░░░░         ░░░░░░░░  ░░░░░███ ░░░░░░     ░░░░░    ░░░░░  ░░░░░░     ░░░░░  
+                        ███ ░███                                              
+                       ░░██████                                               
+                        ░░░░░░                                                
+                                                                              
+          ███████████                                    █████                
+         ░░███░░░░░░█                                   ░░███                 
+          ░███   █ ░   ██████  █████ ████ ████████    ███████                 
+          ░███████    ███░░███░░███ ░███ ░░███░░███  ███░░███                 
+          ░███░░░█   ░███ ░███ ░███ ░███  ░███ ░███ ░███ ░███                 
+          ░███  ░    ░███ ░███ ░███ ░███  ░███ ░███ ░███ ░███                 
+          █████      ░░██████  ░░████████ ████ █████░░████████                
+         ░░░░░        ░░░░░░    ░░░░░░░░ ░░░░ ░░░░░  ░░░░░░░░                 
+`
+---
+
+<PageLayout>
+  <Window>
+    <div class="p-2 font-mono text-sm page-text">
+      <p
+        aria-hidden="true"
+        class="hidden md:block font-semibold text-danos-primary dark:text-danos-primary-inverted"
+      >
+        <Prompt /> echo &quot;404 Page Not Found&quot; &#124; banner
+      </p>
+
+      <p
+        aria-hidden="true"
+        class="hidden md:block whitespace-pre-wrap leading-none text-center text-danos-primary dark:text-danos-primary-inverted"
+      >
+        {banner}
+      </p>
+
+      <br class="hidden md:block" />
+
+      <div class="max-w-2xl">
+        <h1 class="sr-only">404 page not found</h1>
+
+        <p aria-hidden="true">
+          <Prompt /> Looks like there&apos;s nothing here..
+        </p>
+
+        <p aria-hidden="true">
+          <Prompt />
+          <span class="blink">_</span>
+        </p>
+      </div>
+    </div>
+  </Window>
+</PageLayout>
