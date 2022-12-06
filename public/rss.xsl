@@ -77,18 +77,18 @@
           h2,
           h3 {
             margin: 0;
-            margin-top: 4px;
-            margin-bottom: 8px;
-            font-size: 14px;
-            line-height: 20px;
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
             font-weight: 400;
             color: rgb(var(--color-text-primary));
           }
 
           p {
             margin: 0;
-            font-size: 14px;
-            line-height: 20px;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
             color: rgb(var(--color-text-secondary));
           }
 
@@ -116,28 +116,28 @@
             bottom: 0;
             display: flex;
             flex-direction: column;
-            max-width: 768px;
+            max-width: 48rem;
             background-color: rgb(var(--color-bg-primary));
             border: 1px solid rgb(var(--color-border-primary));
           }
 
           .window-header {
-            height: 28px;
+            height: 1.75rem;
             display: flex;
             align-items: center;
-            padding-left: 8px;
-            padding-right: 8px;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
           }
 
           .window-header-wrapper {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
           }
 
           .window-header-icon {
-            height: 10px;
-            width: 10px;
+            height: 0.625rem;
+            width: 0.625rem;
             border: 1px solid rgb(var(--color-border-primary));
             border-radius: 9999px;
           }
@@ -155,16 +155,16 @@
           }
 
           .window-main-wrapper {
-            max-width: 672px;
-            padding: 8px;
+            max-width: 42rem;
+            padding: 0.5rem;
           }
 
           .window-footer {
-            height: 24px;
+            height: 1.5rem;
             display: flex;
             font-family: sans;
-            font-size: 12px;
-            line-height: 16px;
+            font-size: 0.75rem;
+            line-height: 1rem;
             color: rgb(var(--color-text-tertiary));
           }
 
@@ -200,8 +200,8 @@
           }
 
           .datetime {
-            font-size: 12px;
-            line-height: 16px;
+            font-size: 0.75rem;
+            line-height: 1rem;
             color: rgb(var(--color-text-tertiary) / 0.8);
           }
 
@@ -216,14 +216,14 @@
               margin-right: auto;
               margin-top: 47px;
               margin-bottom: 47px;
-              border-radius: 3px;
+              border-radius: 0.125rem;
             }
           }
 
           /* lg */
           @media (min-width: 1024px) {
             .window {
-              max-width: 1024px;
+              max-width: 64rem;
             }
           }
 
