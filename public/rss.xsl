@@ -261,7 +261,7 @@
             <div class="window-main">
               <div class="window-main-wrapper">
                 <p class="cmd" aria-hidden="true">
-                  <span class="prompt" aria-hidden="true"></span> feed about
+                  <span class="prompt" aria-hidden="true"></span> rss about
                 </p>
 
                 <br />
@@ -291,7 +291,7 @@
                 </p>
 
                 <p class="cmd" aria-hidden="true">
-                  <span class="prompt" aria-hidden="true"></span> feed fetch
+                  <span class="prompt" aria-hidden="true"></span> rss fetch
                 </p>
 
                 <br />
@@ -327,7 +327,7 @@
                 </p>
 
                 <p class="cmd" aria-hidden="true">
-                  <span class="prompt" aria-hidden="true"></span> feed help
+                  <span class="prompt" aria-hidden="true"></span> rss help
                 </p>
 
                 <br />
