@@ -67,10 +67,43 @@
             min-height: 100vh;
             padding: 0;
             margin: 0 auto;
-            font-family: monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
             background-color: rgb(var(--color-bg-body));
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+          }
+
+          header {
+            height: 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            background-color: rgb(var(--color-bg-primary));
+            font-family: ui-sans-serif, system-ui, -apple-system,
+              BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+              "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+              "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: rgb(var(--color-text-primary));
+            border-bottom: 1px solid rgb(var(--color-border-primary));
+          }
+
+          .header-wrapper {
+            display: flex;
+            align-items: center;
+          }
+
+          .header-title {
+            display: inline-block;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            font-weight: 600;
           }
 
           h1,
@@ -118,15 +151,12 @@
             flex-direction: column;
             max-width: 48rem;
             background-color: rgb(var(--color-bg-primary));
-            border: 1px solid rgb(var(--color-border-primary));
+            margin-top: 29px;
           }
 
           .window-header {
+            display: none;
             height: 1.75rem;
-            display: flex;
-            align-items: center;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
           }
 
           .window-header-wrapper {
@@ -146,7 +176,6 @@
             flex: 1 1 0%;
             overflow-y: scroll;
             scroll-behavior: smooth;
-            border-top: 1px solid rgb(var(--color-border-primary));
             border-bottom: 1px solid rgb(var(--color-border-primary));
           }
           .window-main:focus-visible {
@@ -162,7 +191,10 @@
           .window-footer {
             height: 1.5rem;
             display: flex;
-            font-family: sans;
+            font-family: ui-sans-serif, system-ui, -apple-system,
+              BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+              "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+              "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 0.75rem;
             line-height: 1rem;
             color: rgb(var(--color-text-tertiary));
@@ -215,8 +247,20 @@
               margin-left: auto;
               margin-right: auto;
               margin-top: 47px;
-              margin-bottom: 47px;
+              margin-bottom: 19px;
+              border: 1px solid rgb(var(--color-border-primary));
               border-radius: 0.125rem;
+            }
+
+            .window-header {
+              display: flex;
+              align-items: center;
+              padding-left: 0.5rem;
+              padding-right: 0.5rem;
+            }
+
+            .window-main {
+              border-top: 1px solid rgb(var(--color-border-primary));
             }
           }
 
@@ -248,6 +292,14 @@
       </head>
 
       <body>
+        <header>
+          <div class="header-wrapper">
+            <span class="header-title" aria-hidden="true">
+              RSS feed for <xsl:value-of select="/rss/channel/title" />
+            </span>
+          </div>
+        </header>
+
         <main>
           <figure class="window">
             <div class="window-header">
@@ -266,10 +318,11 @@
 
                 <br />
 
-                <h1 class="sr-only">RSS feed</h1>
+                <h1 class="sr-only">
+                  RSS feed for <xsl:value-of select="/rss/channel/title" />
+                </h1>
 
                 <p>
-                  <xsl:value-of select="/rss/channel/title" />:
                   <xsl:value-of select="/rss/channel/description" />
                 </p>
 
