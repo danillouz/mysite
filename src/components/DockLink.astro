@@ -19,36 +19,55 @@ if (href) {
 }
 ---
 
-<div class="flex flex-col items-center gap-1">
-  <a
-    href={href}
-    title={title}
-    aria-current={isActive ? "page" : undefined}
-    class:list={[
-      // Base styles.
-      "mt-1 nav-text focusable rounded-full p-[2px]",
+<div class="relative">
+  <div class="flex flex-col items-center gap-0">
+    <div class="relative flex">
+      <a
+        href={href}
+        title={title}
+        aria-current={isActive ? "page" : undefined}
+        class:list={[
+          // Base styles.
+          "nav-text focusable rounded-full p-1",
 
-      // Custom styles.
-      className,
-    ]}
-  >
-    <div
-      class="flex items-center justify-center w-12 h-12 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
-    >
-      <slot />
+          // Custom styles.
+          className,
+        ]}
+      >
+        <div
+          class="flex items-center justify-center w-12 h-12 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
+        >
+          <slot />
+        </div>
+      </a>
+
+      <div
+        class:list={[
+          // Base styles.
+          "hidden xl:block absolute inset-y-0 left-0 my-auto -ml-[1.0625rem] w-1 h-1 rounded-full",
+
+          {
+            // Active styles.
+            "bg-danos-primary-inverted dark:bg-danos-primary": isActive,
+          },
+        ]}
+      >
+      </div>
     </div>
-  </a>
 
-  <span class="inline-block nav-text">{title}</span>
+    <span class="inline-block mb-2 xl:mb-0 nav-text">{title}</span>
+  </div>
 
-  <span
+  <div
     class:list={[
       // Base styles.
-      "w-1 h-1 rounded-full",
+      "xl:hidden absolute inset-x-0 xl:inset-x-auto xl:inset-y-0 bottom-0 xl:left-0 mx-auto xl:mx-0 xl:my-auto -mb-[0.1875rem] w-1 h-1 rounded-full",
 
       {
         // Active styles.
         "bg-danos-primary-inverted dark:bg-danos-primary": isActive,
       },
-    ]}></span>
+    ]}
+  >
+  </div>
 </div>
