@@ -11,6 +11,27 @@ import { remarkReadingTime } from "./src/plugins/reading-time"
 // See: https://astro.build/config
 export default defineConfig({
   site: "https://www.danillouz.dev",
+
+  markdown: {
+    syntaxHighlight: "shiki",
+
+    // See: https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
+    shikiConfig: {
+      // See: https://github.com/shikijs/shiki/blob/main/docs/themes.md
+      theme: "nord",
+
+      wrap: false,
+    },
+
+    // See: https://docs.astro.build/en/reference/configuration-reference/#markdownremarkrehype
+    remarkRehype: {
+      // See: https://github.com/remarkjs/remark-rehype#optionsfootnotelabelproperties
+      footnoteLabelProperties: {
+        className: [],
+      },
+    },
+  },
+
   integrations: [
     // See: https://docs.astro.build/en/guides/integrations-guide/sitemap/
     sitemap(),
@@ -24,6 +45,7 @@ export default defineConfig({
 
     // See: https://docs.astro.build/en/guides/integrations-guide/mdx/
     mdx({
+      extendPlugins: "markdown",
       extendDefaultPlugins: true,
       remarkPlugins: [remarkReadingTime],
       rehypePlugins: [
@@ -58,16 +80,4 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
   ],
-
-  markdown: {
-    syntaxHighlight: "shiki",
-
-    // See: https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
-    shikiConfig: {
-      // See: https://github.com/shikijs/shiki/blob/main/docs/themes.md
-      theme: "nord",
-
-      wrap: false,
-    },
-  },
 })
