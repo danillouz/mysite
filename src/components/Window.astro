@@ -83,6 +83,9 @@ const { tabs } = Astro.props
       )
     }
 
+    <!-- Put aside first, so we tab into that first. -->
+    <slot name="aside" />
+
     <slot />
   </div>
 

@@ -63,9 +63,6 @@ module.exports = {
             "rgb(var(--color-border-primary-inverted) / <alpha-value>)",
         },
       },
-      boxShadowColor: {
-        danos: "rgb(var(--color-shadow) / <alpha-value>)",
-      },
       typography: {
         danos: {
           css: {

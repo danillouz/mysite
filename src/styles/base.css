@@ -53,12 +53,29 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
 
   article :is(h2, h3, h4, h5, h6),
   sup a,
+  a[id="introduction"],
   section[data-footnotes] li {
     @apply scroll-mt-12;
   }
 
   sup a[aria-describedby="footnote-label"] {
     @apply px-[2px] underline-offset-4;
+  }
+
+  a[data-indent="1"] {
+    @apply pl-4;
+  }
+  a[data-indent="2"] {
+    @apply pl-8;
+  }
+  a[data-indent="3"] {
+    @apply pl-12;
+  }
+  a[data-indent="4"] {
+    @apply pl-16;
+  }
+  a[data-indent="5"] {
+    @apply pl-20;
   }
 
   @keyframes blink {

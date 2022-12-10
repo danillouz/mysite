@@ -1,6 +1,7 @@
 ---
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
+import ToC from "@components/ToC.astro"
 import Time from "@components/Time.astro"
 import Tag from "@components/Tag.astro"
 
@@ -8,6 +9,7 @@ import type { Frontmatter } from "@types"
 
 interface Props {
   frontmatter: Frontmatter
+  headings: { depth: number; slug: string; text: string }[]
   children: any
 }
 
@@ -23,6 +25,7 @@ const {
     readingTime,
     url,
   },
+  headings,
 } = Astro.props
 
 const makeIssueLink = (baseUrl: string, postUrl: string): string => {
@@ -45,6 +48,38 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
       { title: `Posts > ${title}`, isActive: true },
     ]}
   >
+    <aside slot="aside" class="hidden 2xl:block absolute top-32 -left-64">
+      <ToC>
+        <>
+          <!-- Custom heading to easily go to top of post. -->
+          <a
+            href={`${url}#introduction`}
+            class="block py-1 truncate focusable"
+            data-indent="0"
+            title="Introduction"
+          >
+            Introduction
+          </a>
+
+          {
+            headings.map((h) => {
+              const indent = h.depth - 2
+              return (
+                <a
+                  href={`${url}#${h.slug}`}
+                  class="block py-1 truncate focusable"
+                  data-indent={indent > 0 ? indent : 0}
+                  title={h.text}
+                >
+                  {h.text}
+                </a>
+              )
+            })
+          }
+        </>
+      </ToC>
+    </aside>
+
     <div class="page-wrapper">
       <article class="mx-auto max-w-2xl">
         <header class="flex flex-col">
@@ -104,6 +139,18 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
               <hr />
             )
           }
+
+          <div class="not-prose">
+            <!-- Custom heading so we can link to it from ToC. -->
+            <a
+              id="introduction"
+              aria-hidden="true"
+              tabindex="-1"
+              class="focus:outline-none focus-visible:outline-none"
+            >
+              <h2 class="sr-only">Introduction</h2>
+            </a>
+          </div>
 
           <slot />
 
