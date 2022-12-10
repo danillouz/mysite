@@ -1,4 +1,5 @@
 ---
+import { FULL_NAME } from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import Prompt from "@components/Prompt.astro"
@@ -44,9 +45,9 @@ const banner = `
 
         <br />
 
-        <h1 class="sr-only">About</h1>
+        <h1 class="sr-only">{FULL_NAME}</h1>
 
-        <p>Hi! I'm Dan. Welcome to my site.</p>
+        <p>Hi, I'm Dan! Welcome to my site.</p>
 
         <br />
 
@@ -63,8 +64,9 @@ const banner = `
         <br />
 
         <p>
-          I enjoy working on the backend the most. And I love to design and
-          build software that's reliable, easy to maintain, and scales well.
+          I build for the web, where I enjoy working on the backend the most.
+          And I love to design and build software that's reliable, easy to
+          maintain, and scales well.
         </p>
 
         <br />
