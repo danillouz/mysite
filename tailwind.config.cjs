@@ -41,6 +41,9 @@ module.exports = {
           link: "rgb(var(--color-text-link) / <alpha-value>)",
           "link-inverted":
             "rgb(var(--color-text-link-inverted) / <alpha-value>)",
+          highlight: "rgb(var(--color-text-highlight) / <alpha-value>)",
+          "highlight-inverted":
+            "rgb(var(--color-text-highlight-inverted) / <alpha-value>)",
         },
       },
       ringColor: {

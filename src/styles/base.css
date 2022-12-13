@@ -31,6 +31,8 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-text-link-inverted: 228 228 231; /* zinc-200 */
     --color-text-special: 39 39 42; /* zinc-800 */
     --color-text-special-inverted: 228 228 231; /* zinc-200 */
+    --color-text-highlight: 20 184 166; /* teal-500 */
+    --color-text-highlight-inverted: 45 212 191; /* teal-400 */
 
     --color-border-primary: 228 228 231; /* zinc-200 */
     --color-border-primary-inverted: 63 63 70; /* zinc-700 */
@@ -76,6 +78,10 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
   }
   a[data-indent="5"] {
     @apply pl-20;
+  }
+
+  .toc-active {
+    @apply text-danos-highlight dark:text-danos-highlight-inverted;
   }
 
   @keyframes blink {
