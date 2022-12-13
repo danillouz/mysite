@@ -106,14 +106,6 @@ const headingIds = [
                 )
               }
 
-              {
-                updatedAt && (
-                  <>
-                    updated <Time datetime={updatedAt} /> &bull;
-                  </>
-                )
-              }
-
               {readingTime}
             </p>
           </header>
@@ -196,6 +188,19 @@ const headingIds = [
                 </span>
               </a>.
             </p>
+
+            {
+              updatedAt && (
+                <p>
+                  Post last updated{" "}
+                  <Time
+                    datetime={updatedAt}
+                    class="font-serif text-danos-secondary dark:text-danos-secondary-inverted"
+                  />
+                  .
+                </p>
+              )
+            }
           </div>
         </article>
       </div>
