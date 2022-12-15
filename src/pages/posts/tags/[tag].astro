@@ -2,6 +2,8 @@
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
+import { sortPostsRecentlyPublished } from "@utils/posts"
+import { getAlphabeticallySortedTagsFromPosts } from "@utils/tags"
 
 import type { MDXInstance } from "astro"
 import type { Frontmatter } from "@types"
@@ -12,15 +14,15 @@ interface Props {
 
 export async function getStaticPaths({}) {
   const posts = await Astro.glob<Frontmatter>("../**/*.mdx")
-  const tags = posts.map((p) => p.frontmatter.tags ?? []).flat()
-  const uniqueTags = Array.from(new Set(tags))
-  return uniqueTags.map((tag) => {
+  const postsSorted = sortPostsRecentlyPublished(posts)
+  const tags = getAlphabeticallySortedTagsFromPosts(posts)
+  return tags.map((tag) => {
     return {
       params: {
         tag,
       },
       props: {
-        posts: posts.filter((post) => {
+        posts: postsSorted.filter((post) => {
           const { tags = [] } = post.frontmatter
           return tags.includes(tag)
         }),

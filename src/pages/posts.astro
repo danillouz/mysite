@@ -3,16 +3,15 @@ import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
+import { sortPostsRecentlyPublished } from "@utils/posts"
 
 import type { Frontmatter } from "@types"
 
-const posts = (await Astro.glob<Frontmatter>("./posts/**/*.mdx")).sort(
-  (a, b) => {
-    const pubDateA = a.frontmatter.publishedAt ?? new Date()
-    const pubDateB = b.frontmatter.publishedAt ?? new Date()
-    return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
-  }
-)
+const posts = await Astro.glob<Frontmatter>("./posts/**/*.mdx")
+const postsSorted = sortPostsRecentlyPublished(posts)
+const footerText = `${postsSorted.length} ${
+  postsSorted.length > 1 ? "posts" : "post"
+}`
 ---
 
 <PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
@@ -30,12 +29,12 @@ const posts = (await Astro.glob<Frontmatter>("./posts/**/*.mdx")).sort(
 
         <p class="page-text mt-6">
           See <a class="page-link" href="/posts/tags">tags</a> to discover posts
-          by topic. Or browse all posts below in chronological order.
+          by topic. Or browse all posts below.
         </p>
       </header>
 
       <div class="page-content">
-        <PostsPreview posts={posts} />
+        <PostsPreview posts={postsSorted} />
       </div>
     </div>
 
@@ -58,11 +57,9 @@ const posts = (await Astro.glob<Frontmatter>("./posts/**/*.mdx")).sort(
           </svg>
         </span>
 
-        <span
-          class="inline-block truncate"
-          title={`${posts.length} ${posts.length > 1 ? "posts" : "post"}`}
-          >{posts.length} {posts.length > 1 ? "posts" : "post"}</span
-        >
+        <span class="inline-block truncate" title={footerText}>
+          {footerText}
+        </span>
       </div>
     </div>
   </Window>
