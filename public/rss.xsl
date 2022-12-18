@@ -62,11 +62,8 @@
           }
 
           body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
             padding: 0;
-            margin: 0 auto;
+            margin: 0;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
             background-color: rgb(var(--color-bg-body));
@@ -79,8 +76,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
             padding-left: 1rem;
             padding-right: 1rem;
             background-color: rgb(var(--color-bg-primary));
