@@ -1,5 +1,6 @@
 import rss from "@astrojs/rss"
 import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
+import { sortRssPostsRecentlyPublished } from "@utils/rss"
 
 import type { Frontmatter } from "@types"
 
@@ -12,6 +13,7 @@ const postImportResult: Record<
   eager: true,
 })
 const posts = Object.values(postImportResult)
+const postsSorted = sortRssPostsRecentlyPublished(posts)
 
 export const get = () => {
   return rss({
@@ -20,7 +22,7 @@ export const get = () => {
     site: import.meta.env.SITE,
     stylesheet: "/rss.xsl",
     customData: `<language>en-us</language>`,
-    items: posts.map((post) => {
+    items: postsSorted.map((post) => {
       const {
         url: link,
         frontmatter: { title, description, publishedAt },
