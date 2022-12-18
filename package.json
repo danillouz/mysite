@@ -1,7 +1,6 @@
 {
   "private": true,
   "type": "module",
-  "license": "MIT",
   "scripts": {
     "start": "astro dev",
     "build": "astro build",
