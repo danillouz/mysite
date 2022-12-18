@@ -12,6 +12,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     https://tailwindcss.com/docs/customizing-colors#using-css-variables
     */
 
+    /* Main theme */
     --color-bg-body: 250 250 250; /* zinc-50 */
     --color-bg-body-inverted: 0 0 0; /* black */
     --color-bg-primary: 255 255 255; /* white */
@@ -20,7 +21,6 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-bg-secondary-inverted: 0 0 0; /* black */
     --color-bg-hover: 250 250 250; /* zinc-50 */
     --color-bg-hover-inverted: 39 39 42; /* zinc-800 */
-
     --color-text-primary: 39 39 42; /* zinc-800 */
     --color-text-primary-inverted: 228 228 231; /* zinc-200 */
     --color-text-secondary: 82 82 91; /* zinc-600 */
@@ -33,13 +33,52 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-text-special-inverted: 228 228 231; /* zinc-200 */
     --color-text-highlight: 20 184 166; /* teal-500 */
     --color-text-highlight-inverted: 45 212 191; /* teal-400 */
-
     --color-border-primary: 228 228 231; /* zinc-200 */
     --color-border-primary-inverted: 63 63 70; /* zinc-700 */
-
     --color-focus-primary: 20 184 166; /* teal-500 */
     --color-focus-primary-inverted: 45 212 191; /* teal-400 */
   }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      /* Light syntax highlighting theme for code in posts */
+      --astro-code-color-text: #24292e;
+      --astro-code-color-background: #fafafa;
+      --astro-code-token-constant: #005cc5;
+      --astro-code-token-string: #032f62;
+      --astro-code-token-comment: #6a737d;
+      --astro-code-token-keyword: #d73a49;
+      --astro-code-token-parameter: #e36209;
+      --astro-code-token-function: #6f42c1;
+      --astro-code-token-string-expression: #032f62;
+      --astro-code-token-punctuation: #24292e;
+      --astro-code-token-link: #0366d6;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Dark syntax highlighting theme for code in posts */
+      --astro-code-color-text: #e1e4e8;
+      --astro-code-color-background: #27272a;
+      --astro-code-token-constant: #79b8ff;
+      --astro-code-token-string: #9ecbff;
+      --astro-code-token-comment: #6a737d;
+      --astro-code-token-keyword: #f97583;
+      --astro-code-token-parameter: #ffab70;
+      --astro-code-token-function: #b392f0;
+      --astro-code-token-string-expression: #9ecbff;
+      --astro-code-token-punctuation: #e1e4e8;
+      --astro-code-token-link: #79b8ff;
+    }
+
+    /* Make images less bright in dark mode */
+    img {
+      filter: brightness(0.8) contrast(1.2);
+    }
+  }
+
+  /* Post styles */
 
   article :is(h2, h3, h4, h5, h6) {
     @apply flex items-center gap-2 md:flex-row-reverse md:justify-end md:-ml-8;
@@ -84,6 +123,8 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply text-danos-highlight dark:text-danos-highlight-inverted;
   }
 
+  /* Animations */
+
   @keyframes blink {
     0% {
       opacity: 0;
@@ -99,12 +140,6 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     }
     100% {
       opacity: 0;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    img {
-      filter: brightness(0.8) contrast(1.2);
     }
   }
 }

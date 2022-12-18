@@ -18,7 +18,7 @@ export default defineConfig({
     // See: https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
     shikiConfig: {
       // See: https://github.com/shikijs/shiki/blob/main/docs/themes.md
-      theme: "nord",
+      theme: "css-variables",
 
       wrap: false,
     },
