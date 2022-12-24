@@ -232,10 +232,6 @@
             color: rgb(var(--color-text-tertiary) / 0.8);
           }
 
-          /* sm */
-          @media (min-width: 640px) {
-          }
-
           /* md */
           @media (min-width: 768px) {
             .window {

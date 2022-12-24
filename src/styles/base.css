@@ -119,6 +119,10 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply pl-20;
   }
 
+  table {
+    @apply block overflow-x-scroll whitespace-nowrap max-w-fit mx-auto sm:table sm:table-auto sm:whitespace-normal sm:max-w-none;
+  }
+
   .toc-active {
     @apply text-danos-highlight dark:text-danos-highlight-inverted;
   }

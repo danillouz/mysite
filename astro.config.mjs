@@ -18,6 +18,8 @@ export default defineConfig({
     // See: https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
     shikiConfig: {
       // See: https://github.com/shikijs/shiki/blob/main/docs/themes.md
+      //
+      // For CSS var values see: `src/styles/base.css`
       theme: "css-variables",
 
       wrap: false,
