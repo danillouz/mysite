@@ -331,14 +331,9 @@
                 <br />
 
                 <p class="cmd" aria-hidden="true">
-                  <span class="prompt" aria-hidden="true"></span>
-                </p>
-
-                <p class="cmd" aria-hidden="true">
                   <span class="prompt" aria-hidden="true"></span> rss fetch
                 </p>
 
-                <br />
                 <br />
 
                 <h2 class="sr-only">Posts</h2>
@@ -363,12 +358,7 @@
                   </p>
 
                   <br />
-                  <br />
                 </xsl:for-each>
-
-                <p class="cmd" aria-hidden="true">
-                  <span class="prompt" aria-hidden="true"></span>
-                </p>
 
                 <p class="cmd" aria-hidden="true">
                   <span class="prompt" aria-hidden="true"></span> rss help
