@@ -50,16 +50,16 @@ const headingIds = [
 ]
 ---
 
-<astro-post data-heading-ids={headingIds}>
-  <PageLayout title={title} description={description}>
-    <Window
-      tabs={[
-        { href: "/posts", title: "Posts" },
-        { href: "/posts/tags", title: "Tags" },
-        { title: `Posts > ${title}`, isActive: true },
-      ]}
-    >
-      <aside slot="aside" class="hidden 2xl:block absolute top-28 -left-60">
+<PageLayout title={title} description={description}>
+  <Window
+    tabs={[
+      { href: "/posts", title: "Posts" },
+      { href: "/posts/tags", title: "Tags" },
+      { title: `Posts > ${title}`, isActive: true },
+    ]}
+  >
+    <aside slot="aside" class="hidden 2xl:block absolute top-28 -left-60">
+      <toc-highlight data-heading-ids={headingIds}>
         <ToC>
           <>
             <!-- Custom heading to easily go to top of post. -->
@@ -91,153 +91,154 @@ const headingIds = [
             }
           </>
         </ToC>
-      </aside>
+      </toc-highlight>
+    </aside>
 
-      <div class="page-wrapper">
-        <article class="mx-auto max-w-2xl">
-          <header class="flex flex-col">
-            <h1 class="page-heading mt-6">
-              {title}
-            </h1>
+    <div class="page-wrapper">
+      <article class="mx-auto max-w-2xl">
+        <header class="flex flex-col">
+          <h1 class="page-heading mt-6">
+            {title}
+          </h1>
 
-            <p class="order-first page-subtext">
-              {
-                publishedAt && (
-                  <>
-                    <Time datetime={publishedAt} /> &bull;
-                  </>
-                )
-              }
-
-              {readingTime}
-            </p>
-          </header>
-
-          <div
-            class="mt-8 prose prose-base dark:prose-invert prose-danos prose-a:font-normal prose-a:underline-offset-[5px] prose-a:decoration-1 prose-figcaption:text-center prose-pre:prose-base prose-pre:leading-tight prose-pre:border prose-pre:border-danos-primary dark:prose-pre:border-danos-primary-inverted prose-pre:rounded-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-sm focus:prose-a:focusable"
-          >
-            <p>{description}</p>
-
-            <div class="not-prose">
-              <ul class="list-none flex flex-wrap items-center gap-2">
-                {
-                  tagsSorted.map((tag) => {
-                    return (
-                      <li class="flex">
-                        <Tag name={tag}>{tag}</Tag>
-                      </li>
-                    )
-                  })
-                }
-              </ul>
-            </div>
-
+          <p class="order-first page-subtext">
             {
-              heroImage ? (
-                <img
-                  width={720}
-                  height={360}
-                  src={heroImage}
-                  alt={heroImageAlt}
-                />
-              ) : (
-                <hr />
+              publishedAt && (
+                <>
+                  <Time datetime={publishedAt} /> &bull;
+                </>
               )
             }
 
-            <div class="not-prose">
-              <!-- Custom (hidden) heading so we can link to it from ToC. -->
-              <a
-                id="introduction"
-                aria-hidden="true"
-                tabindex="-1"
-                class="focus:outline-none focus-visible:outline-none"
-              >
-                <h2 class="sr-only">Introduction</h2>
-              </a>
-            </div>
-
-            <slot />
-
-            <hr />
-
-            <p>
-              Thanks for reading! If you have any remarks or ideas on how to
-              improve this post, please let me know on <a
-                class="inline-flex items-center gap-1"
-                href={makeIssueLink(Astro.url.toString(), url)}
-                title="Open issue on GitHub in new tab"
-                target="_blank"
-              >
-                <span>GitHub</span>
-                <span
-                  class="text-danos-tertiary dark:text-danos-tertiary-inverted"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="w-4 h-4"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
-                      clip-rule="evenodd"></path>
-                    <path
-                      fill-rule="evenodd"
-                      d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </span>
-              </a>.
-            </p>
-
-            {
-              updatedAt && (
-                <p>
-                  Post last updated{" "}
-                  <Time
-                    datetime={updatedAt}
-                    class="font-serif text-danos-secondary dark:text-danos-secondary-inverted"
-                  />
-                  .
-                </p>
-              )
-            }
-          </div>
-        </article>
-      </div>
-
-      <div
-        slot="footer"
-        class="flex-1 flex items-center flex-row-reverse gap-5 px-2"
-      >
-        <div class="flex items-center gap-1 truncate">
-          <span class="inline-block">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              class="w-4 h-4"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </span>
-
-          <span class="inline-block truncate" title={readingTime}>
             {readingTime}
-          </span>
+          </p>
+        </header>
+
+        <div
+          class="mt-8 prose prose-base dark:prose-invert prose-danos prose-a:font-normal prose-a:underline-offset-[5px] prose-a:decoration-1 prose-figcaption:text-center prose-pre:prose-base prose-pre:leading-tight prose-pre:border prose-pre:border-danos-primary dark:prose-pre:border-danos-primary-inverted prose-pre:rounded-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-sm focus:prose-a:focusable"
+        >
+          <p>{description}</p>
+
+          <div class="not-prose">
+            <ul class="list-none flex flex-wrap items-center gap-2">
+              {
+                tagsSorted.map((tag) => {
+                  return (
+                    <li class="flex">
+                      <Tag name={tag}>{tag}</Tag>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </div>
+
+          {
+            heroImage ? (
+              <img
+                width={720}
+                height={360}
+                src={heroImage}
+                alt={heroImageAlt}
+              />
+            ) : (
+              <hr />
+            )
+          }
+
+          <div class="not-prose">
+            <!-- Custom (hidden) heading so we can link to it from ToC. -->
+            <a
+              id="introduction"
+              aria-hidden="true"
+              tabindex="-1"
+              class="focus:outline-none focus-visible:outline-none"
+            >
+              <h2 class="sr-only">Introduction</h2>
+            </a>
+          </div>
+
+          <slot />
+
+          <hr />
+
+          <p>
+            Thanks for reading! If you have any remarks or ideas on how to
+            improve this post, please let me know on <a
+              class="inline-flex items-center gap-1"
+              href={makeIssueLink(Astro.url.toString(), url)}
+              title="Open issue on GitHub in new tab"
+              target="_blank"
+            >
+              <span>GitHub</span>
+              <span
+                class="text-danos-tertiary dark:text-danos-tertiary-inverted"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-4 h-4"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                    clip-rule="evenodd"></path>
+                  <path
+                    fill-rule="evenodd"
+                    d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </span>
+            </a>.
+          </p>
+
+          {
+            updatedAt && (
+              <p>
+                Post last updated{" "}
+                <Time
+                  datetime={updatedAt}
+                  class="font-serif text-danos-secondary dark:text-danos-secondary-inverted"
+                />
+                .
+              </p>
+            )
+          }
         </div>
+      </article>
+    </div>
+
+    <div
+      slot="footer"
+      class="flex-1 flex items-center flex-row-reverse gap-5 px-2"
+    >
+      <div class="flex items-center gap-1 truncate">
+        <span class="inline-block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="w-4 h-4"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </span>
+
+        <span class="inline-block truncate" title={readingTime}>
+          {readingTime}
+        </span>
       </div>
-    </Window>
-  </PageLayout>
-</astro-post>
+    </div>
+  </Window>
+</PageLayout>
 
 <script>
-  class AstroPost extends HTMLElement {
+  // ToCHighlight highlights the "active" heading in the ToC.
+  class ToCHighlight extends HTMLElement {
     constructor() {
       super()
 
@@ -306,5 +307,5 @@ const headingIds = [
     }
   }
 
-  customElements.define("astro-post", AstroPost)
+  customElements.define("toc-highlight", ToCHighlight)
 </script>
