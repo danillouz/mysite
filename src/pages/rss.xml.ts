@@ -20,7 +20,7 @@ export const get = () => {
     title: RSS_TITLE,
     description: RSS_DESCRIPTION,
     site: import.meta.env.SITE,
-    stylesheet: "/rss.xsl",
+    stylesheet: "/rss-styles.xsl",
     customData: `<language>en-us</language>`,
     items: postsSorted.map((post) => {
       const {
