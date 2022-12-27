@@ -136,6 +136,10 @@
             margin: 0;
           }
 
+          .pattern-boxes {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(161 161 170 / 0.08)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+          }
+
           .window {
             position: fixed;
             left: 0;
@@ -284,7 +288,7 @@
         </style>
       </head>
 
-      <body>
+      <body class="pattern-boxes">
         <header>
           <div class="header-wrapper">
             <span class="header-title" aria-hidden="true">
