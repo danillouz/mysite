@@ -147,6 +147,8 @@
             max-width: 48rem;
             background-color: rgb(var(--color-bg-primary));
             margin-top: 29px;
+            box-shadow: 0 3px 6px -1px rgb(0 0 0 / 0.09),
+              0 2px 4px -3px rgb(0 0 0 / 0.09);
           }
 
           .window-header {
