@@ -69,6 +69,12 @@
             -moz-osx-font-smoothing: grayscale;
           }
 
+          main {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+          }
+
           header {
             height: 1.75rem;
             display: flex;
@@ -139,16 +145,11 @@
           }
 
           .window {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
+            flex: 1 1 0%;
             display: flex;
             flex-direction: column;
             max-width: 48rem;
             background-color: rgb(var(--color-bg-primary));
-            margin-top: 29px;
             box-shadow: 0 3px 6px -1px rgb(0 0 0 / 0.09),
               0 2px 4px -3px rgb(0 0 0 / 0.09);
           }
@@ -188,8 +189,8 @@
           }
 
           .window-footer {
+            display: none;
             height: 1.5rem;
-            display: flex;
             font-family: ui-sans-serif, system-ui, -apple-system,
               BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
               "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -239,6 +240,11 @@
           /* md */
           @media (min-width: 768px) {
             .window {
+              position: fixed;
+              left: 0;
+              right: 0;
+              top: 0;
+              bottom: 0;
               margin-left: auto;
               margin-right: auto;
               margin-top: 47px;
@@ -256,6 +262,10 @@
 
             .window-main {
               border-top: 1px solid rgb(var(--color-border-primary));
+            }
+
+            .window-footer {
+              display: flex;
             }
           }
 
@@ -287,15 +297,15 @@
       </head>
 
       <body class="pattern-boxes">
-        <header>
-          <div class="header-wrapper">
-            <span class="header-title" aria-hidden="true">
-              RSS feed for <xsl:value-of select="/rss/channel/title" />
-            </span>
-          </div>
-        </header>
-
         <main>
+          <header>
+            <div class="header-wrapper">
+              <span class="header-title" aria-hidden="true">
+                RSS feed for <xsl:value-of select="/rss/channel/title" />
+              </span>
+            </div>
+          </header>
+
           <figure class="window">
             <div class="window-header">
               <div class="window-header-wrapper">
