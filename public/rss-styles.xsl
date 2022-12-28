@@ -39,7 +39,6 @@
               --color-bg-primary: 255 255 255; /* white */
               --color-text-primary: 39 39 42; /* zinc-800 */
               --color-text-secondary: 82 82 91; /* zinc-600 */
-              --color-text-tertiary: 113 113 122; /* zinc-500 */
               --color-text-link: 39 39 42; /* zinc-800 */
               --color-text-special: 39 39 42; /* zinc-800 */
               --color-border-primary: 228 228 231; /* zinc-200 */
@@ -53,7 +52,6 @@
               --color-bg-primary: 24 24 27; /* zinc-900 */
               --color-text-primary: 228 228 231; /* zinc-200 */
               --color-text-secondary: 161 161 170; /* zinc-400 */
-              --color-text-tertiary: 113 113 122; /* zinc-500 */
               --color-text-link: 228 228 231; /* zinc-200 */
               --color-text-special: 228 228 231; /* zinc-200 */
               --color-border-primary: 63 63 70; /* zinc-700 */
@@ -198,7 +196,7 @@
               "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 0.75rem;
             line-height: 1rem;
-            color: rgb(var(--color-text-tertiary));
+            color: rgb(var(--color-text-secondary));
           }
 
           .cmd {
@@ -209,7 +207,7 @@
           .prompt::after {
             content: "$";
             font-weight: 600;
-            color: rgb(var(--color-text-tertiary) / 0.8);
+            color: rgb(var(--color-text-secondary) / 0.7);
           }
 
           .blink {
@@ -235,7 +233,7 @@
           .datetime {
             font-size: 0.75rem;
             line-height: 1rem;
-            color: rgb(var(--color-text-tertiary) / 0.8);
+            color: rgb(var(--color-text-secondary));
           }
 
           /* md */

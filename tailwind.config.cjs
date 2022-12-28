@@ -35,9 +35,6 @@ module.exports = {
           secondary: "rgb(var(--color-text-secondary) / <alpha-value>)",
           "secondary-inverted":
             "rgb(var(--color-text-secondary-inverted) / <alpha-value>)",
-          tertiary: "rgb(var(--color-text-tertiary) / <alpha-value>)",
-          "tertiary-inverted":
-            "rgb(var(--color-text-tertiary-inverted) / <alpha-value>)",
           link: "rgb(var(--color-text-link) / <alpha-value>)",
           "link-inverted":
             "rgb(var(--color-text-link-inverted) / <alpha-value>)",
