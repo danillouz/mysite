@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    {
+      "source": "/.well-known/webfinger",
+      "destination": "/.well-known/webfinger.json"
+    }
+  ]
+}
