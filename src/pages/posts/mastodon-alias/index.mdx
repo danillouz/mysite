@@ -4,6 +4,7 @@ title: "Aliasing your Mastodon handle"
 description: "Using a custom domain to alias your Mastodon handle."
 tags: ["astro", "mastodon", "til", "vercel", "webfinger"]
 publishedAt: "January 3 2023"
+updatedAt: "January 4 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -250,7 +251,17 @@ For example, these all work:
 
 It was fun to learn a bit more about Mastodon's internals. And while searching around how Mastodon uses WebFinger, I saw others had the same idea to alias their handle. Like [Maarten Balliauw](https://blog.maartenballiauw.be/post/2022/11/05/mastodon-own-donain-without-hosting-server.html) and [Lindsay Wardell](https://www.lindsaykwardell.com/blog/integrate-mastodon-with-astro).
 
-I think the latter post is pretty cool, where Lindsay is also fetching Mastodon posts via RSS to show them on their site. Turns out you can postfix any account with `.rss`, and Mastodon will give you the RSS feed for it. This reminded me of the Reddit API. So I tried `.json`, and that also works! For example:
+I think the latter post is pretty cool, where Lindsay is fetching Mastodon posts via RSS to show them on their site. I learned that you can postfix any account or tag with `.rss`, and Mastodon will give you the RSS feed for it! This reminded me of the Reddit API. So I tried postfixing with `.json`, and that also works[^5].
 
-- [https://mastodon.social/@danillouz.rss](https://mastodon.social/@danillouz.rss)
-- [https://mastodon.social/@danillouz.json](https://mastodon.social/@danillouz.json)
+For example:
+
+[^5]: But as far as I can tell, you won't get the posts in JSON for an account.
+
+- [https://mastodon.social/@Mastodon.rss](https://mastodon.social/@Mastodon.rss)
+- [https://mastodon.social/tags/introduction.rss](https://mastodon.social/tags/introduction.rss)
+- [https://mastodon.social/@Mastodon.json](https://mastodon.social/@Mastodon.json)
+- [https://mastodon.social/tags/introduction.json](https://mastodon.social/tags/introduction.json)
+
+I especially like the RSS feed functionality, since that allows me to subscribe to accounts and tags from my favourite RSS reader[^6]!
+
+[^6]: If you're not familiar with RSS, have a look at [aboutfeeds](https://aboutfeeds.com).
