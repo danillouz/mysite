@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap"
 import tailwind from "@astrojs/tailwind"
 import mdx from "@astrojs/mdx"
 import image from "@astrojs/image"
+import { rehypeHeadingIds } from "@astrojs/markdown-remark"
 import autolinkHeadings from "rehype-autolink-headings"
 import { h } from "hastscript"
 
@@ -51,6 +52,7 @@ export default defineConfig({
       extendDefaultPlugins: true,
       remarkPlugins: [remarkReadingTime],
       rehypePlugins: [
+        rehypeHeadingIds,
         [
           autolinkHeadings,
           {
