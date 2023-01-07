@@ -4,3 +4,5 @@ export const FULL_NAME = "Daniël Illouz"
 export const RSS_TITLE = "Dan's posts"
 export const RSS_DESCRIPTION =
   "Writing about things I learned and find interesting."
+
+export const WEBMENTION_USERNAME = "www.danillouz.dev"

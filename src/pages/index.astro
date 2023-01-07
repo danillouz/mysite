@@ -1,5 +1,5 @@
 ---
-import { FULL_NAME } from "@config"
+import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import Prompt from "@components/Prompt.astro"
@@ -36,7 +36,7 @@ const banner = `
       <br class="hidden md:block" />
 
       <div class="max-w-2xl">
-        <h1 class="sr-only">{FULL_NAME}</h1>
+        <h1 class="sr-only">{config.FULL_NAME}</h1>
 
         <p>
           <Prompt /> Hi, I'm Dan! Welcome to my site.

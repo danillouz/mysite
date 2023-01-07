@@ -1,5 +1,5 @@
 ---
-import { RSS_TITLE, RSS_DESCRIPTION } from "@config"
+import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
@@ -14,7 +14,7 @@ const footerText = `${postsSorted.length} ${
 }`
 ---
 
-<PageLayout title={RSS_TITLE} description={RSS_DESCRIPTION}>
+<PageLayout title={config.RSS_TITLE} description={config.RSS_DESCRIPTION}>
   <Window
     tabs={[
       { title: "Posts", isActive: true },
