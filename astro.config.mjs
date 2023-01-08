@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap"
 import tailwind from "@astrojs/tailwind"
 import mdx from "@astrojs/mdx"
 import image from "@astrojs/image"
+import preact from "@astrojs/preact"
 import { rehypeHeadingIds } from "@astrojs/markdown-remark"
 import autolinkHeadings from "rehype-autolink-headings"
 import { h } from "hastscript"
@@ -79,9 +80,12 @@ export default defineConfig({
       ],
     }),
 
-    // See: https://docs.astro.build/en/guides/integrations-guide/image
+    // See: https://docs.astro.build/en/guides/integrations-guide/image/
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
+
+    // See: https://docs.astro.build/en/guides/integrations-guide/preact/
+    preact(),
   ],
 })
