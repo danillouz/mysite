@@ -31,6 +31,13 @@ const {
 
 const tagsSorted = sortTagsAlphabetically(tags)
 
+const headingIds = [
+  // Used in ToC.
+  "introduction",
+
+  ...headings.map((h) => h.slug),
+]
+
 const makeIssueLink = (baseUrl: string, postUrl: string): string => {
   const postLink = new URL(postUrl, baseUrl)
 
@@ -41,13 +48,6 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
   const url = new URL(`https://github.com/danillouz/mysite/issues/new?${query}`)
   return url.toString()
 }
-
-const headingIds = [
-  // Used in ToC.
-  "introduction",
-
-  ...headings.map((h) => h.slug),
-]
 ---
 
 <PageLayout title={title} description={description}>
@@ -178,7 +178,7 @@ const headingIds = [
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
-                  fill="currentColor"
+                  fill="currentcolor"
                   class="w-4 h-4"
                 >
                   <path
@@ -219,7 +219,7 @@ const headingIds = [
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            fill="currentColor"
+            fill="currentcolor"
             class="w-4 h-4"
           >
             <path

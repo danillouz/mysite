@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     colors: {
       transparent: "transparent",
-      current: "currentColor",
+      current: "currentcolor",
     },
     extend: {
       fontFamily: {
