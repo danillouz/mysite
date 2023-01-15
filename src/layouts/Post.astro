@@ -4,6 +4,7 @@ import Window from "@components/Window.astro"
 import ToC from "@components/ToC.astro"
 import Time from "@components/Time.astro"
 import Tag from "@components/Tag.astro"
+import Webmentions from "@components/Webmentions"
 import { sortTagsAlphabetically } from "@utils/tags"
 
 import type { Frontmatter } from "@types"
@@ -36,7 +37,15 @@ const headingIds = [
   "introduction",
 
   ...headings.map((h) => h.slug),
+
+  // Used in ToC.
+  "webmentions",
 ]
+
+const makePostLink = (baseUrl: string, postUrl: string): string => {
+  const postLink = new URL(postUrl, baseUrl)
+  return postLink.toString()
+}
 
 const makeIssueLink = (baseUrl: string, postUrl: string): string => {
   const postLink = new URL(postUrl, baseUrl)
@@ -89,6 +98,17 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
                 )
               })
             }
+
+            <!-- Custom webmentions heading. -->
+            <a
+              href={`${url}#webmentions`}
+              id="toc-webmentions"
+              class="block p-1 truncate focusable"
+              data-indent="0"
+              title="Webmentions"
+            >
+              Webmentions
+            </a>
           </>
         </ToC>
       </toc-highlight>
@@ -115,7 +135,7 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
         </header>
 
         <div
-          class="mt-8 prose prose-base dark:prose-invert prose-danos prose-a:font-normal prose-a:underline-offset-[5px] prose-a:decoration-1 prose-figcaption:text-center prose-pre:prose-base prose-pre:leading-tight prose-pre:border prose-pre:border-danos-primary dark:prose-pre:border-danos-primary-inverted prose-pre:rounded-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-sm focus:prose-a:focusable"
+          class="mt-8 break-words prose prose-base dark:prose-invert prose-danos prose-a:font-normal prose-a:underline-offset-[5px] prose-a:decoration-1 prose-figcaption:text-center prose-pre:prose-base prose-pre:leading-tight prose-pre:border prose-pre:border-danos-primary dark:prose-pre:border-danos-primary-inverted prose-pre:rounded-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-sm focus:prose-a:focusable"
         >
           <p>{description}</p>
 
@@ -160,6 +180,11 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
           </div>
 
           <slot />
+
+          <Webmentions
+            client:visible
+            source={makePostLink(Astro.url.toString(), url)}
+          />
 
           <hr />
 
