@@ -7,7 +7,7 @@ const Interactions: FunctionalComponent<{
 }> = ({ heading, mentions }) => {
   return (
     <div>
-      <span class="flex items-center justify-center gap-1 ml-0 mt-6 mb-2 font-sans font-medium text-center">
+      <span class="flex items-center justify-center gap-1 ml-0 mt-6 mb-2 text-center page-subheading">
         {heading}
       </span>
 

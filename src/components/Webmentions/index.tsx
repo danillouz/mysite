@@ -66,13 +66,10 @@ const Webmentions: FunctionalComponent<{
             replies.map((wm) => <Reply key={wm["wm-id"]} reply={wm} />)
           ) : (
             <>
-              <p class="my-3 font-sans">No replies yet.</p>
-
               <p class="my-3 font-sans">
                 If your site supports sending webmentions, then replies to this
-                blog post will show up here. Or you can share this blog post on
-                Mastodon; when replying to a Mastodon post that links to this
-                blog post, those replies will show up here as well.
+                post will show up here. Or share this post on Mastodon: replies
+                on Mastodon will show up here as well.
               </p>
             </>
           )}
@@ -118,15 +115,11 @@ const Webmentions: FunctionalComponent<{
             !bookmarks.length &&
             !mentions.length && (
               <>
-                <p class="my-3 font-sans">No interactions yet.</p>
-
                 <p class="my-3 font-sans">
                   If your site supports sending webmentions, then likes,
-                  reposts, bookmarks and mentions of this blog post will show up
-                  here. Or you can share this blog post on Mastodon; when
-                  publishing, favouriting, boosting or bookmarking a Mastodon
-                  post that links to this blog post, those interactions will
-                  show up here as well.
+                  reposts, bookmarks and mentions of this post will show up
+                  here. Or share this post on Mastodon: favourites and boosts on
+                  Mastodon will show up here as likes and reposts.
                 </p>
               </>
             )}
