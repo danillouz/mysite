@@ -25,10 +25,21 @@ function useFetchWebmentions(source: string) {
     setFetchErr(null)
 
     // See: https://github.com/aaronpk/webmention.io#api
-    // NOTE: the trailing "/" for a target (source) is required!
     const api = "https://webmention.io/api/mentions.jf2"
-    const url = `${api}?target=${source}/&per-page=999`
 
+    const query = new URLSearchParams()
+
+    // NOTE: the trailing "/" for a target (source) is required!
+    query.append("target", `${source}/`)
+
+    // Sort in ascending order (chronological).
+    query.append("sort-dir", "up")
+
+    // NOTE: it would probably be better to properly paginate, but for now this
+    // is okay.
+    query.append("per-page", "999")
+
+    const url = `${api}?${query}`
     const controller = new AbortController()
 
     fetch(url, {
