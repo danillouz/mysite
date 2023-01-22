@@ -25,8 +25,8 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-text-primary-inverted: 228 228 231; /* zinc-200 */
     --color-text-secondary: 82 82 91; /* zinc-600 */
     --color-text-secondary-inverted: 161 161 170; /* zinc-400 */
-    --color-text-link: 82 82 91; /* zinc-600 */
-    --color-text-link-inverted: 161 161 170; /* zinc-400 */
+    --color-text-link: 59 130 246; /* blue-500 */
+    --color-text-link-inverted: 96 165 250; /* blue-400 */
     --color-text-special: 39 39 42; /* zinc-800 */
     --color-text-special-inverted: 228 228 231; /* zinc-200 */
     --color-text-highlight: 20 184 166; /* teal-500 */
@@ -112,7 +112,14 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
   }
 
   sup a[aria-describedby="footnote-label"] {
-    @apply px-[2px] underline-offset-4;
+    @apply no-underline;
+  }
+
+  sup a[aria-describedby="footnote-label"]::before {
+    content: "[";
+  }
+  sup a[aria-describedby="footnote-label"]::after {
+    content: "]";
   }
 
   a[data-indent="1"] {
@@ -216,7 +223,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
   /* Link styles */
 
   .page-link {
-    @apply font-normal underline underline-offset-[5px] decoration-1 text-danos-link dark:text-danos-link-inverted focusable;
+    @apply font-normal underline underline-offset-2 decoration-1 text-danos-link dark:text-danos-link-inverted focusable;
   }
 
   /* Focus styles */
