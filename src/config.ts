@@ -6,3 +6,4 @@ export const RSS_DESCRIPTION =
   "Writing about things I learned and find interesting."
 
 export const WEBMENTION_USERNAME = "www.danillouz.dev"
+export const EMAIL = "hi@danillouz.dev"

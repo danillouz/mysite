@@ -1,3 +1,5 @@
+import * as config from "@config"
+
 import type { FunctionalComponent } from "preact"
 
 const Help: FunctionalComponent = () => {
@@ -47,8 +49,12 @@ const Help: FunctionalComponent = () => {
             </p>
 
             <p class="mt-0">
-              Sure thing. Send me an email to "hi" at "danillouz" dot "dev", and
-              include the link to the webmention source you want me to delete.
+              Sure thing. Send me an email to{" "}
+              <a href={`mailto:${config.EMAIL}`} class="page-link">
+                {config.EMAIL}
+              </a>{" "}
+              and include the link to the webmention source you want me to
+              delete.
             </p>
           </li>
 

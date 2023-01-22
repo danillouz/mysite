@@ -120,8 +120,10 @@ const banner = `
         <br />
 
         <p>
-          <Prompt /> If you want to chat, send me an email to "hi" <i>at</i> "danillouz"
-          <i>dot</i> "dev".
+          <Prompt /> If you want to chat, send me an email to <a
+            href={`mailto:${config.EMAIL}`}
+            class="page-link">{config.EMAIL}</a
+          >.
         </p>
 
         <p aria-hidden="true">
