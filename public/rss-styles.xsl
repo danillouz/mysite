@@ -39,10 +39,10 @@
               --color-bg-primary: 255 255 255; /* white */
               --color-text-primary: 39 39 42; /* zinc-800 */
               --color-text-secondary: 82 82 91; /* zinc-600 */
-              --color-text-link: 39 39 42; /* zinc-800 */
+              --color-text-link: 59 130 246; /* blue-500 */
               --color-text-special: 39 39 42; /* zinc-800 */
-              --color-border-primary: 228 228 231; /* zinc-200 */
-              --color-focus-primary: 20 184 166; /* teal-500 */
+              --color-border: 228 228 231; /* zinc-200 */
+              --color-focus: 20 184 166; /* teal-500 */
             }
           }
 
@@ -52,11 +52,17 @@
               --color-bg-primary: 24 24 27; /* zinc-900 */
               --color-text-primary: 228 228 231; /* zinc-200 */
               --color-text-secondary: 161 161 170; /* zinc-400 */
-              --color-text-link: 228 228 231; /* zinc-200 */
+              --color-text-link: 96 165 250; /* blue-400 */
               --color-text-special: 228 228 231; /* zinc-200 */
-              --color-border-primary: 63 63 70; /* zinc-700 */
-              --color-focus-primary: 45 212 191; /* teal-400 */
+              --color-border: 63 63 70; /* zinc-700 */
+              --color-focus: 45 212 191; /* teal-400 */
             }
+          }
+
+          /* Body and main */
+
+          .pattern-boxes {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(161 161 170 / 0.08)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
           }
 
           body {
@@ -75,6 +81,8 @@
             min-height: 100vh;
           }
 
+          /* Header */
+
           header {
             height: 1.75rem;
             display: flex;
@@ -90,7 +98,7 @@
             font-size: 0.875rem;
             line-height: 1.25rem;
             color: rgb(var(--color-text-primary));
-            border-bottom: 1px solid rgb(var(--color-border-primary));
+            border-bottom: 1px solid rgb(var(--color-border));
           }
 
           .header-wrapper {
@@ -105,17 +113,7 @@
             font-weight: 600;
           }
 
-          h1,
-          h2,
-          h3 {
-            margin: 0;
-            margin-top: 0.25rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-            font-weight: 400;
-            color: rgb(var(--color-text-primary));
-          }
+          /* Text and links */
 
           p {
             margin: 0;
@@ -127,28 +125,23 @@
           a {
             font-weight: 400;
             text-decoration-line: underline;
-            text-underline-offset: 5px;
+            text-underline-offset: 2px;
             text-decoration-thickness: 1px;
             color: rgb(var(--color-text-link));
           }
           a:focus {
-            outline: 2px solid rgb(var(--color-focus-primary));
+            outline: 2px solid rgb(var(--color-focus));
             outline-offset: 2px;
           }
 
-          figure {
-            margin: 0;
-          }
-
-          .pattern-boxes {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(161 161 170 / 0.08)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
-          }
+          /* Window */
 
           .window {
             flex: 1 1 0%;
             display: flex;
             flex-direction: column;
             max-width: 48rem;
+            margin: 0;
             background-color: rgb(var(--color-bg-primary));
             box-shadow: 0 3px 6px -1px rgb(0 0 0 / 0.09),
               0 2px 4px -3px rgb(0 0 0 / 0.09);
@@ -168,7 +161,7 @@
           .window-header-icon {
             height: 0.625rem;
             width: 0.625rem;
-            border: 1px solid rgb(var(--color-border-primary));
+            border: 1px solid rgb(var(--color-border));
             border-radius: 9999px;
           }
 
@@ -176,10 +169,10 @@
             flex: 1 1 0%;
             overflow-y: scroll;
             scroll-behavior: smooth;
-            border-bottom: 1px solid rgb(var(--color-border-primary));
+            border-bottom: 1px solid rgb(var(--color-border));
           }
           .window-main:focus-visible {
-            outline: 2px solid rgb(var(--color-focus-primary));
+            outline: 2px solid rgb(var(--color-focus));
             outline-offset: 2px;
           }
 
@@ -200,10 +193,7 @@
             color: rgb(var(--color-text-secondary));
           }
 
-          .cmd {
-            font-weight: 600;
-            color: rgb(var(--color-text-special));
-          }
+          /* Prompt */
 
           .prompt::after {
             content: "$";
@@ -211,13 +201,90 @@
             color: rgb(var(--color-text-secondary) / 0.7);
           }
 
-          .blink {
-            animation-name: blink;
-            animation-duration: 1s;
-            animation-timing-function: linear;
-            animation-delay: 0.5s;
-            animation-iteration-count: infinite;
+          .cmd {
+            font-weight: 600;
+            color: rgb(var(--color-text-special));
           }
+
+          /* Posts */
+
+          .posts-list-wrapper {
+            --spacing: 1.5rem;
+
+            padding: 0;
+          }
+
+          .posts-list-wrapper > li {
+            display: block;
+            position: relative;
+            padding-left: 1rem;
+          }
+
+          .posts-list-wrapper summary {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: rgb(var(--color-text-secondary));
+          }
+          .posts-list-wrapper summary:hover {
+            cursor: pointer;
+          }
+          .posts-list-wrapper summary:focus {
+            outline: 2px solid rgb(var(--color-focus));
+            outline-offset: 2px;
+          }
+
+          .posts-list {
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+            margin-left: 2px;
+            padding-left: 0;
+          }
+
+          .post {
+            display: block;
+            position: relative;
+            padding-left: 2rem;
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-left-color: rgb(var(--color-border));
+          }
+          .post::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -1px;
+            width: var(--spacing);
+            height: calc(var(--spacing) + 1px);
+            border-style: solid;
+            border-width: 0 0 1px 1px;
+            border-color: rgb(var(--color-border));
+          }
+          .post:last-child {
+            border-color: transparent;
+          }
+
+          .post h3 {
+            margin: 0;
+            padding-top: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: rgb(var(--color-text-primary));
+          }
+
+          .post p {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .post time {
+            margin: 0;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: rgb(var(--color-text-secondary));
+          }
+
+          /* Misc */
 
           .sr-only {
             position: absolute;
@@ -229,12 +296,6 @@
             clip: rect(0, 0, 0, 0);
             white-space: nowrap;
             border-width: 0;
-          }
-
-          .datetime {
-            font-size: 0.75rem;
-            line-height: 1rem;
-            color: rgb(var(--color-text-secondary));
           }
 
           /* md */
@@ -249,7 +310,7 @@
               margin-right: auto;
               margin-top: 47px;
               margin-bottom: 19px;
-              border: 1px solid rgb(var(--color-border-primary));
+              border: 1px solid rgb(var(--color-border));
               border-radius: 0.125rem;
             }
 
@@ -261,7 +322,7 @@
             }
 
             .window-main {
-              border-top: 1px solid rgb(var(--color-border-primary));
+              border-top: 1px solid rgb(var(--color-border));
             }
 
             .window-footer {
@@ -274,6 +335,16 @@
             .window {
               max-width: 64rem;
             }
+          }
+
+          /* Animation */
+
+          .blink {
+            animation-name: blink;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-delay: 0.5s;
+            animation-iteration-count: infinite;
           }
 
           @keyframes blink {
@@ -348,31 +419,43 @@
                   <span class="prompt" aria-hidden="true"></span> rss fetch
                 </p>
 
-                <br />
+                <ul class="posts-list-wrapper">
+                  <li>
+                    <details open="true">
+                      <summary>
+                        Posts (<xsl:value-of
+                          select="count(/rss/channel/item)"
+                        />)
+                      </summary>
 
-                <h2 class="sr-only">Posts</h2>
+                      <ul class="posts-list">
+                        <xsl:for-each select="/rss/channel/item">
+                          <li class="post">
+                            <h3>
+                              <a>
+                                <xsl:attribute name="href">
+                                  <xsl:value-of select="link" />
+                                </xsl:attribute>
 
-                <xsl:for-each select="/rss/channel/item">
-                  <time class="datetime">
-                    <xsl:value-of select="pubDate" />
-                  </time>
+                                <xsl:value-of select="title" />
+                              </a>
+                            </h3>
 
-                  <h3>
-                    <a>
-                      <xsl:attribute name="href">
-                        <xsl:value-of select="link" />
-                      </xsl:attribute>
+                            <p>
+                              <xsl:value-of select="description" />
+                            </p>
 
-                      <xsl:value-of select="title" />
-                    </a>
-                  </h3>
-
-                  <p>
-                    <xsl:value-of select="description" />
-                  </p>
-
-                  <br />
-                </xsl:for-each>
+                            <time>
+                              <xsl:value-of
+                                select="substring(pubDate, 0, string-length(pubDate) - 12)"
+                              />
+                            </time>
+                          </li>
+                        </xsl:for-each>
+                      </ul>
+                    </details>
+                  </li>
+                </ul>
 
                 <p class="cmd" aria-hidden="true">
                   <span class="prompt" aria-hidden="true"></span> rss help

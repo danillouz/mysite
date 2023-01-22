@@ -45,22 +45,18 @@ module.exports = {
       },
       ringColor: {
         danos: {
-          primary: "rgb(var(--color-border-primary) / <alpha-value>)",
+          primary: "rgb(var(--color-border) / <alpha-value>)",
           "primary-inverted":
-            "rgb(var(--color-border-primary-inverted) / <alpha-value>)",
-          secondary: "rgb(var(--color-border-secondary) / <alpha-value>)",
-          "secondary-inverted":
-            "rgb(var(--color-border-secondary-inverted) / <alpha-value>)",
-          focus: "rgb(var(--color-focus-primary) / <alpha-value>)",
-          "focus-inverted":
-            "rgb(var(--color-focus-primary-inverted) / <alpha-value>)",
+            "rgb(var(--color-border-inverted) / <alpha-value>)",
+          focus: "rgb(var(--color-focus) / <alpha-value>)",
+          "focus-inverted": "rgb(var(--color-focus-inverted) / <alpha-value>)",
         },
       },
       borderColor: {
         danos: {
-          primary: "rgb(var(--color-border-primary) / <alpha-value>)",
+          primary: "rgb(var(--color-border) / <alpha-value>)",
           "primary-inverted":
-            "rgb(var(--color-border-primary-inverted) / <alpha-value>)",
+            "rgb(var(--color-border-inverted) / <alpha-value>)",
         },
       },
       typography: {
@@ -73,15 +69,15 @@ module.exports = {
             "--tw-prose-bold": "rgb(var(--color-text-special))",
             "--tw-prose-counters": "rgb(var(--color-text-secondary))",
             "--tw-prose-bullets": "rgb(var(--color-text-tertiary))",
-            "--tw-prose-hr": "rgb(var(--color-border-primary))",
+            "--tw-prose-hr": "rgb(var(--color-border))",
             "--tw-prose-quotes": "rgb(var(--color-text-special))",
-            "--tw-prose-quote-borders": "rgb(var(--color-border-primary))",
+            "--tw-prose-quote-borders": "rgb(var(--color-border))",
             "--tw-prose-captions": "rgb(var(--color-text-secondary))",
             "--tw-prose-code": "rgb(var(--color-text-special))",
             "--tw-prose-pre-code": "rgb(var(--color-text-special))",
             "--tw-prose-pre-bg": "rgb(var(--color-bg-secondary) / 50%)",
-            "--tw-prose-th-borders": "rgb(var(--color-border-primary))",
-            "--tw-prose-td-borders": "rgb(var(--color-border-primary))",
+            "--tw-prose-th-borders": "rgb(var(--color-border))",
+            "--tw-prose-td-borders": "rgb(var(--color-border))",
             "--tw-prose-invert-body":
               "rgb(var(--color-text-secondary-inverted))",
             "--tw-prose-invert-headings":
@@ -94,11 +90,11 @@ module.exports = {
               "rgb(var(--color-text-secondary-inverted))",
             "--tw-prose-invert-bullets":
               "rgb(var(--color-text-tertiary-inverted))",
-            "--tw-prose-invert-hr": "rgb(var(--color-border-primary-inverted))",
+            "--tw-prose-invert-hr": "rgb(var(--color-border-inverted))",
             "--tw-prose-invert-quotes":
               "rgb(var(--color-text-special-inverted))",
             "--tw-prose-invert-quote-borders":
-              "rgb(var(--color-border-primary-inverted))",
+              "rgb(var(--color-border-inverted))",
             "--tw-prose-invert-captions":
               "rgb(var(--color-text-secondary-inverted))",
             "--tw-prose-invert-code": "rgb(var(--color-text-special-inverted))",
@@ -106,10 +102,8 @@ module.exports = {
               "rgb(var(--color-text-special-inverted))",
             "--tw-prose-invert-pre-bg":
               "rgb(var(--color-bg-secondary-inverted) / 50%)",
-            "--tw-prose-invert-th-borders":
-              "rgb(var(--color-border-primary-inverted))",
-            "--tw-prose-invert-td-borders":
-              "rgb(var(--color-border-primary-inverted))",
+            "--tw-prose-invert-th-borders": "rgb(var(--color-border-inverted))",
+            "--tw-prose-invert-td-borders": "rgb(var(--color-border-inverted))",
           },
         },
       },

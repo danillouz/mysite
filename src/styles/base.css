@@ -31,15 +31,15 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-text-special-inverted: 228 228 231; /* zinc-200 */
     --color-text-highlight: 20 184 166; /* teal-500 */
     --color-text-highlight-inverted: 45 212 191; /* teal-400 */
-    --color-border-primary: 228 228 231; /* zinc-200 */
-    --color-border-primary-inverted: 63 63 70; /* zinc-700 */
-    --color-focus-primary: 20 184 166; /* teal-500 */
-    --color-focus-primary-inverted: 45 212 191; /* teal-400 */
+    --color-border: 228 228 231; /* zinc-200 */
+    --color-border-inverted: 63 63 70; /* zinc-700 */
+    --color-focus: 20 184 166; /* teal-500 */
+    --color-focus-inverted: 45 212 191; /* teal-400 */
   }
 
   @media (prefers-color-scheme: light) {
     :root {
-      /* Light syntax highlighting theme for code in posts */
+      /* Light syntax highlighting for code blocks (VS Code GitHub Light) */
       --astro-code-color-text: #24292e;
       --astro-code-color-background: #fafafa;
       --astro-code-token-constant: #005cc5;
@@ -56,7 +56,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
 
   @media (prefers-color-scheme: dark) {
     :root {
-      /* Dark syntax highlighting theme for code in posts */
+      /* Dark syntax highlighting for code blocks (VS Code GitHub Light) */
       --astro-code-color-text: #e1e4e8;
       --astro-code-color-background: #27272a;
       --astro-code-token-constant: #79b8ff;
