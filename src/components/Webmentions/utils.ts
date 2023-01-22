@@ -31,7 +31,7 @@ export const processWebmentions = (webmentions: Webmention[]) => {
 
     // See: https://github.com/cure53/DOMPurify#can-i-configure-dompurify
     const allowedHtml = {
-      ALLOWED_TAGS: ["a", "b", "em", "i", "strong"],
+      ALLOWED_TAGS: ["a", "b", "em", "i", "p", "strong"],
       ALLOWED_ATTR: ["href"],
     }
 

@@ -17,7 +17,7 @@ const Webmentions: FunctionalComponent<{
       <>
         <Heading />
 
-        <p class="flex items-center justify-center gap-2 my-3 font-sans">
+        <p class="flex items-center justify-center gap-2 font-sans">
           <svg
             class="animate-spin h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ const Webmentions: FunctionalComponent<{
       <>
         <Heading />
 
-        <p class="my-3 font-sans text-center">{fetchErr.message}</p>
+        <p class="font-sans text-center">{fetchErr.message}</p>
       </>
     )
   }
@@ -66,7 +66,7 @@ const Webmentions: FunctionalComponent<{
             replies.map((wm) => <Reply key={wm["wm-id"]} reply={wm} />)
           ) : (
             <>
-              <p class="my-3 font-sans">
+              <p class="font-sans">
                 If your site supports sending webmentions, then replies to this
                 post will show up here. Or share this post on Mastodon: replies
                 on Mastodon will show up here as well.
@@ -115,7 +115,7 @@ const Webmentions: FunctionalComponent<{
             !bookmarks.length &&
             !mentions.length && (
               <>
-                <p class="my-3 font-sans">
+                <p class="font-sans">
                   If your site supports sending webmentions, then likes,
                   reposts, bookmarks and mentions of this post will show up
                   here. Or share this post on Mastodon: favourites and boosts on

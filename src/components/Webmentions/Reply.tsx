@@ -36,14 +36,20 @@ const Reply: FunctionalComponent<{ reply: Webmention }> = ({ reply }) => {
         </div>
       </header>
 
-      <p
-        dangerouslySetInnerHTML={{ __html: content.value }}
-        class="m-0 mt-4 break-words"
-      ></p>
+      {content.value.startsWith("<p>") ? (
+        <section
+          dangerouslySetInnerHTML={{ __html: content.value }}
+          class="break-words wm-reply-content"
+        ></section>
+      ) : (
+        <section class="break-words wm-reply-content">
+          <p dangerouslySetInnerHTML={{ __html: content.value }}></p>
+        </section>
+      )}
 
       <footer>
         {!content.isTruncated && (
-          <p class="m-0 mt-4 page-subtext text-sm text-right">
+          <p class="m-0 page-subtext text-right">
             <a href={source} title="Go to webmention source">
               Source
             </a>

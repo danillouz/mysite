@@ -131,6 +131,11 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply text-danos-highlight dark:text-danos-highlight-inverted;
   }
 
+  /* Webmentions */
+  .wm-reply-content p {
+    @apply my-3;
+  }
+
   /* Animations */
 
   @keyframes blink {
