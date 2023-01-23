@@ -28,7 +28,10 @@ const { posts } = Astro.props
               <h2 class="page-subheading">
                 <div class="z-0 absolute -inset-x-4 sm:-inset-x-6 -inset-y-6 sm:rounded-sm bg-danos-hover dark:bg-danos-hover-inverted/50 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition" />
 
-                <a href={url} class="focusable">
+                <a
+                  href={url}
+                  class="underline underline-offset-2 decoration-1 focusable"
+                >
                   <span class="z-20 absolute -inset-y-6 -inset-x-4 sm:-inset-x-6 sm:rounded-sm" />
 
                   <span class="z-10 relative">{title}</span>

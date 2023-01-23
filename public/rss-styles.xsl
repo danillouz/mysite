@@ -39,7 +39,7 @@
               --color-bg-primary: 255 255 255; /* white */
               --color-text-primary: 39 39 42; /* zinc-800 */
               --color-text-secondary: 82 82 91; /* zinc-600 */
-              --color-text-link: 59 130 246; /* blue-500 */
+              --color-text-link: 82 82 91; /* zinc-600 */
               --color-text-special: 39 39 42; /* zinc-800 */
               --color-border: 228 228 231; /* zinc-200 */
               --color-focus: 20 184 166; /* teal-500 */
@@ -52,7 +52,7 @@
               --color-bg-primary: 24 24 27; /* zinc-900 */
               --color-text-primary: 228 228 231; /* zinc-200 */
               --color-text-secondary: 161 161 170; /* zinc-400 */
-              --color-text-link: 96 165 250; /* blue-400 */
+              --color-text-link: 161 161 170; /* zinc-400 */
               --color-text-special: 228 228 231; /* zinc-200 */
               --color-border: 63 63 70; /* zinc-700 */
               --color-focus: 45 212 191; /* teal-400 */
@@ -123,7 +123,6 @@
           }
 
           a {
-            font-weight: 400;
             text-decoration-line: underline;
             text-underline-offset: 2px;
             text-decoration-thickness: 1px;
@@ -265,10 +264,15 @@
           }
 
           .post h3 {
+            /* font-weight: 600; */
+
             margin: 0;
             padding-top: 1rem;
             font-size: 0.875rem;
             line-height: 1.25rem;
+            color: rgb(var(--color-text-primary));
+          }
+          .post h3 a {
             color: rgb(var(--color-text-primary));
           }
 
@@ -405,12 +409,13 @@
                 <br />
 
                 <p>
+                  Visit
                   <a>
                     <xsl:attribute name="href">
                       <xsl:value-of select="/rss/channel/link" />
                     </xsl:attribute>
-                    Visit my site
-                  </a>
+                    my site</a
+                  >.
                 </p>
 
                 <br />

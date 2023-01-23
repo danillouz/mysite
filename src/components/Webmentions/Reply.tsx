@@ -12,13 +12,17 @@ const Reply: FunctionalComponent<{ reply: Webmention }> = ({ reply }) => {
     <article class="my-6 px-4 py-3 bg-[#fafafa] dark:bg-[#27272a] border border-danos-primary dark:border-danos-primary-inverted rounded-sm">
       <header class="flex gap-2">
         <div class="self-center flex-shrink-0">
-          <a href={author.url} class="flex items-center gap-2">
+          <a href={author.url}>
             <img alt="" src={author.photo} class="w-12 h-12 m-0" />
           </a>
         </div>
 
-        <div class="flex flex-col gap-1 justify-center page-subtext truncate">
-          <a href={author.url} title={author.name} class="truncate">
+        <div class="flex flex-col justify-center page-subtext truncate">
+          <a
+            href={author.url}
+            title={author.name}
+            class="truncate text-danos-secondary dark:text-danos-secondary-inverted"
+          >
             {author.name}
           </a>
 
@@ -50,7 +54,11 @@ const Reply: FunctionalComponent<{ reply: Webmention }> = ({ reply }) => {
       <footer>
         {!content.isTruncated && (
           <p class="m-0 page-subtext text-right">
-            <a href={source} title="Go to webmention source">
+            <a
+              href={source}
+              title="Go to webmention source"
+              class="text-danos-secondary dark:text-danos-secondary-inverted"
+            >
               Source
             </a>
           </p>
