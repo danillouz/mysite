@@ -21,6 +21,8 @@ const Interactions: FunctionalComponent<{
                 class="inline-block"
               >
                 <img
+                  loading="lazy"
+                  decoding="async"
                   alt=""
                   src={wm.author.photo}
                   class="inline-block w-12 h-12 m-0"

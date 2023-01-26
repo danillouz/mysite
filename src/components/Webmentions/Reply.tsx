@@ -11,11 +11,19 @@ const Reply: FunctionalComponent<{ reply: Webmention }> = ({ reply }) => {
   return (
     <article class="my-6 px-4 py-3 bg-[#fafafa] dark:bg-[#27272a] border border-danos-primary dark:border-danos-primary-inverted rounded-sm">
       <header class="flex gap-2">
-        <div class="self-center flex-shrink-0">
-          <a href={author.url}>
-            <img alt="" src={author.photo} class="w-12 h-12 m-0" />
-          </a>
-        </div>
+        <a
+          href={author.url}
+          title="Go to webmention author"
+          class="self-center flex-shrink-0"
+        >
+          <img
+            loading="lazy"
+            decoding="async"
+            alt=""
+            src={author.photo}
+            class="w-12 h-12 m-0"
+          />
+        </a>
 
         <div class="flex flex-col justify-center page-subtext truncate">
           <a

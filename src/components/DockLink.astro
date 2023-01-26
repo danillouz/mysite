@@ -20,7 +20,7 @@ if (href) {
 ---
 
 <div class="relative">
-  <div class="flex flex-col items-center gap-0">
+  <div class="flex flex-col items-center justify-center">
     <div class="relative flex">
       <a
         href={href}
@@ -28,17 +28,15 @@ if (href) {
         aria-current={isActive ? "page" : undefined}
         class:list={[
           // Base styles.
-          "nav-text focusable rounded-full p-1",
+          "nav-text focusable rounded-full m-1",
+
+          "flex items-center justify-center w-12 h-12 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted",
 
           // Custom styles.
           className,
         ]}
       >
-        <div
-          class="flex items-center justify-center w-12 h-12 rounded-full bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted"
-        >
-          <slot />
-        </div>
+        <slot />
       </a>
 
       <div
