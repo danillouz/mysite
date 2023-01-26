@@ -41,8 +41,9 @@
               --color-text-secondary: 82 82 91; /* zinc-600 */
               --color-text-link: 82 82 91; /* zinc-600 */
               --color-text-special: 39 39 42; /* zinc-800 */
-              --color-border: 228 228 231; /* zinc-200 */
+              --color-border: 82 82 91; /* zinc-600 */
               --color-focus: 20 184 166; /* teal-500 */
+              --color-box-shadow: 39 39 42; /* zinc-800 */
             }
           }
 
@@ -84,6 +85,7 @@
           /* Header */
 
           header {
+            box-sizing: border-box;
             height: 1.75rem;
             display: flex;
             align-items: center;
@@ -136,14 +138,24 @@
           /* Window */
 
           .window {
+            box-sizing: border-box;
             flex: 1 1 0%;
             display: flex;
             flex-direction: column;
             max-width: 48rem;
             margin: 0;
             background-color: rgb(var(--color-bg-primary));
-            box-shadow: 0 3px 6px -1px rgb(0 0 0 / 0.09),
-              0 2px 4px -3px rgb(0 0 0 / 0.09);
+          }
+
+          .retro-box-shadow-overlay {
+            display: none;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            border-radius: 0.125rem;
+            border: 1px solid rgb(var(--color-border));
           }
 
           .window-header {
@@ -165,6 +177,7 @@
           }
 
           .window-main {
+            position: relative;
             flex: 1 1 0%;
             overflow-y: scroll;
             scroll-behavior: smooth;
@@ -304,6 +317,17 @@
 
           /* md */
           @media (min-width: 768px) {
+            @media (prefers-color-scheme: light) {
+              .window {
+                box-shadow: 8px 8px 0 0 rgb(var(--color-box-shadow));
+              }
+            }
+            @media (prefers-color-scheme: dark) {
+              .window {
+                box-shadow: none;
+              }
+            }
+
             .window {
               position: fixed;
               left: 0;
@@ -312,10 +336,13 @@
               bottom: 0;
               margin-left: auto;
               margin-right: auto;
-              margin-top: 47px;
-              margin-bottom: 19px;
-              border: 1px solid rgb(var(--color-border));
+              margin-top: 3rem;
+              margin-bottom: 1.25rem;
               border-radius: 0.125rem;
+            }
+
+            .retro-box-shadow-overlay {
+              display: block;
             }
 
             .window-header {
@@ -382,6 +409,8 @@
           </header>
 
           <figure class="window">
+            <div class="retro-box-shadow-overlay"></div>
+
             <div class="window-header">
               <div class="window-header-wrapper">
                 <span class="window-header-icon"></span>

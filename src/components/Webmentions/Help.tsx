@@ -4,7 +4,7 @@ import type { FunctionalComponent } from "preact"
 
 const Help: FunctionalComponent = () => {
   return (
-    <section class="my-12 px-4 py-3 bg-[#fafafa] dark:bg-[#27272a] border-4 border-double border-danos-primary dark:border-danos-primary-inverted rounded-sm">
+    <section class="my-6 sm:my-12 px-4 py-3 bg-[#fafafa] dark:bg-[#27272a] border-4 border-double border-danos-primary dark:border-danos-primary-inverted rounded-sm">
       <span class="flex flex-row items-center gap-1 page-subheading text-lg">
         <span>
           <svg

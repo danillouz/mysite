@@ -52,6 +52,12 @@ module.exports = {
           "focus-inverted": "rgb(var(--color-focus-inverted) / <alpha-value>)",
         },
       },
+      boxShadowColor: {
+        "retro-primary": "rgb(var(--color-box-shadow) / <alpha-value>)",
+      },
+      boxShadow: {
+        retro: "8px 8px 0 0",
+      },
       borderColor: {
         danos: {
           primary: "rgb(var(--color-border) / <alpha-value>)",
