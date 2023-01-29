@@ -13,6 +13,7 @@ tags:
     "til",
   ]
 publishedAt: "December 22 2022"
+updatedAt: "January 29 2023"
 ---
 
 I recently had to hook-up some middleware in a Go service. And while looking into the Go standard library [net/http](https://pkg.go.dev/net/http) package, I got a bit confused by all the different (but similarly named) types and functions that deal with HTTP handlers.
@@ -49,7 +50,7 @@ So if we implement an `http.Handler` and use it together with an `http.ServeMux`
 
 [^1]: `http.ServeMux` also satisfies the `http.Handler` interface, as it implements a [ServeHTTP(ResponseWriter, \*Request)](https://pkg.go.dev/net/http#ServeMux.ServeHTTP) method.
 
-```go
+```go title="main.go" showLineNumbers
 package main
 
 import (
@@ -78,12 +79,12 @@ In the example above we used the `Handle()` method to respond to requests. But `
 
 At first glance it looks like both accept a pattern and a handler. But `Handle()` requires a handler that satisfies the `http.Handler` interface. While `HandleFunc()` accepts any function that defines `http.ResponseWriter` and `*http.Request` parameters:
 
-- `Handle(pattern string, handler Handler)`
-- `HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
+- `Handle(pattern string, handler Handler){:go}`
+- `HandleFunc(pattern string, handler func(ResponseWriter, *Request)){:go}`
 
 So we can achieve the exact same thing as in the example above with the following:
 
-```go
+```go title="main.go" showLineNumbers
 package main
 
 import (
@@ -108,7 +109,7 @@ We saw in the above examples that `http.ServeMux` exposes the `Handle()` and `Ha
 
 For example:
 
-```go
+```go title="main.go" showLineNumbers
 package main
 
 import (
@@ -138,7 +139,7 @@ This type allows us to convert a "plain" handler function (i.e. `func(ResponseWr
 
 So the following won't compile:
 
-```go
+```go showLineNumbers
 handler := func (w http.ResponseWriter, r *http.Request) {
   w.Write([]byte("Home"))
 }
@@ -147,7 +148,7 @@ http.Handle("/", handler) // ❌ Does not compile
 
 But this will compile:
 
-```go
+```go showLineNumbers
 handler := func (w http.ResponseWriter, r *http.Request) {
   w.Write([]byte("Home"))
 }
@@ -183,7 +184,6 @@ func someMiddleware(next http.Handler) http.Handler {
   return http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
     // Do something with `r`.
 
-    // Call the next handler in the chain.
     next.ServeHTTP(w, r)
   })
 }

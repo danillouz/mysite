@@ -4,7 +4,7 @@ title: "Aliasing your Mastodon handle"
 description: "Using a custom domain to alias your Mastodon handle."
 tags: ["astro", "mastodon", "til", "vercel", "webfinger"]
 publishedAt: "January 3 2023"
-updatedAt: "January 4 2023"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -27,17 +27,19 @@ WebFinger is a protocol[^1] that allows information about people or entities to 
 
 A WebFinger request is an HTTP `GET` request to a resource. The resource is a well-known URI with a query target. And the query target identifies the entity to get the location for, which is specified via the `?resource=` query parameter in the request. The endpoint then returns the location information as JSON.
 
-For example, to get WebFinger information for the Mastodon account `danillouz@mastodon.social`[^2], you need to make an HTTP `GET` request to:
+For example, to get WebFinger information for the Mastodon account `danillouz@mastodon.social`[^2], you need to make the following request:
 
 [^2]: Mastodon uses the `acct:` URI scheme as described in [RFC 7565](https://www.rfc-editor.org/rfc/rfc7565).
 
-```
-https://mastodon.social/.well-known/webfinger?resource=acct:danillouz@mastodon.social
+```sh title="HTTP request"
+GET /.well-known/webfinger?resource=acct:danillouz@mastodon.social
+HOST: mastodon.social
 ```
 
-Which will return the following JSON response:
+```sh title="HTTP response"
+200 OK
+Content-Type: application/json
 
-```json
 {
   "subject": "acct:danillouz@mastodon.social",
   "aliases": [
@@ -65,7 +67,7 @@ Which will return the following JSON response:
 
 You can replace the Mastodon domain and username with your own, to get your information instead:
 
-```
+```sh
 https://{MASTODON_DOMAIN}/.well-known/webfinger?resource=acct:{MASTODON_USERNAME}
 ```
 
@@ -77,9 +79,13 @@ And from what I understand, Mastodon's internal implementation can't just use th
 
 ## Adding a WebFinger endpoint
 
-The RFC [mentions](https://www.rfc-editor.org/rfc/rfc7033#section-1) that WebFinger information is static:
+The RFC mentions that WebFinger information is static:
 
 > The information is intended to be static in nature, and, as such, WebFinger is not intended to be used to return dynamic information like the temperature of a CPU or the current toner level in a laser printer.
+>
+> <cite>
+>   [RFC 7033: Introduction](https://www.rfc-editor.org/rfc/rfc7033#section-1)
+> </cite>
 
 So if you can host some static JSON on your custom domain, you can add a WebFinger endpoint.
 
@@ -95,15 +101,9 @@ With that in place, your custom domain can be used to find your Mastodon account
 
 ### Static file endpoint
 
-I'm using [Astro](https://astro.build/), so I just added a [static file endpoint](https://docs.astro.build/en/core-concepts/endpoints/#static-file-endpoints) by creating the file:
+I'm using [Astro](https://astro.build/), so I just added a [static file endpoint](https://docs.astro.build/en/core-concepts/endpoints/#static-file-endpoints):
 
-```
-src/pages/.well-known/webfinger.json.ts
-```
-
-With the following content:
-
-```ts
+```ts title="src/pages/.well-known/webfinger.json.ts" showLineNumbers
 import type { APIRoute } from "astro"
 
 const MASTODON_USERNAME = "danillouz"
@@ -140,23 +140,25 @@ export const get: APIRoute = async function get({ params, request }) {
 
 ### Redirecting WebFinger requests
 
-Note that the [static JSON endpoint](#static-file-endpoint) I added will only serve the WebFinger information when making an HTTP `GET` request to:
+Note that the [static JSON endpoint](#static-file-endpoint) I added will only serve the WebFinger information when making the request:
 
-```
-https://www.danillouz.dev/.well-known/webfinger.json
+```sh title="HTTP request"
+GET /.well-known/webfinger.json
+Host: www.danillouz.dev
 ```
 
-But Mastodon will actually make an HTTP `GET` request to:
+But Mastodon will actually make the following request:
 
-```
-https://www.danillouz.dev/.well-known/webfinger?resource=acct:danillouz@mastodon.social
+```sh title="HTTP request"
+GET /.well-known/webfinger?resource=acct:danillouz@mastodon.social
+Host: www.danillouz.dev
 ```
 
 Since I have just one Mastodon account, I chose to just ignore the `?resource=` query parameter, and redirect all requests from `/.well-known/webfinger` to `/.well-known/webfinger.json`.
 
-I'm using [Vercel](https://vercel.com/), which supports [redirects](https://vercel.com/docs/project-configuration#project-configuration/redirects) by creating a `vercel.json` file. So I can achieve the desired redirect by adding the following rule:
+I'm using [Vercel](https://vercel.com/), which supports [redirects](https://vercel.com/docs/project-configuration#project-configuration/redirects). So I can achieve the desired redirect by adding the following rule:
 
-```json
+```json title="vercel.json"
 {
   "redirects": [
     {
@@ -193,9 +195,14 @@ Like mentioned before, Mastodon is a bit different, where an account handle cons
 - The local username. For example `danillouz`.
 - The server domain. For example `mastodon.social`.
 
-And the docs [mention](https://docs.joinmastodon.org/user/signup/#address) that you should include the server domain when sharing your handle with other people, because otherwise they won't be able to find you easily:
+And the docs mention that you should include the server domain when sharing your handle with other people, because otherwise they won't be able to find you easily:
 
 > Mastodon allows you to skip the second part when addressing people on the same server as you, but you have to keep in mind when sharing your username with other people, you need to include the domain or they won't be able to find you as easily.
+>
+> <cite>
+>   [Mastodon docs: Your username and your
+>   domain](https://docs.joinmastodon.org/user/signup/#address)
+> </cite>
 
 So in theory, setting up an alias allows you to create a handle that does not change when migrating to a different Mastodon server. And it might make your account easier to find if people know your custom domain.
 
@@ -219,21 +226,28 @@ Turns out that when you're not signed in to a server, the search API will not us
 
 This is how the search request looks like when I'm signed in:
 
-```
-https://mastodon.social/api/v2/search?q=hi@danillouz.dev&resolve=true
+```sh title="HTTP request" /resolve=true/
+GET /api/v2/search?q=hi@danillouz.dev&resolve=true
+Host: mastodon.social
 ```
 
 And this is how the same search request looks like when I'm signed out:
 
-```
-https://mastodon.social/api/v2/search?q=hi@danillouz.dev&resolve=false
+```sh title="HTTP request" /resolve=false/
+GET /api/v2/search?q=hi@danillouz.dev&resolve=false
+Host: mastodon.social
 ```
 
 The difference is that the query parameter `resolve` is set to `true` when signed in. But is set to `false` when signed out.
 
-And checking the v2 search API [docs](https://docs.joinmastodon.org/methods/search/#query-parameters), we can see that `resolve` controls if a WebFinger lookup should happen or not:
+And checking the v2 search API docs, we can see that `resolve` controls if a WebFinger lookup should happen or not:
 
 > Boolean. Attempt WebFinger lookup? Defaults to false.
+>
+> <cite>
+>   [Mastodon docs: Perform a
+>   search](https://docs.joinmastodon.org/methods/search/#query-parameters)
+> </cite>
 
 ### The alias behaves like a "catch-all"
 

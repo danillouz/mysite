@@ -16,7 +16,7 @@ tags:
     "tutorial",
   ]
 publishedAt: "October 27 2019"
-updatedAt: "December 3 2022"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -205,22 +205,9 @@ Make sure the resource ARNs of your input and output buckets are named correctly
 
 ### 4. Create a Serverless project
 
-Create a new project named "audio-transcoder":
+Create a new project named "audio-transcoder". Move into this directory and create a Serverless manifest in the project root:
 
-```sh
-mkdir audio-transcoder
-```
-
-Move into this directory and create a `serverless.yml` file in the project root:
-
-```sh
-audio-transcoder
-  └── serverless.yml
-```
-
-Add the following to it:
-
-```yaml
+```yaml title="audio-transcoder/serverless.yml" showLineNumbers
 service: audio-transcoder
 
 provider:
@@ -238,44 +225,29 @@ package:
 
 Add the Elastic Transcoder Pipeline ID, MP3 Preset ID and region (from [step 1](#1-create-a-pipeline) and [step 2](#2-choose-a-preset)) as environment variables:
 
-```yaml
+```yaml title="audio-transcoder/serverless.yml" showLineNumbers {6-9}
+service: audio-transcoder
+
 provider:
+  name: aws
+  runtime: nodejs10.x
   environment:
     TRANSCODE_AUDIO_PIPELINE_ID: "1572538082044-xmgzaa"
     TRANSCODER_MP3_PRESET_ID: "1351620000001-300040"
     ELASTIC_TRANSCODER_REGION: "eu-west-1"
+
+package:
+  exclude:
+    - ./*
+    - ./**/*.test.js
+  include:
+    - node_modules
+    - src
 ```
 
 Use the Elastic Transcoder Pipeline ARN and MP3 Preset ARN (from [step 1](#1-create-a-pipeline) and [step 2](#2-choose-a-preset)) to configure the Lambda with the required IAM permissions, so it can create transcoder jobs:
 
-```yaml
-provider:
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - elastictranscoder:CreateJob
-      Resource:
-        - YOUR_PIPELINE_ARN # Replace this with the ARN from step 1
-        - YOUR_PRESET_ARN # Replace this with the ARN from step 2
-```
-
-And finally, add the Lambda function definition. This Lambda will be executed whenever an object is created in the input bucket:
-
-```yaml
-functions:
-  transcodeToMp3:
-    handler: src/handler.transcodeToMp3
-    description: Transcode an audio file to MP3
-    events:
-      - s3:
-          bucket: "raw.recordings"
-          event: "s3:ObjectCreated:*"
-          existing: true
-```
-
-You should now have a manifest that looks like this:
-
-```yaml
+```yaml title="audio-transcoder/serverless.yml" showLineNumbers {10-16}
 service: audio-transcoder
 
 provider:
@@ -290,8 +262,37 @@ provider:
       Action:
         - elastictranscoder:CreateJob
       Resource:
-        - YOUR_PIPELINE_ARN
-        - YOUR_PRESET_ARN
+        - YOUR_PIPELINE_ARN # Replace this with the ARN from step 1
+        - YOUR_PRESET_ARN # Replace this with the ARN from step 2
+
+package:
+  exclude:
+    - ./*
+    - ./**/*.test.js
+  include:
+    - node_modules
+    - src
+```
+
+And finally, add the Lambda function definition. This Lambda will be executed whenever an object is created in the input bucket:
+
+```yaml title="audio-transcoder/serverless.yml" showLineNumbers {26-34}
+service: audio-transcoder
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  environment:
+    TRANSCODE_AUDIO_PIPELINE_ID: "1572538082044-xmgzaa"
+    TRANSCODER_MP3_PRESET_ID: "1351620000001-300040"
+    ELASTIC_TRANSCODER_REGION: "eu-west-1"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - elastictranscoder:CreateJob
+      Resource:
+        - YOUR_PIPELINE_ARN # Replace this with the ARN from step 1
+        - YOUR_PRESET_ARN # Replace this with the ARN from step 2
 
 package:
   exclude:
@@ -314,18 +315,9 @@ functions:
 
 ### 5. Implement the Lambda function
 
-In order to match the Lambda function definition in the Serverless manifest, create a file named `handler.js` in `src`:
+In order to match the Lambda function definition in the Serverless manifest, create a file named `handler.js` in `src`. And export a method named `transcodeToMp3`:
 
-```sh
-audio-transcoder
-  ├── serverless.yml
-  └── src
-      └── handler.js
-```
-
-And in `src/handler.js` export a method named `transcodeToMp3`:
-
-```js
+```js title="audio-transcoder/src/handler.js" showLineNumbers
 "use strict"
 
 module.exports.transcodeToMp3 = async () => {
@@ -359,7 +351,7 @@ You can see the entire event message structure in the [AWS S3 docs](https://docs
 
 Also be aware that you can get **more than one** `Record`. So always process all of them:
 
-```js
+```js title="audio-transcoder/src/handler.js" showLineNumbers {5-18}
 "use strict"
 
 module.exports.transcodeToMp3 = async (event) => {
@@ -387,7 +379,7 @@ module.exports.transcodeToMp3 = async (event) => {
 
 Finally, initialize the transcoder client. And schedule a transcoder job for every created object in the input bucket:
 
-```js
+```js title="audio-transcoder/src/handler.js" showLineNumbers {3-13, 30-43}
 "use strict"
 
 const ElasticTranscoder = require("aws-sdk/clients/elastictranscoder")
@@ -506,22 +498,9 @@ We'll apply these changes by going through the following steps:
 
 ### 1. Create and publish FFmpeg Lambda Layer
 
-The Serverless Framework makes it very easy to work with layers. To get started create a new project named "lambda-layers":
+The Serverless Framework makes it very easy to work with layers. To get started create a new project named "lambda-layers". Move into this directory and create a Serverless manifest in the project root:
 
-```sh
-mkdir lambda-layers
-```
-
-Move to this directory and create a `serverless.yml` file in the project root:
-
-```sh
-lambda-layers
-  └── serverless.yml
-```
-
-Add the following to it:
-
-```yaml
+```yaml title="lambda-layers/serverless.yml" showLineNumbers
 service: lambda-layers
 
 provider:
@@ -543,13 +522,9 @@ layers:
     licenseInfo: GPL v2+, for more info see https://github.com/FFmpeg/FFmpeg/blob/master/LICENSE.md
 ```
 
-The layer is named `ffmpeg` and the `path` property dictates that the layer code will reside in a directory named `layers`. Match this structure in the project:
+The layer is named `ffmpeg` and the `path` property dictates that the layer code will reside in a directory named `layers`. Match this structure in the project by creating that directory first.
 
-```sh
-mkdir layers
-```
-
-Move into this directory and download a static build of FFmpeg from [johnvansickle.com/ffmpeg](https://johnvansickle.com/ffmpeg)[^5].
+Move into the `layers` directory and download a static build of FFmpeg from [johnvansickle.com/ffmpeg](https://johnvansickle.com/ffmpeg)[^5].
 
 [^5]: These FFmpeg builds are all compatible with Amazon Linux 2. This is the operating system on which Lambda runs when the `Node.js` [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) is used.
 
@@ -613,42 +588,9 @@ When Serverless finishes deploying, navigate to the Lambda service in the AWS we
 
 We'll now be modifying the manifest file of the `audio-transcoder` project.
 
-First change the environment variables, and add the names of your input and output buckets:
+First change the environment variables, and add the names of your input and output buckets. Then change the IAM permissions so the Lambda function can read from the input bucket and write to the output bucket. And finally, change the Lambda function to use the FFmpeg layer with the ARN from the previous step:
 
-```yaml
-provider:
-  environment:
-    S3_INPUT_BUCKET_NAME: "raw.recordings"
-    S3_OUTPUT_BUCKET_NAME: "transcoded.recordings"
-```
-
-Then change the IAM permissions so the Lambda function can read from the input bucket and write to the output bucket:
-
-```yaml
-provider:
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - s3:GetObject
-      Resource: arn:aws:s3:::raw.recordings/*
-    - Effect: Allow
-      Action:
-        - s3:PutObject
-      Resource: arn:aws:s3:::transcoded.recordings/*
-```
-
-Finally, change the Lambda function to use the FFmpeg layer with the ARN from the previous step:
-
-```yaml
-functions:
-  transcodeToMp3:
-    layers:
-      - YOUR_FFMPEG_LAYER_ARN # Replace this with the ARN from step 1
-```
-
-You should now have a manifest that looks like this:
-
-```yaml
+```yaml title="audio-transcoder/serverless.yml" showLineNumbers {7-8,10-17,36-37}
 service: audio-transcoder
 
 provider:
@@ -690,9 +632,9 @@ functions:
 
 ### 3. Update the Lambda function
 
-Since we have to read from the input bucket and write to the output bucket, replace the Elastic Transcoder client with the S3 client. And use the `decodedKey` to get the WebM recording from the input bucket::
+Since we have to read from the input bucket and write to the output bucket, replace the Elastic Transcoder client with the S3 client. And use the `decodedKey` to get the WebM recording from the input bucket:
 
-```js
+```js title="audio-transcoder/src/handler.js" showLineNumbers {3-5, 22-27}
 "use strict"
 
 const S3 = require("aws-sdk/clients/s3")
@@ -729,31 +671,9 @@ module.exports.transcodeToMp3 = async (event) => {
 
 The S3 client returns an object that contains a `Body` property. The value of `Body` is a blob, which we'll feed to the FFmpeg layer and convert it to MP3.
 
-Create a helper module called `ffmpeg.js` in `src`:
+We'll do this via a helper function that will spawn a [synchronous child process](https://nodejs.org/api/child_process.html#child_process_child_process_spawnsync_command_args_options) which allows us to execute the `ffmpeg` "command" (provided by the FFmpeg layer):
 
-```sh
-audio-transcoder
-  ├── serverless.yml
-  └── src
-      ├── ffmpeg.js
-      └── handler.js
-```
-
-And export an object with a method called `convertWebmToMp3`, which receives the WebM blob as an argument:
-
-```js
-"use strict"
-
-module.exports = {
-  convertWebmToMp3(webmBlob) {
-    // Implementation goes here.
-  },
-}
-```
-
-This module will spawn a [synchronous child process](https://nodejs.org/api/child_process.html#child_process_child_process_spawnsync_command_args_options) that allows us to execute the `ffmpeg` "command" (provided by the FFmpeg layer):
-
-```js
+```js title="audio-transcoder/src/ffmpeg.js" showLineNumbers
 "use strict"
 
 const { spawnSync } = require("child_process")
@@ -779,7 +699,7 @@ The `ffmpeg` command requires the file system to do its magic. And we'll use a "
 
 First write the WebM blob to `/tmp` so FFmpeg can read it. And then tell it to write the produced MP3 file back to the same directory:
 
-```js
+```js title="audio-transcoder/src/ffmpeg.js" showLineNumbers {4,8-18}
 "use strict"
 
 const { spawnSync } = require("child_process")
@@ -804,7 +724,7 @@ module.exports = {
 
 Now read the produced MP3 file from disk, clean `/tmp`, and return the MP3 blob:
 
-```js
+```js title="audio-transcoder/src/ffmpeg.js" showLineNumbers {18-23}
 "use strict"
 
 const { spawnSync } = require("child_process")
@@ -832,9 +752,9 @@ module.exports = {
 }
 ```
 
-Finally, use the MP3 blob to write it to the output bucket:
+Finally, use the MP3 blob in the handler to write it to the output bucket:
 
-```js
+```js title="audio-transcoder/src/handler.js" showLineNumbers {4,30-38}
 "use strict"
 
 const S3 = require("aws-sdk/clients/s3")
@@ -926,7 +846,7 @@ How do we solve this? By optimizing the Lambda function!
 
 First let's just set the timeout to a larger value. For example 180 seconds. This way we can see how long it would actually take to complete the transcoding process:
 
-```yaml
+```yaml title="audio-transcoder/serverless.yml"
 functions:
   transcodeToMp3:
     timeout: 180
@@ -956,7 +876,7 @@ This is important because when you choose a higher memory setting, AWS will also
 
 By default a Lambda function has a memory setting of 128 MB. So lets increase it and compare results. A good strategy is usually to keep doubling memory and measure the duration. But for the sake of brevity, I'm jumping ahead to 2048 MB:
 
-```yaml
+```yaml title="audio-transcoder/serverless.yml"
 functions:
   transcodeToMp3:
     memorySize: 2048
@@ -1027,7 +947,7 @@ These are the timing results of the test runs:
 
 So the average transcoding time of the audio file would be:
 
-```
+```sh
 7638 + 6663 + 7729 + 6595 + 8752 + 7216 + 7167 + 6605 + 6718 + 8700 = 73 783 ms
 
 73783 / 10 = 7378,3 ms
@@ -1037,7 +957,7 @@ So the average transcoding time of the audio file would be:
 
 Lets say we would be transcoding `100 000` of these audio files per month, that would amount to a total transcoding time of:
 
-```
+```sh
 7,3783 * 100 000 = 737 830 sec
 
 737 830 / 60 = 12 297,166 666 667 min
@@ -1045,13 +965,13 @@ Lets say we would be transcoding `100 000` of these audio files per month, that 
 
 Since we pay `$0,00522` per minute, the costs without free tier would be:
 
-```
+```sh
 12 297,166 666 667 * 0,00522 = $64,191 21
 ```
 
 And with free tier it would cost:
 
-```
+```sh
 (12 297,166 666 667 - 20) * 0,00522 = $64,086 81
 ```
 
@@ -1080,7 +1000,7 @@ These are the Lambda durations (with 128 MB memory) for the accompanying transco
 
 The average billed duration would be:
 
-```
+```sh
 500 + 200 + 200 + 200 + 200 + 300 + 200 + 200 + 400 + 300 = 2700 ms
 
 2700 / 10 = 270 ms
@@ -1092,7 +1012,7 @@ In region `eu-west-1`, we'll currently pay `$0,000 016 6667` for every GB per se
 
 For `100 000` transcoding jobs per month (with 128 MB memory) that would be:
 
-```
+```sh
 100 000 * 0,27 = 27000 sec
 
 (128 / 1024) * 27000 = 3375 GB/sec
@@ -1100,7 +1020,7 @@ For `100 000` transcoding jobs per month (with 128 MB memory) that would be:
 
 Currently you get `400 000` GB/sec for free every month, so depending on your scale you may or may not have to include it in your calculations. But without free tier it would cost:
 
-```
+```sh
 3375 * 0,000 016 6667 = $0,056 250 113
 ```
 
@@ -1123,7 +1043,7 @@ These are the Lambda durations (with 2048 MB memory) of the test runs:
 
 The average _billed duration_ would be:
 
-```
+```sh
 4100 + 3900 + 4000 + 3800 + 3900 + 3900 + 3900 + 3800 + 3900 + 3900 = 39100 ms
 
 39100 / 10 = 3910 ms
@@ -1133,7 +1053,7 @@ The average _billed duration_ would be:
 
 In region `eu-west-1`, we'll currently pay `$0,000 016 6667` for every GB/sec. For `100 000` transcoding jobs (with 2048 MB memory) that would be:
 
-```
+```sh
 100 000 * 3,91 = 391 000 sec
 
 (2048 / 1024) * 391 000 = 782 000 GB/sec
@@ -1141,13 +1061,13 @@ In region `eu-west-1`, we'll currently pay `$0,000 016 6667` for every GB/sec. F
 
 Without free tier it would cost:
 
-```
+```sh
 782 000 * 0,000 016 6667 = $13,033 3594
 ```
 
 With free tier it would cost:
 
-```
+```sh
 (782 000 - 400 000) * 0,000 016 6667 = $6,366 6794
 ```
 
@@ -1155,7 +1075,9 @@ With free tier it would cost:
 
 > Data transferred between S3, Glacier, DynamoDB, SES, SQS, Kinesis, ECR, SNS, or SimpleDB and Lambda functions **in the same AWS Region is free**.
 >
-> <cite>[Lambda pricing page](https://aws.amazon.com/lambda/pricing)</cite>
+> <cite>
+>   <p>[AWS Lambda: Pricing](https://aws.amazon.com/lambda/pricing)</p>
+> </cite>
 
 Otherwise, data transferred into and out of Lambda functions will be charged at the [EC2 data transfer rates](https://aws.amazon.com/ec2/pricing/on-demand) as listed under the “Data transfer” section.
 

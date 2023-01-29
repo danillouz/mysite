@@ -4,7 +4,7 @@ title: "AWS Lambda and the Node.js event loop"
 description: "Lambda can freeze and thaw its execution context, which can impact Node.js event loop behavior."
 tags: ["aws", "event-loop", "lambda", "nodejs"]
 publishedAt: "May 30 2019"
-updatedAt: "December 3 2022"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -42,7 +42,7 @@ Each frame stores information about the invoked function. Like the arguments the
 
 When we execute the following code:
 
-```js
+```js showLineNumbers
 "use strict"
 
 function work() {
@@ -74,7 +74,7 @@ We can visualize the call stack over time like this:
 
 2. `main()` is called, and pushed onto the call stack:
 
-```js
+```js showLineNumbers {13}
 "use strict"
 
 function work() {
@@ -87,12 +87,12 @@ function main() {
   console.log("main end")
 }
 
-main() // Step 2
+main()
 ```
 
 3. While executing `main`, `console.log("main start")` is called, and pushed onto the call stack:
 
-```js
+```js showLineNumbers {8}
 "use strict"
 
 function work() {
@@ -100,7 +100,7 @@ function work() {
 }
 
 function main() {
-  console.log("main start") // Step 3
+  console.log("main start")
   work()
   console.log("main end")
 }
@@ -122,7 +122,7 @@ main()
 
 5. `main` continues executing, calls `work()`, and is pushed onto the call stack:
 
-```js
+```js showLineNumbers {9}
 "use strict"
 
 function work() {
@@ -131,7 +131,7 @@ function work() {
 
 function main() {
   console.log("main start")
-  work() // Step 5
+  work()
   console.log("main end")
 }
 
@@ -140,11 +140,11 @@ main()
 
 6. While executing `work`, `console.log("do work")` is called, and pushed onto the call stack:
 
-```js
+```js showLineNumbers {4}
 "use strict"
 
 function work() {
-  console.log("do work") // Step 6
+  console.log("do work")
 }
 
 function main() {
@@ -172,7 +172,7 @@ main()
 
 9. `main` continues executing, calls `console.log("main end")` and is pushed onto the call stack:
 
-```js
+```js showLineNumbers {10}
 "use strict"
 
 function work() {
@@ -182,7 +182,7 @@ function work() {
 function main() {
   console.log("main start")
   work()
-  console.log("main end") // Step 9
+  console.log("main end")
 }
 
 main()
@@ -270,7 +270,7 @@ The `callback` argument may be used to return information to the caller and to s
 
 From here on we'll use a simple script as a "baseline" to reason about the event loop behavior. Create a file called `timeout.js` with the following contents:
 
-```js
+```js title="timeout.js" showLineNumbers
 "use strict"
 
 function timeout(ms) {
@@ -295,7 +295,7 @@ main()
 
 When we execute this script _locally_ (not via Lambda) with `node timeout.js`, the following will print:
 
-```sh
+```sh title="node timeout.js output"
 main start
 timeout start
 main end
@@ -308,7 +308,7 @@ The last message takes 5 seconds to print, but the script does _not_ stop execut
 
 Now lets modify the code from `timeout.js` so it's compatible with Lambda:
 
-```js
+```js title="timeout.js" showLineNumbers {20}
 "use strict"
 
 function timeout(ms) {
@@ -328,7 +328,7 @@ async function main() {
   console.log("main end")
 }
 
-exports.handler = main // This change allows Lambda to run `main`
+exports.handler = main
 ```
 
 You can create a new function in the AWS Lambda console and paste in the code from above. Run it, sit back and enjoy:
@@ -365,17 +365,32 @@ AWS Lambda takes care of provisioning and managing resources needed to run your 
 
 After a Lambda function is called, Lambda maintains the execution context for some time in anticipation of another invocation of the Lambda function (for performance benefits). It freezes the execution context after a Lambda function completes and may choose to reuse (thaw) the same execution context when the Lambda function is called again (but it doesn't have to).
 
-In the [AWS documentation](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html) we can find the following regarding this subject:
+In the AWS docs we can find the following regarding this subject:
 
 > Background processes or callbacks initiated by your Lambda function that did not complete when the function ended resume **if AWS Lambda chooses to** reuse the Execution Context.
+>
+> <cite>
+>   [AWS docs: Lambda execution
+>   environment](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html)
+> </cite>
 
-As well as this somewhat [hidden message](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html):
+As well as this somewhat hidden message:
 
 > When the callback is called (explicitly or implicitly), AWS Lambda continues the Lambda function invocation until the event loop is empty.
+>
+> <cite>
+>   [AWS docs: Lambda function handler in
+>   Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html)
+> </cite>
 
-Looking further, there's some documentation about the [context object](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html). Specifically about a property called `callbackWaitsForEmptyEventLoop`. This is what it does:
+Looking further, there's some documentation about the context object. Specifically about a property called `callbackWaitsForEmptyEventLoop`. This is what it does:
 
 > The default value is `true`. This property is useful only to modify the default behavior of the callback. **By default, the callback will wait until the event loop is empty before freezing the process and returning the results to the caller**.
+>
+> <cite>
+>   [AWS docs: Lambda context object in
+>   Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html)
+> </cite>
 
 Okay, so with this information we can make sense of what happened when we executed the code in `timeout.js` before. Lets break it down and go over it step by step:
 
@@ -397,7 +412,7 @@ Okay, so with this information we can make sense of what happened when we execut
 
 2. `main` is called, and pushed onto to the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers {20}
 "use strict"
 
 function timeout(ms) {
@@ -417,7 +432,7 @@ async function main() {
   console.log("main end")
 }
 
-exports.handler = main // Step 2
+exports.handler = main
 ```
 
 <figure>
@@ -429,7 +444,7 @@ exports.handler = main // Step 2
 
 3. While executing `main`, `console.log("main start")` is called, and pushed onto the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers {15}
 "use strict"
 
 function timeout(ms) {
@@ -444,7 +459,7 @@ function timeout(ms) {
 }
 
 async function main() {
-  console.log("main start") // Step 3
+  console.log("main start")
   timeout(5e3)
   console.log("main end")
 }
@@ -470,7 +485,7 @@ exports.handler = main
 
 5. `main` continues executing, calls `timeout(5e3)`, and is pushed onto the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers {16}
 "use strict"
 
 function timeout(ms) {
@@ -486,7 +501,7 @@ function timeout(ms) {
 
 async function main() {
   console.log("main start")
-  timeout(5e3) // Step 5
+  timeout(5e3)
   console.log("main end")
 }
 
@@ -502,11 +517,11 @@ exports.handler = main
 
 6. While executing `timeout`, `console.log("timeout start")` is called, and pushed onto the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers {4}
 "use strict"
 
 function timeout(ms) {
-  console.log("timeout start") // Step 6
+  console.log("timeout start")
 
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -541,15 +556,14 @@ exports.handler = main
   />
 </figure>
 
-8. `timeout` continues executing, calls `new Promise(callback)`, and is pushed onto the call stack:
+8. `timeout` continues executing, calls `new Promise(callback)` on line 6, and is pushed onto the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers /new Promise/
 "use strict"
 
 function timeout(ms) {
   console.log("timeout start")
 
-  // Step 8
   return new Promise((resolve) => {
     setTimeout(() => {
       console.log(`timeout cb fired after ${ms} ms`)
@@ -603,7 +617,7 @@ exports.handler = main
 
 12. `main` continues executing, calls `console.log("main end")`, and is pushed onto the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers {17}
 "use strict"
 
 function timeout(ms) {
@@ -620,7 +634,7 @@ function timeout(ms) {
 async function main() {
   console.log("main start")
   timeout(5e3)
-  console.log("main end") // Step 12
+  console.log("main end")
 }
 
 exports.handler = main
@@ -660,16 +674,15 @@ exports.handler = main
   />
 </figure>
 
-16. The `Promise` callback executes, calls `setTimeout(callback, timeout)`, and is pushed onto the call stack:
+16. The `Promise` callback executes, calls `setTimeout(callback, timeout)` on line 7, and is pushed onto the call stack:
 
-```js
+```js title="timeout.js" showLineNumbers /setTimeout/
 "use strict"
 
 function timeout(ms) {
   console.log("timeout start")
 
   return new Promise((resolve) => {
-    // Step 16.
     setTimeout(() => {
       console.log(`timeout cb fired after ${ms} ms`)
       resolve()
@@ -759,9 +772,14 @@ This results in `timeout cb fired after 5000 ms` being printed first, because it
 
 Obviously this is undesired behavior and you should _not_ write your code in the same way we wrote the code in `timeout.js`.
 
-Like stated in the [AWS documentation](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html), we need to make sure to complete processing _all_ callbacks before our handler exits:
+Like stated in the AWS docs, we need to make sure to complete processing _all_ callbacks before our handler exits:
 
 > You should make sure any background processes or callbacks (in case of Node.js) in your code are complete before the code exits.
+>
+> <cite>
+>   [AWS docs: Lambda execution
+>   environment](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html)
+> </cite>
 
 Therefore we'll make the following change to the code in `timeout.js`:
 
@@ -772,7 +790,7 @@ Therefore we'll make the following change to the code in `timeout.js`:
 
 This change makes sure the handler function does _not_ stop executing until the `timeout` function finishes:
 
-```js
+```js title="timeout.js" showLineNumbers {16}
 "use strict"
 
 function timeout(ms) {
@@ -788,7 +806,7 @@ function timeout(ms) {
 
 async function main() {
   console.log("main start")
-  await timeout(5e3) // Use await
+  await timeout(5e3)
   console.log("main end")
 }
 

@@ -16,7 +16,7 @@ tags:
     "tutorial",
   ]
 publishedAt: "June 19 2019"
-updatedAt: "December 3 2022"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -89,21 +89,15 @@ This API isn't very useful, but gives us something to work with in order to impl
 
 ### Example
 
-Request:
-
-```
-HTTP GET /profile
+```sh title="HTTP request"
+GET /profile
 Authorization: Bearer eyJ...lKw
 ```
 
-Response:
-
-```
-HTTP 200 OK
+```sh title="HTTP response"
+200 OK
 Content-Type: application/json
-```
 
-```json
 {
   "name": "Daniël"
 }
@@ -161,8 +155,8 @@ I haven't explained what a Lambda Authorizer is yet. In short, it's a feature of
 > A Lambda authorizer is useful if you want to implement a custom authorization scheme that uses a bearer token authentication strategy such as OAuth.
 >
 > <cite>
->   [AWS
->   docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
+>   [AWS docs: Use API Gateway Lambda
+>   authorizers](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 > </cite>
 
 There are actually two types of Lambda Authorizers:
@@ -182,7 +176,7 @@ When a Lambda Authorizer is configured, and a client makes a request to APIG, AW
 
 [^4]: We get the JWKS URI, issuer and audience values from the [Lambda Authorizer configuration](#lambda-authorizer-configuration).
 
-Only when the token passes these checks should the Lambda Authorizer return an [IAM Policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) document with `Effect` set to `Allow`:
+Only when the token passes these checks should the Lambda Authorizer return an [IAM Policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) document with `"Effect"` set to `"Allow"`:
 
 ```json
 {
@@ -199,7 +193,7 @@ Only when the token passes these checks should the Lambda Authorizer return an [
 
 It's this policy that tells APIG it's _allowed_ to invoke our downstream Lambda handler. In our case that will be the Lambda handler that returns the profile data.
 
-Alternatively, the Lambda authorizer may _deny_ invoking the downstream handler by setting `Effect` to `Deny`:
+Alternatively, the Lambda authorizer may _deny_ invoking the downstream handler by setting `"Effect"` to `"Deny"`:
 
 ```json
 {
@@ -249,7 +243,7 @@ We'll use this scope when implementing the Account API. And you can read more ab
 
 You can propagate authorization information (like scopes) downstream by returning a `context` object in the Lambda Authorizer's response:
 
-```js
+```js showLineNumbers {16-18}
 "use strict"
 
 module.exports.authorizer = (event) => {
@@ -266,7 +260,7 @@ module.exports.authorizer = (event) => {
       ],
     },
     context: {
-      scope: "get:profile", // Custom info goes here
+      scope: "get:profile",
     },
   }
 
@@ -278,22 +272,22 @@ But there's a caveat here. You can _not_ set a JSON serializable object or array
 
 ```js
 context: {
-  a: 'value', // OK
-  b: 1, // OK
-  c: true, // OK
-  d: [9, 8, 7], // Will NOT be serialized
-  e: { x: 'value', y: 99, z: false } // Will NOT be serialized
+  a: 'value', // ✅ OK
+  b: 1, // ✅ OK
+  c: true, // ✅ OK
+  d: [9, 8, 7], // ❌ Will NOT be serialized
+  e: { x: 'value', y: 99, z: false } // ❌ Will NOT be serialized
 }
 ```
 
 Any "valid" properties passed to the `context` object will be made available to downstream Lambda handlers via the `event` object:
 
-```js
+```js showLineNumbers
 "use strict"
 
 module.exports.handler = (event) => {
   const { authorizer } = event.requestContext
-  console.log(authorizer.scope) // Logs: "get:profile"
+  console.log(authorizer.scope) // "get:profile"
 }
 ```
 
@@ -364,14 +358,7 @@ Move to this directory and initialize a new [npm](https://www.npmjs.com) project
 npm init -y
 ```
 
-This creates a `package.json` file:
-
-```sh
-lambda-authorizers
-  └── package.json
-```
-
-Now install the following required npm dependencies:
+This creates a `package.json` file. Now you can install the following required npm dependencies:
 
 ```sh
 npm i jsonwebtoken jwks-rsa
@@ -387,19 +374,9 @@ npm i -D serverless
 
 ### 2. Configuring a Serverless manifest
 
-Create a `serverless.yaml` manifest file:
+Create a Serverless manifest:
 
-```sh
-lambda-authorizers
-  ├── node_modules
-  ├── package-lock.json
-  ├── package.json
-  └── serverless.yaml
-```
-
-Add the following to it:
-
-```yaml
+```yaml title="lambda-authorizers/serverless.yaml" showLineNumbers
 service: lambda-authorizers
 
 provider:
@@ -421,26 +398,33 @@ package:
 
 Add the properties we got from the [Lambda Authorizer configuration](#lambda-authorizer-configuration) as environment variables. For example:
 
-```yaml
+```yaml title="lambda-authorizers/serverless.yaml" showLineNumbers{10-13}
+service: lambda-authorizers
+
 provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'prod'}
+  region: ${opt:region, 'eu-central-1'}
+  memorySize: 128
+  timeout: 3
   environment:
     JWKS_URI: "https://danillouz.eu.auth0.com/.well-known/jwks.json"
     TOKEN_ISSUER: "https://danillouz.eu.auth0.com/"
     AUDIENCE: "https://api.danillouz.dev/account"
+
+package:
+  exclude:
+    - ./*
+    - ./**/*.test.js
+  include:
+    - node_modules
+    - src
 ```
 
 And add the Lambda function definition:
 
-```yaml
-functions:
-  auth0VerifyBearer:
-    handler: src/auth0.verifyBearer
-    description: Verifies the bearer token with the help of Auth0
-```
-
-You should now have a manifest that looks like this:
-
-```yaml
+```yaml yaml title="lambda-authorizers/serverless.yaml" showLineNumbers{23-26}
 service: lambda-authorizers
 
 provider:
@@ -471,21 +455,9 @@ functions:
 
 ### 3. Defining the Lambda Authorizer
 
-In order to match the Lambda function definition in the Serverless manifest, create a file named `auth0.js` in `src`:
+In order to match the Lambda function definition in the Serverless manifest, create a file named `auth0.js` in `src`. And in that file export a method named `verifyBearer`:
 
-```sh
-lambda-authorizers
-  ├── node_modules
-  ├── package-lock.json
-  ├── package.json
-  ├── serverless.yaml
-  └── src
-      └── auth0.js
-```
-
-And in `src/auth0.js` export a method named `verifyBearer`:
-
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers
 "use strict"
 
 module.exports.verifyBearer = async () => {
@@ -500,26 +472,13 @@ module.exports.verifyBearer = async () => {
 
 If something goes wrong in the Lambda, we'll log the error and throw a new `Unauthorized` error. This will make APIG return a `401 Unauthorized` response back to the caller[^5].
 
-[^5]: The thrown error _must_ match the string `"Unauthorized"` _exactly_ for this to work.
+[^5]: The thrown error message _must_ match the string `"Unauthorized"` _exactly_ for this to work.
 
 ### 4. Getting the token
 
-The Lambda will first have to get the bearer token from the `Authorization` request header. Create a helper function for that in `src/get-token.js`:
+The Lambda will first have to get the bearer token from the `Authorization` request header. Create a helper function for that in `src/get-token.js`. And in that file export a function named `getToken`:
 
-```sh
-lambda-authorizers
-  ├── node_modules
-  ├── package-lock.json
-  ├── package.json
-  ├── serverless.yaml
-  └── src
-      ├── auth0.js
-      └── get-token.js
-```
-
-And in this file export a function named `getToken`:
-
-```js
+```js title="lambda-authorizers/src/get-token.js" showLineNumbers
 "use strict"
 
 module.exports = function getToken(event) {
@@ -545,7 +504,7 @@ Here we're only interested in `TOKEN` events because we're implementing a [token
 
 Then `require` and call the helper in the Lambda with the APIG HTTP input [event](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format) as an argument:
 
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {3,7}
 "use strict"
 
 const getToken = require("./get-token")
@@ -562,29 +521,15 @@ module.exports.verifyBearer = async (event) => {
 
 ### 5. Verifying the token
 
-Now we have the token, we need to verify it. We'll use another helper function for that in `src/verify-token.js`:
+Now we have the token, we need to verify it by:
 
-```sh
-lambda-authorizers
-  ├── node_modules
-  ├── package-lock.json
-  ├── package.json
-  ├── serverless.yaml
-  └── src
-      ├── auth0.js
-      ├── get-token.js
-      └── verify-token.js
-```
+1. Decoding the bearer token (JWT).
+2. Fetching the public key from Auth0 using the JWKS URI (used to verify the token signature).
+3. Verifying the token signature, issuer and audience claims.
 
-This helper will do 3 things:
+We'll use another helper function for this. Create one in `src/verify-token.js`, and export a function named `verifyToken`:
 
-1. Decode the bearer token (JWT).
-2. Fetch the public key from Auth0 using the JWKS URI (used to verify the token signature).
-3. Verify the token signature, issuer and audience claims.
-
-Export a function named `verifyToken` in `src/verify-token.js`:
-
-```js
+```js title="lambda-authorizers/src/verify-token.js" showLineNumbers
 "use strict"
 
 module.exports = async function verifyToken(
@@ -620,7 +565,7 @@ When we registered the API with Auth0 we chose the `RS256` signing algorithm. Th
 
 First require the helper in the Lambda and pass the `token` as the first argument when calling it:
 
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {4,9}
 "use strict"
 
 const getToken = require("./get-token")
@@ -639,7 +584,7 @@ module.exports.verifyBearer = async (event) => {
 
 To decode the token in the helper (step 1), we'll use the `jsonwebtoken` library. It exposes a `decode` method. Pass this method as the second argument when calling the helper:
 
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {3,11}
 "use strict"
 
 const jwt = require("jsonwebtoken")
@@ -660,7 +605,7 @@ module.exports.verifyBearer = async (event) => {
 
 To fetch the public key from Auth0 (step 2) we'll use the `jwks-rsa` library. It exposes a client with `getSigningKey` method to fetch the key. Pas a "promisified" version of this method as the third argument when calling the helper:
 
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {3,5,10,11-17,22}
 "use strict"
 
 const util = require("util")
@@ -692,7 +637,7 @@ module.exports.verifyBearer = async (event) => {
 
 Finally, to verify the token signature, issuer and audience claims (step 3) we'll use the `jsonwebtoken` library again. It exposes a `verify` method. Pass a "promisified" version of this method together with the `TOKEN_ISSUER` and `AUDIENCE` as the final arguments when calling the helper:
 
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {10,18,27-29}
 "use strict"
 
 const util = require("util")
@@ -732,7 +677,7 @@ module.exports.verifyBearer = async (event) => {
 
 When the helper verifies the token, it will return the JWT payload data (with all claims) as `verifiedData`. For example:
 
-```json
+```json title="verifiedData"
 {
   "iss": "https://danillouz.eu.auth0.com/",
   "sub": "FHgLVARPk8oXjsP5utP8wYAnZePPAkw1@clients",
@@ -746,9 +691,9 @@ When the helper verifies the token, it will return the JWT payload data (with al
 
 ### 6. Creating the auth response
 
-We'll use the `verifiedData` to create the `authResponse`:
+We'll use `verifiedData` to create the `authResponse`:
 
-```js
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {23,31-44}
 "use strict"
 
 const util = require("util")
@@ -779,7 +724,6 @@ module.exports.verifyBearer = async (event) => {
       TOKEN_ISSUER,
       AUDIENCE
     )
-
     const authResponse = {
       principalId: verifiedData.sub,
       policyDocument: {
@@ -805,7 +749,7 @@ module.exports.verifyBearer = async (event) => {
 
 The `authResponse.principalId` property must represent a unique (user) identifier associated with the token sent by the client. Auth0 provides this via the `sub` claim and ours has the value:
 
-```json
+```json title="verifiedData" {3}
 {
   "iss": "https://danillouz.eu.auth0.com/",
   "sub": "FHgLVARPk8oXjsP5utP8wYAnZePPAkw1@clients", // Principal ID
@@ -865,9 +809,9 @@ Then check the `get:profile` scope, click "Update" and click "Continue":
   </figcaption>
 </figure>
 
-Now the configured scope will be a claim on issued test tokens:
+Now the configured scope will be a claim on issued test tokens, and part of the `verifiedData`:
 
-```json
+```json title="verifiedData" {8}
 {
   "iss": "https://danillouz.eu.auth0.com/",
   "sub": "FHgLVARPk8oXjsP5utP8wYAnZePPAkw1@clients",
@@ -880,24 +824,60 @@ Now the configured scope will be a claim on issued test tokens:
 }
 ```
 
-And therefore part of the `verifiedData`, so we can propagate it to downstream Lambda handlers like this:
+So we can propagate it to downstream Lambda handlers like this:
 
-```js
-const authResponse = {
-  principalId: verifiedData.sub,
-  policyDocument: {
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Action: "execute-api:Invoke",
-        Effect: "Allow",
-        Resource: event.methodArn,
+```js title="lambda-authorizers/src/auth0.js" showLineNumbers {43-45}
+"use strict"
+
+const util = require("util")
+const jwt = require("jsonwebtoken")
+const jwksRSA = require("jwks-rsa")
+
+const getToken = require("./get-token")
+const verifyToken = require("./verify-token")
+
+const { JWKS_URI, TOKEN_ISSUER, AUDIENCE } = process.env
+
+const jwksClient = jwksRSA({
+  cache: true,
+  rateLimit: true,
+  jwksUri: JWKS_URI,
+})
+const getSigningKey = util.promisify(jwksClient.getSigningKey)
+const verifyJwt = util.promisify(jwt.verify)
+
+module.exports.verifyBearer = async (event) => {
+  try {
+    const token = getToken(event)
+    const verifiedData = await verifyToken(
+      token,
+      jwt.decode,
+      getSigningKey,
+      verifyJwt,
+      TOKEN_ISSUER,
+      AUDIENCE
+    )
+    const authResponse = {
+      principalId: verifiedData.sub,
+      policyDocument: {
+        Version: "2012-10-17",
+        Statement: [
+          {
+            Action: "execute-api:Invoke",
+            Effect: "Allow",
+            Resource: event.methodArn,
+          },
+        ],
       },
-    ],
-  },
-  context: {
-    scope: verifiedData.scope, // Propagate scope downstream
-  },
+      context: {
+        scope: verifiedData.scope, // Propagate scope downstream
+      },
+    }
+    return authResponse
+  } catch (err) {
+    console.log("Authorizer Error: ", err)
+    throw new Error("Unauthorized")
+  }
 }
 ```
 
@@ -905,7 +885,7 @@ const authResponse = {
 
 Finally, add a release command to the `package.json`:
 
-```json
+```json title="lambda-authorizers/package.json" showLineNumbers {4}
 {
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -921,13 +901,9 @@ Finally, add a release command to the `package.json`:
 }
 ```
 
-In order to upload the Lambda to AWS, [sign up](https://portal.aws.amazon.com/billing/signup) and make sure you have your [credentials configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). Then release the Lambda with:
+And to upload the Lambda to AWS, [sign up](https://portal.aws.amazon.com/billing/signup) and make sure you have your [credentials configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). Then release the Lambda by running `npm run release`:
 
-```sh
-npm run release
-```
-
-```sh
+```sh title="npm run release output" {25}
 Serverless: Packaging service...
 Serverless: Excluding development dependencies...
 Serverless: Creating Stack...
@@ -998,14 +974,7 @@ Move to this directory and initialize a new npm project with:
 npm init -y
 ```
 
-This creates a `package.json` file:
-
-```sh
-account-api
-  └── package.json
-```
-
-Again, we'll use the Serverless Framework to configure and upload the Lambda to AWS, so install it as a dev dependency:
+This creates a `package.json` file. Again, we'll use the Serverless Framework to configure and upload the Lambda to AWS, so install it as a dev dependency:
 
 ```sh
 npm i -D serverless
@@ -1013,19 +982,9 @@ npm i -D serverless
 
 ### 2. Configuring the Serverless manifest
 
-Create a `serverless.yaml` manifest file:
+Create a Serverless manifest, and add the Lambda function definition for the `GET /profile` endpoint handler:
 
-```sh
-account-api
-  ├── node_modules
-  ├── package-lock.json
-  ├── package.json
-  └── serverless.yaml
-```
-
-Add the Lambda function definition for the `GET /profile` endpoint handler:
-
-```yaml
+```yaml title="account-api/serverless.yaml" showLineNumbers
 service: account-api
 
 provider:
@@ -1056,21 +1015,9 @@ functions:
 
 ### 3. Defining the Lambda handler
 
-In order to match the Lambda function definition in the Serverless manifest, create a file named `handler.js` in `src`:
+In order to match the Lambda function definition in the Serverless manifest, create a file named `handler.js` in `src`. And in that file export a method named `getProfile`:
 
-```sh
-account-api
-  ├── node_modules
-  ├── package-lock.json
-  ├── package.json
-  ├── serverless.yaml
-  └── src
-      └── handler.js
-```
-
-And in `src/handler.js` export a method named `getProfile`:
-
-```js
+```js title="account-api/src/handler.js" showLineNumbers
 "use strict"
 
 module.exports.getProfile = async () => {
@@ -1093,7 +1040,7 @@ If something goes wrong in the Lambda, we'll return an error response as [HTTP o
 
 Otherwise we'll return the profile data:
 
-```js
+```js title="account-api/src/handler.js" showLineNumbers {5-11}
 "use strict"
 
 module.exports.getProfile = async () => {
@@ -1124,7 +1071,7 @@ Before we enable auth, let's first release the API to see if we can call the end
 
 Add a release command to the `package.json`:
 
-```json
+```js title="account-api/package.json" showLineNumbers {4}
 {
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -1136,13 +1083,9 @@ Add a release command to the `package.json`:
 }
 ```
 
-Then release the Lambda with:
+Then release the Lambda by running `npm run release`:
 
-```sh
-npm run release
-```
-
-```sh
+```sh title="npm run release output" {23}
 Serverless: Packaging service...
 Serverless: Excluding development dependencies...
 Serverless: Creating Stack...
@@ -1172,7 +1115,7 @@ layers:
   None
 ```
 
-Now try to call the endpoint that has been created for you (printed in `endpoints > GET`). For example:
+Now try to call the endpoint that has been created for you. For example:
 
 ```sh
 curl https://9jwh.execute-api.eu-central-1.amazonaws.com/prod/profile
@@ -1180,36 +1123,20 @@ curl https://9jwh.execute-api.eu-central-1.amazonaws.com/prod/profile
 
 It should return:
 
-```json
-{ "name": "Daniël" }
+```sh title="HTTP response"
+200 OK
+Content-Type: application/json
+
+{
+  "name": "Daniël"
+}
 ```
 
 ### 5. Configuring the Lambda Authorizer
 
 Now we know the endpoint is working, we'll protect it by adding a custom `authorizer` property in the `serverless.yaml` manifest:
 
-```yaml
-custom:
-  authorizer:
-    arn: LAMBDA_AUTHORIZER_ARN
-    resultTtlInSeconds: 0
-    identitySource: method.request.header.Authorization
-    identityValidationExpression: '^Bearer [-0-9a-zA-z\.]*$'
-    type: token
-```
-
-Let's go over the `authorizer` properties:
-
-- `arn`: must be the value of the Lambda Authorizer ARN we [released](#finding-the-arn) before.
-- `resultTtlInSeconds`: used to cache the IAM Policy document returned from the Lambda Authorizer[^6].
-- `identitySource`: where APIG should "look" for the bearer token.
-- `identityValidationExpression`: the expression used to extract the token from the `identitySource`.
-
-[^6]: Caching is _disabled_ when set to `0`. When caching is enabled and a policy document has been cached, the Lambda Authorizer will _not_ be executed. According to the AWS [docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/configure-api-gateway-lambda-authorization-with-console.html) the default value is `300` seconds and the max value is `3600` seconds.
-
-You should now have a manifest that looks like this:
-
-```yaml
+```yaml title="account-api/serverless.yaml" showLineNumbers {3-9,36}
 service: account-api
 
 custom:
@@ -1248,11 +1175,20 @@ functions:
           authorizer: ${self:custom.authorizer}
 ```
 
+Let's go over the `authorizer` properties:
+
+- `arn`: must be the value of the Lambda Authorizer ARN we [released](#finding-the-arn) before.
+- `resultTtlInSeconds`: used to cache the IAM Policy document returned from the Lambda Authorizer[^6].
+- `identitySource`: where APIG should "look" for the bearer token.
+- `identityValidationExpression`: the expression used to extract the token from the `identitySource`.
+
+[^6]: Caching is _disabled_ when set to `0`. When caching is enabled and a policy document has been cached, the Lambda Authorizer will _not_ be executed. According to the AWS [docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/configure-api-gateway-lambda-authorization-with-console.html) the default value is `300` seconds and the max value is `3600` seconds.
+
 ### 6. Adding authorization logic
 
 Now the Lambda Authorizer is configured and we also propagate the `get:profile` scope from the Lambda Authorizer, we can check if a caller has been granted the required scope. If not, we'll return a `403 Forbidden` response back to the caller:
 
-```js
+```js title="account-api/src/handler.js" showLineNumbers {3,7-15}
 "use strict"
 
 const REQUIRED_SCOPE = "get:profile"
@@ -1291,19 +1227,13 @@ module.exports.getProfile = async (event) => {
 
 Note that the `authorizer.scope` is a string and that it may contain more than one scope value. When multiple scopes are configured, they will be space separated like this:
 
-```js
+```js title="authorizer.scope"
 "get:profile update:profile"
 ```
 
 ### 7. Releasing the API with auth enabled
 
-Do another release:
-
-```sh
-npm run release
-```
-
-After Serverless finishes, go to the AWS Console and visit the "API Gateway" service. Navigate to "prod-account-api" and click on the "GET" resource under "/profile". You should now see that the "Method Request" tile has a property "Auth" set to `auth0VerifyBearer`:
+Do another release by running `npm run release`. And after Serverless finishes, go to the AWS Console and visit the "API Gateway" service. Navigate to "prod-account-api" and click on the "GET" resource under "/profile". You should now see that the "Method Request" tile has a property "Auth" set to `auth0VerifyBearer`:
 
 <figure>
   <Image
@@ -1323,8 +1253,13 @@ curl https://9jwh.execute-api.eu-central-1.amazonaws.com/prod/profile
 
 It should return:
 
-```json
-{ "message": "Unauthorized" }
+```sh title="HTTP response"
+401 Unauthorized
+Content-Type: application/json
+
+{
+  "message": "Unauthorized"
+}
 ```
 
 ### 8. Getting a test token
@@ -1357,26 +1292,34 @@ curl --request GET \
 
 This should return the profile data again:
 
-```json
-{ "name": "Daniël" }
+```sh title="HTTP response"
+200 OK
+Content-Type: application/json
+
+{
+  "name": "Daniël"
+}
 ```
 
-Also, sending a token without the required scope should return a `403`:
+Also, sending a token _without_ the required scope should return a `403`:
 
-```json
+```sh title="HTTP response"
+403 Forbidden
+Content-Type: application/json
+
 {
   "message": "Error: Forbidden",
   "info": "scope \"get:profile\" is required"
 }
 ```
 
-Awesome! We successfully secured our API with a token based authentication strategy, so only authenticated and authorized clients can access it!
+Awesome! We successfully secured our API with a token based authentication strategy. So only authenticated _and_ authorized clients can access it now!
 
 ## CORS headers
 
 On a final note, when your API needs to return [CORS headers](https://serverless.com/blog/cors-api-gateway-survival-guide), make sure to add a [custom APIG Response](https://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html) as well:
 
-```yaml
+```yaml title="account-api/serverless.yaml" showLineNumbers {37-56}
 service: account-api
 
 custom:
@@ -1413,7 +1356,6 @@ functions:
           method: get
           authorizer: ${self:custom.authorizer}
 
-# Custom APIG Response.
 resources:
   Resources:
     GatewayResponseDefault4XX:
