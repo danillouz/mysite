@@ -80,7 +80,9 @@ const Help: FunctionalComponent = () => {
 
               <cite>
                 <p>
-                  <a href="https://brid.gy/about">Bridgy about</a>
+                  <a href="https://brid.gy/about">
+                    Bridgy about: Which things does it send, specifically?
+                  </a>
                 </p>
               </cite>
             </blockquote>

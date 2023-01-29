@@ -9,23 +9,15 @@ import autolinkHeadings from "rehype-autolink-headings"
 import { h } from "hastscript"
 
 import { remarkReadingTime } from "./src/plugins/reading-time"
+import { codeSnippets } from "./src/plugins/code-snippets"
 
 // See: https://astro.build/config
 export default defineConfig({
   site: "https://www.danillouz.dev",
 
   markdown: {
-    syntaxHighlight: "shiki",
-
-    // See: https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
-    shikiConfig: {
-      // See: https://github.com/shikijs/shiki/blob/main/docs/themes.md
-      //
-      // For CSS var values see: `src/styles/base.css`
-      theme: "css-variables",
-
-      wrap: false,
-    },
+    // Syntax highlighting is controlled via custom plugin `codeSnippets`.
+    syntaxHighlight: false,
 
     // See: https://docs.astro.build/en/reference/configuration-reference/#markdownremarkrehype
     remarkRehype: {
@@ -77,6 +69,7 @@ export default defineConfig({
             ],
           },
         ],
+        codeSnippets,
       ],
     }),
 

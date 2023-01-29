@@ -38,45 +38,6 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-box-shadow: 39 39 42; /* zinc-800 */
   }
 
-  @media (prefers-color-scheme: light) {
-    :root {
-      /* Light syntax highlighting for code blocks (VS Code GitHub Light) */
-      --astro-code-color-text: #24292e;
-      --astro-code-color-background: #fafafa;
-      --astro-code-token-constant: #005cc5;
-      --astro-code-token-string: #032f62;
-      --astro-code-token-comment: #6a737d;
-      --astro-code-token-keyword: #d73a49;
-      --astro-code-token-parameter: #e36209;
-      --astro-code-token-function: #6f42c1;
-      --astro-code-token-string-expression: #032f62;
-      --astro-code-token-punctuation: #24292e;
-      --astro-code-token-link: #0366d6;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      /* Dark syntax highlighting for code blocks (VS Code GitHub Light) */
-      --astro-code-color-text: #e1e4e8;
-      --astro-code-color-background: #27272a;
-      --astro-code-token-constant: #79b8ff;
-      --astro-code-token-string: #9ecbff;
-      --astro-code-token-comment: #6a737d;
-      --astro-code-token-keyword: #f97583;
-      --astro-code-token-parameter: #ffab70;
-      --astro-code-token-function: #b392f0;
-      --astro-code-token-string-expression: #9ecbff;
-      --astro-code-token-punctuation: #e1e4e8;
-      --astro-code-token-link: #79b8ff;
-    }
-
-    /* Make images less bright in dark mode */
-    img {
-      filter: brightness(0.8) contrast(1.2);
-    }
-  }
-
   /* Background */
 
   .pattern-boxes {
@@ -97,12 +58,14 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply opacity-100;
   }
 
-  blockquote cite p::before {
-    content: "\2014" !important;
+  .prose blockquote cite p::before {
+    content: "\2014"; /* Em dash */
   }
-
-  blockquote cite p::after {
-    content: none !important;
+  .prose blockquote cite p::after {
+    content: none;
+  }
+  .prose blockquote a {
+    @apply text-danos-primary dark:text-danos-primary-inverted;
   }
 
   article :is(h2, h3, h4, h5, h6),
@@ -112,11 +75,14 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply scroll-mt-12;
   }
 
+  table {
+    @apply block overflow-x-scroll whitespace-nowrap max-w-fit mx-auto sm:table sm:table-auto sm:whitespace-normal sm:max-w-none;
+  }
+
   sup a[aria-describedby="footnote-label"],
   a[data-footnote-backref] {
     @apply no-underline;
   }
-
   sup a[aria-describedby="footnote-label"]::before {
     content: "[";
   }
@@ -124,6 +90,9 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     content: "]";
   }
 
+  .toc-active {
+    @apply text-danos-highlight dark:text-danos-highlight-inverted;
+  }
   a[data-indent="1"] {
     @apply pl-4;
   }
@@ -140,19 +109,71 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply pl-20;
   }
 
-  table {
-    @apply block overflow-x-scroll whitespace-nowrap max-w-fit mx-auto sm:table sm:table-auto sm:whitespace-normal sm:max-w-none;
+  /* Code snippets */
+
+  div[data-rehype-pretty-code-fragment] {
+    @apply my-5 border border-danos-primary dark:border-danos-primary-inverted rounded-sm;
   }
 
-  img {
-    @apply shadow-md;
+  div[data-rehype-pretty-code-title] {
+    @apply p-1 font-sans text-xs text-center text-danos-primary dark:text-danos-primary-inverted bg-danos-secondary/50 dark:bg-danos-secondary-inverted/50 border-b border-danos-primary dark:border-danos-primary-inverted;
   }
 
-  .toc-active {
-    @apply text-danos-highlight dark:text-danos-highlight-inverted;
+  pre > code {
+    --line-highlighted-border-width: 3px;
+
+    --line-num-color: #1b1f234d;
+    --line-num-highlighted-color: #24292e;
+    --line-highlighted-bg: #0366d625;
+    --line-highlighted-border: #005cc5;
+    --line-highlighted-word-bg: #0366d625;
+
+    --line-num-color-inverted: #444d56;
+    --line-num-highlighted-color-inverted: #e1e4e8;
+    --line-highlighted-bg-inverted: #3392ff44;
+    --line-highlighted-border-inverted: #79b8ff;
+    --line-highlighted-word-bg-inverted: #3392ff44;
+
+    @apply grid;
+  }
+
+  code .line {
+    @apply px-5;
+
+    padding-left: calc(1.25rem - var(--line-highlighted-border-width));
+
+    /* Prevent misalignment when line numbers are enabled. */
+    border-left-width: var(--line-highlighted-border-width);
+    border-left-style: solid;
+    border-left-color: transparent;
+  }
+
+  code[data-line-numbers] .line {
+    @apply pl-0;
+  }
+  code[data-line-numbers] {
+    counter-reset: line;
+  }
+  code[data-line-numbers] > .line::before {
+    @apply inline-block mr-4 w-4 text-right;
+
+    counter-increment: line;
+    content: counter(line);
+  }
+  code[data-line-numbers-max-digits="2"] > .line::before {
+    @apply w-8;
+  }
+  code[data-line-numbers-max-digits="3"] > .line::before {
+    @apply w-12;
+  }
+
+  code .line.highlighted {
+    border-left-width: var(--line-highlighted-border-width);
+    border-left-style: solid;
   }
 
   /* Webmentions */
+
   .wm-reply-content p {
     @apply my-3;
   }
@@ -174,6 +195,66 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     }
     100% {
       opacity: 0;
+    }
+  }
+
+  /* Dark/light mode overrides */
+
+  @media (prefers-color-scheme: light) {
+    img {
+      @apply shadow-md;
+    }
+
+    /* Code snippets */
+
+    div[data-rehype-pretty-code-title][data-theme="dark"],
+    pre[data-theme="dark"],
+    code[data-theme="dark"] {
+      display: none;
+    }
+
+    code[data-line-numbers] > .line::before {
+      color: var(--line-num-color);
+    }
+    code[data-line-numbers] > .line.highlighted::before {
+      color: var(--line-num-highlighted-color);
+    }
+
+    code .line.highlighted {
+      background: var(--line-highlighted-bg);
+      border-left-color: var(--line-highlighted-border);
+    }
+    code .line .highlighted-word {
+      background: var(--line-highlighted-word-bg);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    img {
+      filter: brightness(0.8) contrast(1.2);
+    }
+
+    /* Code snippets */
+
+    div[data-rehype-pretty-code-title][data-theme="light"],
+    pre[data-theme="light"],
+    code[data-theme="light"] {
+      display: none;
+    }
+
+    code[data-line-numbers] > .line::before {
+      color: var(--line-num-color-inverted);
+    }
+    code[data-line-numbers] > .line.highlighted::before {
+      color: var(--line-num-highlighted-color-inverted);
+    }
+
+    code .line.highlighted {
+      background: var(--line-highlighted-bg-inverted);
+      border-left-color: var(--line-highlighted-border-inverted);
+    }
+    code .line .highlighted-word {
+      background: var(--line-highlighted-word-bg-inverted);
     }
   }
 }
