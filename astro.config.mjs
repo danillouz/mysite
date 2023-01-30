@@ -12,7 +12,7 @@ import { codeSnippets } from "./src/plugins/code-snippets"
 
 // See: https://astro.build/config
 export default defineConfig({
-  site: "https://www.danillouz.dev",
+  site: "https://www.danillouz.dev/",
 
   markdown: {
     // Syntax highlighting is controlled via custom plugin `codeSnippets`.
@@ -40,8 +40,6 @@ export default defineConfig({
 
     // See: https://docs.astro.build/en/guides/integrations-guide/mdx/
     mdx({
-      extendPlugins: "markdown",
-      extendDefaultPlugins: true,
       remarkPlugins: [remarkReadingTime],
       rehypePlugins: [rehypeHeadingIds, autolinkHeadings, codeSnippets],
     }),

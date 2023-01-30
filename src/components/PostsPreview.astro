@@ -19,7 +19,7 @@ const { posts } = Astro.props
       posts.map((post) => {
         const {
           url,
-          frontmatter: { title, description, publishedAt },
+          frontmatter: { title, description, pubDate },
         } = post
 
         return (
@@ -38,9 +38,9 @@ const { posts } = Astro.props
                 </a>
               </h2>
 
-              {publishedAt && (
+              {pubDate && (
                 <Time
-                  datetime={publishedAt}
+                  datetime={pubDate}
                   class="z-10 relative order-first mb-3 flex items-center text-sm md:hidden"
                 />
               )}
@@ -48,9 +48,9 @@ const { posts } = Astro.props
               <p class="z-10 relative mt-2 text-sm page-text">{description}</p>
             </div>
 
-            {publishedAt && (
+            {pubDate && (
               <Time
-                datetime={publishedAt}
+                datetime={pubDate}
                 class="hidden z-10 md:block relative order-first items-center text-sm"
               />
             )}

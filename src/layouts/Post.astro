@@ -20,8 +20,8 @@ const {
     title,
     description,
     tags,
-    publishedAt,
-    updatedAt,
+    pubDate,
+    updatedDate,
     heroImage,
     heroImageAlt,
     readingTime,
@@ -123,9 +123,9 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
 
           <p class="order-first page-subtext">
             {
-              publishedAt && (
+              pubDate && (
                 <>
-                  <Time datetime={publishedAt} /> &bull;
+                  <Time datetime={pubDate} /> &bull;
                 </>
               )
             }
@@ -225,9 +225,9 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
           </p>
 
           {
-            updatedAt && (
+            updatedDate && (
               <p class="page-subtext text-center">
-                Post last updated <Time datetime={updatedAt} />
+                Post last updated <Time datetime={updatedDate} />
               </p>
             )
           }

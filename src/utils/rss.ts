@@ -1,11 +1,9 @@
-import type { Frontmatter } from "@types"
+import type { RssItem } from "@types"
 
-export function sortRssPostsRecentlyPublished(
-  posts: { url: string; frontmatter: Frontmatter }[]
-) {
-  return posts.sort((a, b) => {
-    const pubDateA = a.frontmatter.publishedAt ?? new Date()
-    const pubDateB = b.frontmatter.publishedAt ?? new Date()
+export function sortRssPostsRecentlyPublished(items: RssItem[]) {
+  return items.sort((a, b) => {
+    const pubDateA = a.pubDate
+    const pubDateB = b.pubDate
     return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
   })
 }

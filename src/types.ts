@@ -1,30 +1,53 @@
 export interface Frontmatter {
-  // title of the post.
+  // Title of the post.
   title: string
 
-  // description of the post.
+  // Description of the post.
   description: string
 
-  // tags of the post.
+  // Tags of the post.
   tags: string[]
 
-  // publishedAt is the date string when the post was published.
-  publishedAt?: string
+  // Date string when the post was published.
+  pubDate?: string
 
-  // updatedAt is the date string when the post was updated.
-  updatedAt?: string
+  // Date string when the post was updated.
+  updatedDate?: string
 
-  // heroImage is the hero image of the post.
+  // Hero image of the post.
   heroImage?: string
 
-  // heroImageAlt is the hero image alt text of the post.
+  // Hero image alt text of the post.
   heroImageAlt?: string
 
-  // readingTime describes how long it takes to read the post.
+  // How long it takes to read the post.
   // Will be injected by `src/plugins/reading-time.mjs`.
   readingTime: string
 
-  // url of the post.
-  // For example: /posts/cool-post
+  // Url of the post.
+  // For example: `/posts/cool-post`.
   url: string
+}
+
+export interface RssItem {
+  // Title of the RSS item.
+  title: string
+
+  // Description of the RSS item.
+  description?: string | undefined
+
+  // Content of the RSS item.
+  content?: string | undefined
+
+  // If the RSS item is a draft or not.
+  draft?: boolean | undefined
+
+  // Custom XML data of the RSS item.
+  customData?: string | undefined
+
+  // Date string when the RSS item was published.
+  pubDate: Date
+
+  // Link to the RSS item.
+  link: string
 }
