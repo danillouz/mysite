@@ -7,27 +7,37 @@ import Tag from "@components/Tag.astro"
 import Webmentions from "@components/Webmentions"
 import { sortTagsAlphabetically } from "@utils/tags"
 
-import type { Frontmatter } from "@types"
+import type { MarkdownHeading } from "astro"
 
 interface Props {
-  frontmatter: Frontmatter
-  headings: { depth: number; slug: string; text: string }[]
+  headings: MarkdownHeading[]
+  url: string
+  data: {
+    title: string
+    description: string
+    tags?: string[]
+    publishedAt: Date
+    updatedAt?: Date
+    heroImage?: string
+    heroImageAlt?: string
+  }
+  readingTime?: string
   children: any
 }
 
 const {
-  frontmatter: {
+  headings,
+  url,
+  data: {
     title,
     description,
-    tags,
-    pubDate,
-    updatedDate,
+    tags = [],
+    publishedAt,
+    updatedAt,
     heroImage,
     heroImageAlt,
-    readingTime,
-    url,
   },
-  headings,
+  readingTime,
 } = Astro.props
 
 const tagsSorted = sortTagsAlphabetically(tags)
@@ -122,15 +132,7 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
           </h1>
 
           <p class="order-first page-subtext">
-            {
-              pubDate && (
-                <>
-                  <Time datetime={pubDate} /> &bull;
-                </>
-              )
-            }
-
-            {readingTime}
+            <Time datetime={publishedAt.toISOString()} /> &bull; {readingTime}
           </p>
         </header>
 
@@ -225,9 +227,9 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
           </p>
 
           {
-            updatedDate && (
+            updatedAt && (
               <p class="page-subtext text-center">
-                Post last updated <Time datetime={updatedDate} />
+                Post last updated <Time datetime={updatedAt.toISOString()} />
               </p>
             )
           }

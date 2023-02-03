@@ -1,11 +1,10 @@
 ---
 import Time from "@components/Time.astro"
 
-import type { MDXInstance } from "astro"
-import type { Frontmatter } from "@types"
+import type { CollectionEntry } from "astro:content"
 
 interface Props {
-  posts: MDXInstance<Frontmatter>[]
+  posts: CollectionEntry<"posts">[]
 }
 
 const { posts } = Astro.props
@@ -18,8 +17,9 @@ const { posts } = Astro.props
     {
       posts.map((post) => {
         const {
-          url,
-          frontmatter: { title, description, pubDate },
+          collection,
+          slug,
+          data: { title, description, publishedAt },
         } = post
 
         return (
@@ -29,7 +29,7 @@ const { posts } = Astro.props
                 <div class="z-0 absolute -inset-x-4 sm:-inset-x-6 -inset-y-6 sm:rounded-sm bg-danos-hover dark:bg-danos-hover-inverted/50 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition" />
 
                 <a
-                  href={url}
+                  href={`/${collection}/${slug}`}
                   class="underline underline-offset-2 decoration-1 focusable"
                 >
                   <span class="z-20 absolute -inset-y-6 -inset-x-4 sm:-inset-x-6 sm:rounded-sm" />
@@ -38,9 +38,9 @@ const { posts } = Astro.props
                 </a>
               </h2>
 
-              {pubDate && (
+              {publishedAt && (
                 <Time
-                  datetime={pubDate}
+                  datetime={publishedAt.toISOString()}
                   class="z-10 relative order-first mb-3 flex items-center text-sm md:hidden"
                 />
               )}
@@ -48,9 +48,9 @@ const { posts } = Astro.props
               <p class="z-10 relative mt-2 text-sm page-text">{description}</p>
             </div>
 
-            {pubDate && (
+            {publishedAt && (
               <Time
-                datetime={pubDate}
+                datetime={publishedAt.toISOString()}
                 class="hidden z-10 md:block relative order-first items-center text-sm"
               />
             )}

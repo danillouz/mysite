@@ -1,10 +1,7 @@
-import type { MDXInstance } from "astro"
-import type { Frontmatter } from "@types"
+import type { CollectionEntry } from "astro:content"
 
-export function sortPostsRecentlyPublished(posts: MDXInstance<Frontmatter>[]) {
+export function sortPostsRecentlyPublished(posts: CollectionEntry<"posts">[]) {
   return posts.sort((a, b) => {
-    const pubDateA = a.frontmatter.pubDate ?? new Date()
-    const pubDateB = b.frontmatter.pubDate ?? new Date()
-    return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
+    return b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
   })
 }

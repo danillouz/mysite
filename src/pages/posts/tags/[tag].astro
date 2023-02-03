@@ -1,19 +1,19 @@
 ---
+import { getCollection } from "astro:content"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
 import { sortPostsRecentlyPublished } from "@utils/posts"
 import { getAlphabeticallySortedTagsFromPosts } from "@utils/tags"
 
-import type { MDXInstance } from "astro"
-import type { Frontmatter } from "@types"
+import type { CollectionEntry } from "astro:content"
 
 interface Props {
-  posts: MDXInstance<Frontmatter>[]
+  post: CollectionEntry<"posts">
 }
 
-export async function getStaticPaths({}) {
-  const posts = await Astro.glob<Frontmatter>("../**/*.mdx")
+export async function getStaticPaths() {
+  const posts = await getCollection("posts")
   const postsSorted = sortPostsRecentlyPublished(posts)
   const tags = getAlphabeticallySortedTagsFromPosts(posts)
   return tags.map((tag) => {
@@ -23,7 +23,7 @@ export async function getStaticPaths({}) {
       },
       props: {
         posts: postsSorted.filter((post) => {
-          const { tags = [] } = post.frontmatter
+          const { tags = [] } = post.data
           return tags.includes(tag)
         }),
       },

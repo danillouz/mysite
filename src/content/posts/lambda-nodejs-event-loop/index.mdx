@@ -1,10 +1,9 @@
 ---
-layout: "../../../layouts/Post.astro"
 title: "AWS Lambda and the Node.js event loop"
 description: "Lambda can freeze and thaw its execution context, which can impact Node.js event loop behavior."
 tags: ["aws", "event-loop", "lambda", "nodejs"]
-pubDate: "May 30 2019"
-updatedDate: "January 29 2023"
+publishedAt: "May 30 2019"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -34,7 +33,12 @@ Every time a function is called, it's _pushed_ onto the stack (i.e. added to the
 The frames in a stack are popped off in <abbr title="Last In First Out">LIFO</abbr> order:
 
 <figure>
-  <Image src={import("./img/call-stack.png")} alt="Call stack with 2 frames." />
+  <Image
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/call-stack.png"
+    )}
+    alt="Call stack with 2 frames."
+  />
   <figcaption>A call stack with 2 frames.</figcaption>
 </figure>
 
@@ -62,7 +66,9 @@ We can visualize the call stack over time like this:
 
 <figure>
   <Image
-    src={import("./img/call-stack/1.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/1.png"
+    )}
     alt="Call stack progression over time for steps 1, 2 and 3."
   />
   <figcaption>
@@ -110,7 +116,9 @@ main()
 
 <figure>
   <Image
-    src={import("./img/call-stack/2.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/2.png"
+    )}
     alt="Call stack progression over time for steps 4, 5 and 6."
   />
   <figcaption>
@@ -158,7 +166,9 @@ main()
 
 <figure>
   <Image
-    src={import("./img/call-stack/3.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/3.png"
+    )}
     alt="Call stack progression over time for steps 7, 8 and 9."
   />
   <figcaption>
@@ -190,7 +200,9 @@ main()
 
 <figure>
   <Image
-    src={import("./img/call-stack/4.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/4.png"
+    )}
     alt="Call stack progression over time for steps 10 and 11."
   />
   <figcaption>Call stack progression over time for steps 10 and 11.</figcaption>
@@ -210,7 +222,7 @@ Each message can be thought of as a function that will be called in <abbr title=
 
 <figure>
   <Image
-    src={import("./img/queue.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/queue.png")}
     alt="A queue with 2 tasks (i.e. messages)."
   />
   <figcaption>A queue with 2 tasks (i.e. messages).</figcaption>
@@ -246,7 +258,9 @@ To summarize:
 
 <figure>
   <Image
-    src={import("./img/event-loop.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/event-loop.png"
+    )}
     alt="The event loop can be visualized as a queue of tasks, which are picked up by a loop."
   />
   <figcaption>The event loop visualized.</figcaption>
@@ -335,7 +349,7 @@ You can create a new function in the AWS Lambda console and paste in the code fr
 
 <figure>
   <Image
-    src={import("./img/console/1.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/console/1.png")}
     alt="Lambda console first run. The log message from the timeout callback is not printed."
   />
   <figcaption>
@@ -348,7 +362,7 @@ Wait, what? Lambda just ended the handler function _without_ printing the last m
 
 <figure>
   <Image
-    src={import("./img/console/2.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/console/2.png")}
     alt="Lambda console second run. The log message of the timeout callback from the previous run is printed first."
   />
   <figcaption>
@@ -396,7 +410,7 @@ Okay, so with this information we can make sense of what happened when we execut
 
 <figure>
   <Image
-    src={import("./img/lambda/1.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/1.png")}
     alt="Event loop visualized when executing step 1 of the timeout js script."
   />
 </figure>
@@ -405,7 +419,7 @@ Okay, so with this information we can make sense of what happened when we execut
 
 <figure>
   <Image
-    src={import("./img/lambda/2.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/2.png")}
     alt="Event loop visualized when executing step 2 of the timeout js script."
   />
 </figure>
@@ -437,7 +451,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/3.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/3.png")}
     alt="Event loop visualized when executing step 3 of the timeout js script."
   />
 </figure>
@@ -469,7 +483,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/4.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/4.png")}
     alt="Event loop visualized when executing step 4 of the timeout js script."
   />
 </figure>
@@ -478,7 +492,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/5.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/5.png")}
     alt="Event loop visualized when executing step 5 of the timeout js script."
   />
 </figure>
@@ -510,7 +524,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/6.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/6.png")}
     alt="Event loop visualized when executing step 6 of the timeout js script."
   />
 </figure>
@@ -542,7 +556,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/7.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/7.png")}
     alt="Event loop visualized when executing step 7 of the timeout js script."
   />
 </figure>
@@ -551,7 +565,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/8.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/8.png")}
     alt="Event loop visualized when executing step 8 of the timeout js script."
   />
 </figure>
@@ -583,7 +597,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/9.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/9.png")}
     alt="Event loop visualized when executing step 9 of the timeout js script."
   />
 </figure>
@@ -592,7 +606,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/10.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/10.png")}
     alt="Event loop visualized when executing step 10 of the timeout js script."
   />
 </figure>
@@ -601,7 +615,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/11.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/11.png")}
     alt="Event loop visualized when executing step 11 of the timeout js script."
   />
 </figure>
@@ -610,7 +624,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/12.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/12.png")}
     alt="Event loop visualized when executing step 12 of the timeout js script."
   />
 </figure>
@@ -642,7 +656,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/13.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/13.png")}
     alt="Event loop visualized when executing step 13 of the timeout js script."
   />
 </figure>
@@ -651,7 +665,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/14.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/14.png")}
     alt="Event loop visualized when executing step 14 of the timeout js script."
   />
 </figure>
@@ -660,7 +674,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/15.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/15.png")}
     alt="Event loop visualized when executing step 15 of the timeout js script."
   />
 </figure>
@@ -669,7 +683,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/16.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/16.png")}
     alt="Event loop visualized when executing step 16 of the timeout js script."
   />
 </figure>
@@ -701,7 +715,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/17.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/17.png")}
     alt="Event loop visualized when executing step 17 of the timeout js script."
   />
 </figure>
@@ -710,7 +724,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/18.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/18.png")}
     alt="Event loop visualized when executing step 18 of the timeout js script."
   />
 </figure>
@@ -719,7 +733,7 @@ exports.handler = main
 
 <figure>
   <Image
-    src={import("./img/lambda/19.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/lambda/19.png")}
     alt="Event loop visualized when executing step 18 of the timeout js script."
   />
 </figure>
@@ -734,7 +748,9 @@ This happens because after the Lambda stopped executing, the execution context w
 
 <figure>
   <Image
-    src={import("./img/lambda/exec-context-1.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-1.png"
+    )}
     alt="The setTimeout callback is sent to the task queue after 5 seconds."
   />
   <figcaption>
@@ -747,7 +763,9 @@ When we execute the Lambda again (second run), the call stack is empty with a me
 
 <figure>
   <Image
-    src={import("./img/lambda/exec-context-2.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-2.png"
+    )}
     alt="The setTimeout callback is scheduled by the event loop."
   />
   <figcaption>
@@ -759,7 +777,9 @@ This results in `timeout cb fired after 5000 ms` being printed first, because it
 
 <figure>
   <Image
-    src={import("./img/lambda/exec-context-3.png")}
+    src={import(
+      "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-3.png"
+    )}
     alt="The setTimeout callback is executed before any other code in the Lambda."
   />
   <figcaption>
@@ -817,7 +837,7 @@ When we run our code with this change, all is well now:
 
 <figure>
   <Image
-    src={import("./img/console/3.png")}
+    src={import("../../../assets/posts/lambda-nodejs-event-loop/console/3.png")}
     alt="Lambda console third run. Awaiting the timeout prints the log messages in expected order."
   />
   <figcaption>

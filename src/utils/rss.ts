@@ -1,9 +1,9 @@
-import type { RssItem } from "@types"
+import type { CollectionEntry } from "astro:content"
 
-export function sortRssPostsRecentlyPublished(items: RssItem[]) {
-  return items.sort((a, b) => {
-    const pubDateA = a.pubDate
-    const pubDateB = b.pubDate
-    return new Date(pubDateB).getTime() - new Date(pubDateA).getTime()
+export function sortRssPostsRecentlyPublished(
+  posts: CollectionEntry<"posts">[]
+) {
+  return posts.sort((a, b) => {
+    return b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
   })
 }

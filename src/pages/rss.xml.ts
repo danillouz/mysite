@@ -1,22 +1,24 @@
-import rss, { pagesGlobToRssItems } from "@astrojs/rss"
+import { getCollection } from "astro:content"
+import rss from "@astrojs/rss"
 import * as config from "@config"
 import { sortRssPostsRecentlyPublished } from "@utils/rss"
 
-import type { RssItem } from "@types"
-
 // See: https://docs.astro.build/en/guides/rss/
 
-const items: RssItem[] = await pagesGlobToRssItems(
-  import.meta.glob("./posts/**/*.mdx")
-)
-
 export async function get() {
+  const posts = await getCollection("posts")
+  const postsSorted = sortRssPostsRecentlyPublished(posts)
   return rss({
     title: config.RSS_TITLE,
     description: config.RSS_DESCRIPTION,
     site: import.meta.env.SITE,
     stylesheet: "/rss-styles.xsl",
     customData: `<language>en-us</language>`,
-    items: sortRssPostsRecentlyPublished(items),
+    items: postsSorted.map((post) => ({
+      title: post.data.title,
+      pubDate: post.data.publishedAt,
+      description: post.data.description,
+      link: `/posts/${post.slug}/`,
+    })),
   })
 }

@@ -1,10 +1,9 @@
 ---
-layout: "../../../layouts/Post.astro"
 title: "Aliasing your Mastodon handle"
 description: "Using a custom domain to alias your Mastodon handle."
 tags: ["astro", "mastodon", "til", "vercel", "webfinger"]
-pubDate: "January 3 2023"
-updatedDate: "January 29 2023"
+publishedAt: "January 3 2023"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -177,7 +176,7 @@ For example, searching for `hi@danillouz.dev` will now give me a hit:
 
 <figure>
   <Image
-    src={import("./img/mastodon-search.png")}
+    src={import("../../../assets/posts/mastodon-alias/mastodon-search.png")}
     alt="Mastodon search results, showing a search hit after searching for hi@danillouz.dev."
   />
   <figcaption>

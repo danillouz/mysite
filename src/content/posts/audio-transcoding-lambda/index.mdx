@@ -1,5 +1,4 @@
 ---
-layout: "../../../layouts/Post.astro"
 title: "Audio transcoding with AWS Lambda"
 description: "Transcoding short audio files with Amazon Elastic Transcoder or FFmpeg."
 tags:
@@ -15,8 +14,8 @@ tags:
     "transcoding",
     "tutorial",
   ]
-pubDate: "October 27 2019"
-updatedDate: "January 29 2023"
+publishedAt: "October 27 2019"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -140,7 +139,9 @@ Navigate to the Elastic Transcoder service in the AWS web console. Select a regi
 
 <figure>
   <Image
-    src={import("./img/create-pipeline.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/create-pipeline.png"
+    )}
     alt="Elastic Transcoder pipeline creation form."
   />
   <figcaption>
@@ -152,7 +153,9 @@ Create the pipeline and take note of the ARN and Pipeline ID. We'll need both to
 
 <figure>
   <Image
-    src={import("./img/created-pipeline.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/created-pipeline.png"
+    )}
     alt="Created Elastic Transcoder pipeline."
   />
   <figcaption>The created pipeline with its ARN and Pipeline ID.</figcaption>
@@ -166,7 +169,7 @@ In the web console, click on "Presets" and filter on the keyword "MP3". Select o
 
 <figure>
   <Image
-    src={import("./img/preset.png")}
+    src={import("../../../assets/posts/audio-transcoding-lambda/preset.png")}
     alt="Elastic Transcoder MP3 (128k) preset."
   />
   <figcaption>AWS system preset for MP3 (128k).</figcaption>
@@ -455,7 +458,9 @@ To get more information about a scheduled job, navigate to the Elastic Transcode
 
 <figure>
   <Image
-    src={import("./img/created-job.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/created-job.png"
+    )}
     alt="Information about the scheduled Elastic Transcoder job."
   />
   <figcaption>Information about the scheduled job.</figcaption>
@@ -578,7 +583,9 @@ When Serverless finishes deploying, navigate to the Lambda service in the AWS we
 
 <figure>
   <Image
-    src={import("./img/published-layer.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/published-layer.png"
+    )}
     alt="Published FFmpeg layer."
   />
   <figcaption>Information about the published FFmpeg layer.</figcaption>
@@ -826,7 +833,9 @@ Here you should see the logs of the Lambda function:
 
 <figure>
   <Image
-    src={import("./img/logs-timeout.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/logs-timeout.png"
+    )}
     alt="CloudWatch logs of the Lambda function that's timing out."
   />
   <figcaption>The Lambda function stops executing after ~6 seconds.</figcaption>
@@ -856,7 +865,9 @@ Deploy again. When Serverless is done, upload another WebM audio file, and check
 
 <figure>
   <Image
-    src={import("./img/logs-complete.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/logs-complete.png"
+    )}
     alt="CloudWatch logs of the Lambda function that finishes executing."
   />
   <figcaption>
@@ -886,7 +897,9 @@ Deploy again. And when Serverless is done, upload another WebM audio file and ch
 
 <figure>
   <Image
-    src={import("./img/logs-double-memory.png")}
+    src={import(
+      "../../../assets/posts/audio-transcoding-lambda/logs-double-memory.png"
+    )}
     alt="CloudWatch logs of the Lambda function with twice the memory."
   />
   <figcaption>

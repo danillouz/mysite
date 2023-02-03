@@ -1,5 +1,4 @@
 ---
-layout: "../../../layouts/Post.astro"
 title: "Serverless auth"
 description: "Protecting AWS API Gateway endpoints with AWS Lambda and Auth0."
 tags:
@@ -15,8 +14,8 @@ tags:
     "serverless-framework",
     "tutorial",
   ]
-pubDate: "June 19 2019"
-updatedDate: "January 29 2023"
+publishedAt: "June 19 2019"
+updatedAt: "January 29 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -117,7 +116,7 @@ When the Account API receives a request with the bearer token, it will have to v
 
 <figure>
   <Image
-    src={import("./img/auth0/register.png")}
+    src={import("../../../assets/posts/serverless-auth/auth0/register.png")}
     alt="The Auth0 API registration form."
   />
   <figcaption>
@@ -142,7 +141,7 @@ You can also find these values under the "Quick Start" tab of the API details sc
 
 <figure>
   <Image
-    src={import("./img/auth0/quick-start.png")}
+    src={import("../../../assets/posts/serverless-auth/auth0/quick-start.png")}
     alt="Image of the Auth0 Node.js quick start."
   />
   <figcaption>Find your public auth properties.</figcaption>
@@ -231,7 +230,9 @@ You can configure scope in the Auth0 dashboard by adding permissions to the regi
 
 <figure>
   <Image
-    src={import("./img/auth0/api-permissions.png")}
+    src={import(
+      "../../../assets/posts/serverless-auth/auth0/api-permissions.png"
+    )}
     alt="Image of the Auth0 API permissions tab."
   />
   <figcaption>Use Auth0 to add scopes to the Account API.</figcaption>
@@ -307,7 +308,7 @@ We can visualize how these components will interact with each other like this:
 
 <figure>
   <Image
-    src={import("./img/auth-flow.png")}
+    src={import("../../../assets/posts/serverless-auth/auth-flow.png")}
     alt="Image that shows an auth flow diagram."
   />
   <figcaption>The auth flow visualized.</figcaption>
@@ -769,7 +770,9 @@ You can find the test application in the Auth0 dashboard by navigating to "Appli
 
 <figure>
   <Image
-    src={import("./img/auth0/test-application.png")}
+    src={import(
+      "../../../assets/posts/serverless-auth/auth0/test-application.png"
+    )}
     alt="Image that shows the Auth0 Test Application."
   />
   <figcaption>
@@ -791,7 +794,9 @@ Navigate to the "APIs" tab in the "Test Application" details and click on the "r
 
 <figure>
   <Image
-    src={import("./img/auth0/grant-scope-1.png")}
+    src={import(
+      "../../../assets/posts/serverless-auth/auth0/grant-scope-1.png"
+    )}
     alt="Image that shows the Auth0 test application authorization settings."
   />
   <figcaption>Select the Account API.</figcaption>
@@ -801,7 +806,9 @@ Then check the `get:profile` scope, click "Update" and click "Continue":
 
 <figure>
   <Image
-    src={import("./img/auth0/grant-scope-2.png")}
+    src={import(
+      "../../../assets/posts/serverless-auth/auth0/grant-scope-2.png"
+    )}
     alt="Image that shows how to grant the Auth0 test application the get profile scope."
   />
   <figcaption>
@@ -939,7 +946,9 @@ Now go to the AWS Console and visit the "Lambda" service. Find `lambda-authorize
 
 <figure>
   <Image
-    src={import("./img/aws/lambda-authorizer-arn.png")}
+    src={import(
+      "../../../assets/posts/serverless-auth/aws/lambda-authorizer-arn.png"
+    )}
     alt="Image that shows where to find the Lambda Authorizer ARN in the AWS Lambda Console."
   />
   <figcaption>Find the ARN of the Lambda Authorizer.</figcaption>
@@ -1237,7 +1246,9 @@ Do another release by running `npm run release`. And after Serverless finishes, 
 
 <figure>
   <Image
-    src={import("./img/aws/lambda-authorizer-arn.png")}
+    src={import(
+      "../../../assets/posts/serverless-auth/aws/lambda-authorizer-arn.png"
+    )}
     alt="Image that shows the API Gateway resource configuration."
   />
   <figcaption>
@@ -1268,7 +1279,7 @@ We can get a test token from the Auth0 dashboard by navigating to the "Test" tab
 
 <figure>
   <Image
-    src={import("./img/auth0/test.png")}
+    src={import("../../../assets/posts/serverless-auth/auth0/test.png")}
     alt="Image that shows where to get a test token in the Auth0 dashboard."
   />
   <figcaption>Get a test token for your API.</figcaption>
