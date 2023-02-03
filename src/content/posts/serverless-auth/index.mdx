@@ -15,7 +15,7 @@ tags:
     "tutorial",
   ]
 publishedAt: "June 19 2019"
-updatedAt: "January 29 2023"
+updatedAt: "February 3 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -226,7 +226,7 @@ Following this design also leads to a nice decoupling between the authentication
 
 When using OAuth 2.0, scopes can be used to apply authorization logic. In our case we could have a `get:profile` scope. And a Lambda handler can check if the caller has been authorized to perform the action that is represented by the scope. If the scope is not present, the Lambda handler can return a `403 Forbidden` response back to the caller.
 
-You can configure scope in the Auth0 dashboard by adding permissions to the registered API. Navigate to the "Permissions" tab of the API details screen and add `get:profile` as a scope:
+You can configure scope in the Auth0 dashboard by adding permissions to the registered API. Navigate to the "Permissions" tab of the API details screen and add `get:profile` as a scope.
 
 <figure>
   <Image
@@ -304,7 +304,7 @@ To summarize, we need the following components to protect our API:
 - A Lambda handler for the `GET /profile` endpoint to return the profile data.
 - `curl` as the client to send HTTP requests to the API with a token.
 
-We can visualize how these components will interact with each other like this:
+We can visualize how these components will interact with each other like this.
 
 <figure>
   <Image
@@ -766,7 +766,7 @@ Note that if you use an Auth0 test token (like we'll do in a bit), the `sub` cla
 
 In this case the test application represents a "machine" and _not_ a user. But that's okay because the machine has a unique identifier the same way a user would have (by means of a client ID). This means that this implementation will also work when using "user centric" auth flows like the [implicit grant](https://auth0.com/docs/flows/concepts/implicit).
 
-You can find the test application in the Auth0 dashboard by navigating to "Applications" and selecting "Account API (Test Application)":
+You can find the test application in the Auth0 dashboard by navigating to "Applications" and selecting "Account API (Test Application)".
 
 <figure>
   <Image
@@ -790,7 +790,7 @@ The [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.
 
 Like mentioned when discussing [scopes](#scopes), Auth0 can provide scopes as authorization information. In order for Auth0 to do this, we need to "grant" our client the `get:profile` scope. In our case, the client is the "Test Application" that has been created for us.
 
-Navigate to the "APIs" tab in the "Test Application" details and click on the "right pointing chevron" (circled in red) to the right of "Account API":
+Navigate to the "APIs" tab in the "Test Application" details and click on the "right pointing chevron" (circled in red) to the right of "Account API".
 
 <figure>
   <Image
@@ -802,7 +802,7 @@ Navigate to the "APIs" tab in the "Test Application" details and click on the "r
   <figcaption>Select the Account API.</figcaption>
 </figure>
 
-Then check the `get:profile` scope, click "Update" and click "Continue":
+Then check the `get:profile` scope, click "Update" and click "Continue".
 
 <figure>
   <Image
@@ -942,7 +942,7 @@ layers:
 
 #### Finding the ARN
 
-Now go to the AWS Console and visit the "Lambda" service. Find `lambda-authorizers-prod-auth0VerifyBearer` under "Functions" and take note of the ARN in the top right corner:
+Now go to the AWS Console and visit the "Lambda" service. Find `lambda-authorizers-prod-auth0VerifyBearer` under "Functions" and take note of the ARN in the top right corner.
 
 <figure>
   <Image
@@ -1242,7 +1242,7 @@ Note that the `authorizer.scope` is a string and that it may contain more than o
 
 ### 7. Releasing the API with auth enabled
 
-Do another release by running `npm run release`. And after Serverless finishes, go to the AWS Console and visit the "API Gateway" service. Navigate to "prod-account-api" and click on the "GET" resource under "/profile". You should now see that the "Method Request" tile has a property "Auth" set to `auth0VerifyBearer`:
+Do another release by running `npm run release`. And after Serverless finishes, go to the AWS Console and visit the "API Gateway" service. Navigate to "prod-account-api" and click on the "GET" resource under "/profile". You should now see that the "Method Request" tile has a property "Auth" set to `auth0VerifyBearer`.
 
 <figure>
   <Image
@@ -1275,7 +1275,7 @@ Content-Type: application/json
 
 ### 8. Getting a test token
 
-We can get a test token from the Auth0 dashboard by navigating to the "Test" tab in the API details screen:
+We can get a test token from the Auth0 dashboard by navigating to the "Test" tab in the API details screen.
 
 <figure>
   <Image

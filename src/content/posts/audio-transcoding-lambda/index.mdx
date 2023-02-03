@@ -15,7 +15,7 @@ tags:
     "tutorial",
   ]
 publishedAt: "October 27 2019"
-updatedAt: "January 29 2023"
+updatedAt: "February 3 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -829,7 +829,7 @@ Lets find out why this is happening by checking the Lambda function's log files 
 - Click the "View logs in CloudWatch" button.
 - Select the latest log group.
 
-Here you should see the logs of the Lambda function:
+Here you should see the logs of the Lambda function.
 
 <figure>
   <Image
@@ -861,7 +861,7 @@ functions:
     timeout: 180
 ```
 
-Deploy again. When Serverless is done, upload another WebM audio file, and check the logs:
+Deploy again. When Serverless is done, upload another WebM audio file, and check the logs.
 
 <figure>
   <Image
@@ -893,7 +893,7 @@ functions:
     memorySize: 2048
 ```
 
-Deploy again. And when Serverless is done, upload another WebM audio file and check the logs:
+Deploy again. And when Serverless is done, upload another WebM audio file and check the logs.
 
 <figure>
   <Image
@@ -937,7 +937,7 @@ When done optimizing, make sure to apply a sensible value for the Lambda timeout
 
 To compare costs between both implementation, I did a couple of test runs converting a 3 minute (2,8 MB) WebM audio file to MP3.
 
-The following comparison is by no means very extensive, and your mileage may vary. But <abbr title="In My Opinion">IMO</abbr> I think it's good enough to get a decent impression of the cost range.
+The following comparison is by no means very extensive, and your mileage may vary. But in my opinion I think it's good enough to get a decent impression of the cost range.
 
 ### Amazon Elastic Transcoder costs
 

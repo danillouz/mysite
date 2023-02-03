@@ -3,7 +3,7 @@ title: "AWS Lambda and the Node.js event loop"
 description: "Lambda can freeze and thaw its execution context, which can impact Node.js event loop behavior."
 tags: ["aws", "event-loop", "lambda", "nodejs"]
 publishedAt: "May 30 2019"
-updatedAt: "January 29 2023"
+updatedAt: "February 3 2023"
 ---
 
 import { Image } from "@astrojs/image/components"
@@ -30,7 +30,7 @@ Function calls form a _stack of frames_, where each frame represents a single fu
 
 Every time a function is called, it's _pushed_ onto the stack (i.e. added to the stack). And when the function is done executing, it's _popped_ off the stack (i.e. removed from the stack).
 
-The frames in a stack are popped off in <abbr title="Last In First Out">LIFO</abbr> order:
+The frames in a stack are popped off in <abbr title="Last In First Out">LIFO</abbr> order.
 
 <figure>
   <Image
@@ -62,7 +62,7 @@ function main() {
 main()
 ```
 
-We can visualize the call stack over time like this:
+We can visualize the call stack over time like this.
 
 <figure>
   <Image
@@ -218,7 +218,7 @@ This code didn't interact with any asynchronous (internal) APIs. But when it doe
 
 Any asynchronous work in the runtime is represented as a task in a queue, or in other words, a _message queue_.
 
-Each message can be thought of as a function that will be called in <abbr title="First In First Out">FIFO</abbr> order to handle said work. For example, the callback provided to the `setTimeout` or `Promise` API:
+Each message can be thought of as a function that will be called in <abbr title="First In First Out">FIFO</abbr> order to handle said work. For example, the callback provided to the `setTimeout` or `Promise` API.
 
 <figure>
   <Image
@@ -345,7 +345,7 @@ async function main() {
 exports.handler = main
 ```
 
-You can create a new function in the AWS Lambda console and paste in the code from above. Run it, sit back and enjoy:
+You can create a new function in the AWS Lambda console and paste in the code from above. Run it, sit back and enjoy.
 
 <figure>
   <Image
@@ -358,7 +358,7 @@ You can create a new function in the AWS Lambda console and paste in the code fr
   </figcaption>
 </figure>
 
-Wait, what? Lambda just ended the handler function _without_ printing the last message `timeout cb fired after 5000 ms`. Lets run it again:
+Wait, what? Lambda just ended the handler function _without_ printing the last message `timeout cb fired after 5000 ms`. Lets run it again.
 
 <figure>
   <Image
@@ -406,7 +406,7 @@ Looking further, there's some documentation about the context object. Specifical
 >   Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html)
 > </cite>
 
-Okay, so with this information we can make sense of what happened when we executed the code in `timeout.js` before. Lets break it down and go over it step by step:
+Okay, so with this information we can make sense of what happened when we executed the code in `timeout.js` before. Lets break it down and go over it step by step.
 
 <figure>
   <Image
@@ -833,7 +833,7 @@ async function main() {
 exports.handler = main
 ```
 
-When we run our code with this change, all is well now:
+When we run our code with this change, all is well now.
 
 <figure>
   <Image
