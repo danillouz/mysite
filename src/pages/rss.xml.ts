@@ -12,7 +12,6 @@ export async function get() {
     title: config.RSS_TITLE,
     description: config.RSS_DESCRIPTION,
     site: import.meta.env.SITE,
-    stylesheet: "/rss-styles.xsl",
     customData: `<language>en-us</language>`,
     items: postsSorted.map((post) => {
       return {
