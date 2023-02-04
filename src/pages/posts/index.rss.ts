@@ -3,9 +3,11 @@ import rss from "@astrojs/rss"
 import * as config from "@config"
 import { sortRssPostsRecentlyPublished, renderPostContent } from "@utils/rss"
 
+import type { APIRoute } from "astro"
+
 // See: https://docs.astro.build/en/guides/rss/
 
-export async function get() {
+export const get: APIRoute = async function get() {
   const posts = await getCollection("posts")
   const postsSorted = sortRssPostsRecentlyPublished(posts)
   return rss({
