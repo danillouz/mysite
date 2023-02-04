@@ -60,7 +60,7 @@ const rssTitle = `RSS feed for ${config.RSS_TITLE}`
       rel="alternate"
       type="application/rss+xml"
       title={rssTitle}
-      href={new URL("/rss.xml", Astro.url)}
+      href={new URL("/posts.rss", Astro.url)}
     />
 
     <!-- Webmention (receiver) -->
@@ -104,9 +104,8 @@ const rssTitle = `RSS feed for ${config.RSS_TITLE}`
         <div>
           <a
             class="flex items-center focusable"
-            href="/rss.xml"
-            title={`Open ${rssTitle} in new tab`}
-            target="_blank"
+            href="/posts.rss"
+            title={`Open ${rssTitle}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
