@@ -6,13 +6,14 @@ import image from "@astrojs/image"
 import preact from "@astrojs/preact"
 import { rehypeHeadingIds } from "@astrojs/markdown-remark"
 
+import * as config from "./src/config"
 import { remarkReadingTime } from "./src/plugins/reading-time"
 import { autolinkHeadings } from "./src/plugins/autolink-headings"
 import { codeSnippets } from "./src/plugins/code-snippets"
 
 // See: https://astro.build/config
 export default defineConfig({
-  site: "https://www.danillouz.dev/",
+  site: `https://${config.SITE_DOMAIN}/`,
 
   markdown: {
     // Syntax highlighting is controlled via custom plugin `codeSnippets`.

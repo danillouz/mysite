@@ -1,4 +1,5 @@
 ---
+import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import Prompt from "@components/Prompt.astro"
@@ -37,7 +38,10 @@ const banner = `
 `
 ---
 
-<PageLayout>
+<PageLayout
+  title={config.PAGES.NOT_FOUND.TITLE}
+  description={config.PAGES.NOT_FOUND.DESCRIPTION}
+>
   <Window>
     <div class="p-2 font-mono text-sm page-text">
       <p

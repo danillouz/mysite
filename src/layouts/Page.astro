@@ -12,8 +12,8 @@ interface Props {
 }
 
 const {
-  title = config.SITE_TITLE,
-  description = config.SITE_DESCRIPTION,
+  title = config.PAGES.HOME.TITLE,
+  description = config.PAGES.HOME.DESCRIPTION,
   socialImage = "/social-dark.png",
 } = Astro.props
 ---
@@ -58,7 +58,7 @@ const {
       <link
         rel="alternate"
         type="application/rss+xml"
-        title={config.RSS_TITLE}
+        title={`RSS feed for ${config.PAGES.POSTS.TITLE}`}
         href={new URL("/posts.rss", Astro.url)}
       />
     </slot>
@@ -102,11 +102,7 @@ const {
         </div>
 
         <div>
-          <a
-            class="flex items-center focusable"
-            href="/posts.rss"
-            title={`Open ${config.RSS_TITLE}`}
-          >
+          <a class="flex items-center focusable" href="/feeds" title="Feeds">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"

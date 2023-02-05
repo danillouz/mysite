@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content"
+import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import Tag from "@components/Tag.astro"
@@ -12,7 +13,10 @@ const footerText = `${tagsSorted.length} ${
 }`
 ---
 
-<PageLayout title="Dan's tags">
+<PageLayout
+  title={config.PAGES.TAGS.TITLE}
+  description={config.PAGES.TAGS.DESCRIPTION}
+>
   <Window
     tabs={[
       { href: "/posts", title: "Posts" },
@@ -21,7 +25,7 @@ const footerText = `${tagsSorted.length} ${
   >
     <div class="page-wrapper">
       <header class="page-header">
-        <h1 class="page-heading">Discover posts by topic</h1>
+        <h1 class="page-heading">{config.PAGES.TAGS.DESCRIPTION}</h1>
 
         <p class="page-text mt-6">
           Select a tag below to see all posts for that topic.

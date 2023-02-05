@@ -25,8 +25,8 @@ export const get: APIRoute = async function get({ params }) {
   const { tag } = params
 
   const options: RSSOptions = {
-    title: `${config.RSS_TITLE} tagged ${tag}`,
-    description: config.RSS_DESCRIPTION,
+    title: `RSS feed for ${config.PAGES.TAG.TITLE} ${tag}`,
+    description: config.PAGES.TAG.DESCRIPTION,
     site: import.meta.env.SITE,
     customData: `<language>en-us</language>`,
     items: [],

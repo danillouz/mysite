@@ -1,0 +1,189 @@
+---
+import * as config from "@config"
+import PageLayout from "@layouts/Page.astro"
+import Window from "@components/Window.astro"
+
+const feedsCount = 2
+const footerText = `${feedsCount} ${feedsCount > 1 ? "feeds" : "feed"}`
+---
+
+<PageLayout
+  title={config.PAGES.FEEDS.TITLE}
+  description={config.PAGES.FEEDS.DESCRIPTION}
+>
+  <Window>
+    <div class="page-wrapper">
+      <header class="page-header">
+        <h1 class="page-heading">{config.PAGES.FEEDS.DESCRIPTION}</h1>
+      </header>
+
+      <div class="page-content">
+        <div
+          class:list={[
+            // Prose colors are set in `tailwind.config.cjs` in
+            // `theme.extend.typography`, but additional/custom
+            // styles are to be set here:
+
+            // Base styles.
+            "mt-8 break-words prose prose-base dark:prose-invert prose-danos",
+
+            // Links.
+            "prose-a:font-normal prose-a:underline-offset-2 prose-a:decoration-1 focus:prose-a:focusable",
+
+            // Code inline.
+            "prose-code:before:content-none prose-code:after:content-none",
+          ]}
+        >
+          <section>
+            <h2 class="flex flex-row items-center gap-1">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentcolor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  ></path>
+                </svg>
+              </span>
+
+              <span>Posts</span>
+            </h2>
+
+            <ul>
+              <li>
+                <a href="/posts.rss">{`${config.SITE_DOMAIN}/posts.rss`}</a>
+              </li>
+            </ul>
+
+            <p>This is the main feed. It will subscribe you to all posts.</p>
+          </section>
+
+          <section>
+            <h2 class="flex flex-row items-center gap-1">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentcolor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  ></path>
+                </svg>
+              </span>
+
+              <span>Tag</span>
+            </h2>
+
+            <ul>
+              <li>
+                <code>{`${config.SITE_DOMAIN}/posts/tags/[tag].rss`}</code>
+              </li>
+            </ul>
+
+            <p>
+              This is the feed for a specific tag. It wil subscribe you to posts
+              of a specific topic.
+            </p>
+
+            <p>
+              You can subscribe to any tag listed on the <a href="/posts/tags"
+                >tags</a
+              > page. For example:
+            </p>
+
+            <ul>
+              <li>
+                <a href="/posts/tags/golang.rss"
+                  >{`${config.SITE_DOMAIN}/posts/tags/golang.rss`}</a
+                >
+              </li>
+
+              <li>
+                <a href="/posts/tags/til.rss"
+                  >{`${config.SITE_DOMAIN}/posts/tags/til.rss`}</a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="flex flex-row items-center gap-1">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentcolor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                  ></path>
+                </svg>
+              </span>
+
+              <span>What is this?</span>
+            </h2>
+
+            <p>The links above are RSS feeds, also known as a web feeds.</p>
+
+            <p>
+              You can subscribe to a feed by copying a feed URL into your
+              favorite RSS reader. Your reader will then automatically fetch
+              (new) articles from my site!
+            </p>
+
+            <p>
+              See
+              <a href="https://aboutfeeds.com">about feeds</a>
+              to learn more about RSS feeds and readers.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div
+      slot="footer"
+      class="flex-1 flex items-center flex-row-reverse gap-5 px-2"
+    >
+      <div class="flex items-center gap-1 truncate">
+        <span class="inline-block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentcolor"
+            class="w-4 h-4"
+          >
+            <path
+              d="M3.75 3a.75.75 0 00-.75.75v.5c0 .414.336.75.75.75H4c6.075 0 11 4.925 11 11v.25c0 .414.336.75.75.75h.5a.75.75 0 00.75-.75V16C17 8.82 11.18 3 4 3h-.25z"
+            ></path>
+            <path
+              d="M3 8.75A.75.75 0 013.75 8H4a8 8 0 018 8v.25a.75.75 0 01-.75.75h-.5a.75.75 0 01-.75-.75V16a6 6 0 00-6-6h-.25A.75.75 0 013 9.25v-.5zM7 15a2 2 0 11-4 0 2 2 0 014 0z"
+            ></path>
+          </svg>
+        </span>
+
+        <span class="inline-block truncate" title={footerText}>
+          {footerText}
+        </span>
+      </div>
+    </div>
+  </Window>
+</PageLayout>
