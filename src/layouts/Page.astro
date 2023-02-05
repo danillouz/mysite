@@ -16,8 +16,6 @@ const {
   description = config.SITE_DESCRIPTION,
   socialImage = "/social-dark.png",
 } = Astro.props
-
-const rssTitle = `RSS feed for ${config.RSS_TITLE}`
 ---
 
 <!DOCTYPE html>
@@ -56,12 +54,14 @@ const rssTitle = `RSS feed for ${config.RSS_TITLE}`
     <link rel="manifest" href="/manifest.json" />
 
     <!-- RSS metadata -->
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={rssTitle}
-      href={new URL("/posts.rss", Astro.url)}
-    />
+    <slot name="rss">
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={config.RSS_TITLE}
+        href={new URL("/posts.rss", Astro.url)}
+      />
+    </slot>
 
     <!-- Webmention (receiver) -->
     <link
@@ -105,7 +105,7 @@ const rssTitle = `RSS feed for ${config.RSS_TITLE}`
           <a
             class="flex items-center focusable"
             href="/posts.rss"
-            title={`Open ${rssTitle}`}
+            title={`Open ${config.RSS_TITLE}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

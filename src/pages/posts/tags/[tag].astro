@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content"
+import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
 import PostsPreview from "@components/PostsPreview.astro"
@@ -36,6 +37,14 @@ const { posts } = Astro.props
 ---
 
 <PageLayout title={`Dan's posts tagged ${String(tag)}`}>
+  <link
+    slot="rss"
+    rel="alternate"
+    type="application/rss+xml"
+    title={config.RSS_TITLE}
+    href={new URL(`/posts/tags/${tag}.rss`, Astro.url)}
+  />
+
   <Window
     tabs={[
       { href: "/posts", title: "Posts" },
