@@ -58,8 +58,15 @@ const {
       <link
         rel="alternate"
         type="application/rss+xml"
-        title={`RSS feed for ${config.PAGES.POSTS.TITLE}`}
+        title={config.PAGES.POSTS.TITLE}
         href={new URL("/posts.rss", Astro.url)}
+      />
+
+      <link
+        rel="alternate"
+        type="application/feed+json"
+        title={config.PAGES.POSTS.TITLE}
+        href={new URL("/posts.json", Astro.url)}
       />
     </slot>
 

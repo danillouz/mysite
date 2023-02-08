@@ -11,17 +11,17 @@ export const get: APIRoute = async function get() {
   const posts = await getCollection("posts")
   const postsSorted = sortRssPostsRecentlyPublished(posts)
   return rss({
-    title: `RSS feed for ${config.PAGES.POSTS.TITLE}`,
+    title: config.PAGES.POSTS.TITLE,
     description: config.PAGES.POSTS.DESCRIPTION,
     site: import.meta.env.SITE,
     customData: `<language>en-us</language>`,
     items: postsSorted.map((post) => {
       return {
-        title: post.data.title,
-        pubDate: post.data.publishedAt,
-        description: post.data.description,
         link: `/posts/${post.slug}/`,
+        title: post.data.title,
+        description: post.data.description,
         content: renderPostContent(post.body),
+        pubDate: post.data.publishedAt,
       }
     }),
   })

@@ -44,8 +44,15 @@ const { posts } = Astro.props
     slot="rss"
     rel="alternate"
     type="application/rss+xml"
-    title={`RSS feed for ${config.PAGES.TAG.TITLE} ${tag}`}
+    title={`${config.PAGES.TAG.TITLE} ${tag}`}
     href={new URL(`/posts/tags/${tag}.rss`, Astro.url)}
+  />
+  <link
+    slot="rss"
+    rel="alternate"
+    type="application/feed+json"
+    title={`${config.PAGES.TAG.TITLE} ${tag}`}
+    href={new URL(`/posts/tags/${tag}.json`, Astro.url)}
   />
 
   <Window
