@@ -13,7 +13,7 @@ import { codeSnippets } from "./src/plugins/code-snippets"
 
 // See: https://astro.build/config
 export default defineConfig({
-  site: `https://${config.SITE_DOMAIN}/`,
+  site: `https://${config.SITE_DOMAIN}`,
 
   markdown: {
     // Syntax highlighting is controlled via custom plugin `codeSnippets`.
