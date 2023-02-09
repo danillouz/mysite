@@ -2,6 +2,7 @@
 import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
 import Window from "@components/Window.astro"
+import Prompt from "@components/Prompt.astro"
 
 const feedsCount = 2
 const footerText = `${feedsCount} ${feedsCount > 1 ? "feeds" : "feed"}`
@@ -12,150 +13,150 @@ const footerText = `${feedsCount} ${feedsCount > 1 ? "feeds" : "feed"}`
   description={config.PAGES.FEEDS.DESCRIPTION}
 >
   <Window>
-    <div class="page-wrapper">
-      <header class="page-header">
-        <h1 class="page-heading">{config.PAGES.FEEDS.DESCRIPTION}</h1>
-      </header>
+    <div class="p-2 font-mono text-sm page-text">
+      <div class="max-w-2xl">
+        <h1 class="sr-only">{config.PAGES.FEEDS.DESCRIPTION}</h1>
 
-      <div class="page-content">
-        <div
-          class:list={[
-            // Prose colors are set in `tailwind.config.cjs` in
-            // `theme.extend.typography`, but additional/custom
-            // styles are to be set here:
-
-            // Base styles.
-            "mt-8 break-words prose prose-base dark:prose-invert prose-danos",
-
-            // Links.
-            "prose-a:font-normal prose-a:underline-offset-2 prose-a:decoration-1 focus:prose-a:focusable",
-
-            // Code inline.
-            "prose-code:before:content-none prose-code:after:content-none",
-          ]}
+        <p
+          aria-hidden="true"
+          class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
         >
-          <section>
-            <h2 class="flex flex-row items-center gap-1">
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentcolor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                  ></path>
-                </svg>
-              </span>
+          <Prompt /> feeds posts
+        </p>
 
-              <span>Posts</span>
-            </h2>
+        <br />
 
-            <ul>
-              <li>
-                <a href="/posts.rss">{`${config.SITE_DOMAIN}/posts.rss`}</a>
-              </li>
-            </ul>
+        <section>
+          <h2 class="sr-only">Posts</h2>
 
-            <p>This is the main feed. It will subscribe you to all posts.</p>
-          </section>
+          <p>Subscribe to all posts (main feed):</p>
 
-          <section>
-            <h2 class="flex flex-row items-center gap-1">
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentcolor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                  ></path>
-                </svg>
-              </span>
+          <br />
 
-              <span>Tag</span>
-            </h2>
+          <ul class="ml-4 space-y-1">
+            <li>
+              <a href="/posts.rss" class="page-link"
+                >{`${config.SITE_DOMAIN}/posts.rss`}</a
+              >
+            </li>
 
-            <ul>
-              <li>
-                <code>{`${config.SITE_DOMAIN}/posts/tags/[tag].rss`}</code>
-              </li>
-            </ul>
+            <li>
+              <a href="/posts.json" class="page-link"
+                >{`${config.SITE_DOMAIN}/posts.json`}</a
+              >
+            </li>
+          </ul>
+        </section>
 
-            <p>
-              This is the feed for a specific tag. It wil subscribe you to posts
-              of a specific topic.
-            </p>
+        <br />
 
-            <p>
-              You can subscribe to any tag listed on the <a href="/posts/tags"
-                >tags</a
-              > page. For example:
-            </p>
+        <p
+          aria-hidden="true"
+          class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
+        >
+          <Prompt /> feeds tag
+        </p>
 
-            <ul>
-              <li>
-                <a href="/posts/tags/golang.rss"
-                  >{`${config.SITE_DOMAIN}/posts/tags/golang.rss`}</a
-                >
-              </li>
+        <br />
 
-              <li>
-                <a href="/posts/tags/til.rss"
-                  >{`${config.SITE_DOMAIN}/posts/tags/til.rss`}</a
-                >
-              </li>
-            </ul>
-          </section>
+        <section>
+          <h2 class="sr-only">Tag</h2>
 
-          <section>
-            <h2 class="flex flex-row items-center gap-1">
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentcolor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  ></path>
-                </svg>
-              </span>
+          <p>Subscribe to posts of a specific topic:</p>
 
-              <span>What is this?</span>
-            </h2>
+          <br />
 
-            <p>The links above are RSS feeds, also known as a web feeds.</p>
+          <ul class="ml-4 space-y-1">
+            <li>
+              <code>{`${config.SITE_DOMAIN}/posts/tags/[tag].rss`}</code>
+            </li>
 
-            <p>
-              You can subscribe to a feed by copying a feed URL into your
-              favorite RSS reader. Your reader will then automatically fetch
-              (new) articles from my site!
-            </p>
+            <li>
+              <code>{`${config.SITE_DOMAIN}/posts/tags/[tag].json`}</code>
+            </li>
+          </ul>
 
-            <p>
-              See
-              <a href="https://aboutfeeds.com">about feeds</a>
-              to learn more about RSS feeds and readers.
-            </p>
-          </section>
-        </div>
+          <br />
+
+          <p>
+            You can subscribe to any tag listed on the <a
+              href="/posts/tags"
+              class="page-link">tags</a
+            > page. For example:
+          </p>
+
+          <br />
+
+          <ul class="ml-4 space-y-1">
+            <li>
+              <a href="/posts/tags/golang.rss" class="page-link"
+                >{`${config.SITE_DOMAIN}/posts/tags/golang.rss`}</a
+              >
+            </li>
+
+            <li>
+              <a href="/posts/tags/til.json" class="page-link"
+                >{`${config.SITE_DOMAIN}/posts/tags/til.json`}</a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <br />
+
+        <p
+          aria-hidden="true"
+          class="font-semibold text-danos-primary dark:text-danos-primary-inverted"
+        >
+          <Prompt /> feeds help
+        </p>
+
+        <br />
+
+        <h2 class="sr-only">Tag</h2>
+
+        <p>
+          The URLs above are web feeds. Each feed has 2 variants: RSS and JSON.
+        </p>
+
+        <br />
+
+        <p>Subscribe to a feed by copying a URL above into your feed reader.</p>
+
+        <p>
+          Your reader will then automatically fetch (new) articles from my site!
+        </p>
+
+        <br />
+
+        <p>
+          You can also try using a URL without the <code>.rss</code> or <code
+            >.json</code
+          > postfix; your feed reader should automatically choose a format it likes
+          best.
+        </p>
+
+        <br />
+
+        <p>
+          Visit <a href="https://aboutfeeds.com" class="page-link"
+            >aboutfeeds.com</a
+          > to learn more about RSS feeds and readers.
+        </p>
+
+        <p>
+          And to learn more about JSON feeds, visit <a
+            href="https://www.jsonfeed.org"
+            class="page-link">jsonfeed.org</a
+          >.
+        </p>
+
+        <br />
+
+        <p aria-hidden="true">
+          <Prompt />
+          <span class="blink">_</span>
+        </p>
       </div>
     </div>
 

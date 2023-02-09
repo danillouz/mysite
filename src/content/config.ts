@@ -14,7 +14,6 @@ export const collections = {
         .transform((s) => (s ? new Date(s) : undefined)),
       heroImage: z.string().optional(),
       heroImageAlt: z.string().optional(),
-      readingTime: z.string().optional(),
     }),
   }),
 }
