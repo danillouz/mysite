@@ -2,7 +2,7 @@
 import "@fontsource/merriweather"
 import "@styles/base.css"
 import * as config from "@config"
-import DockLink from "@components/DockLink.astro"
+import { Nav, Link } from "@components/Nav"
 
 interface Props {
   title?: string
@@ -16,6 +16,8 @@ const {
   description = config.PAGES.HOME.DESCRIPTION,
   socialImage = "/social-dark.png",
 } = Astro.props
+
+const { pathname } = Astro.url
 ---
 
 <!DOCTYPE html>
@@ -99,70 +101,18 @@ const {
     class="bg-danos-body dark:bg-danos-body-inverted font-serif antialiased pattern-boxes"
   >
     <main class="flex flex-col min-h-screen">
+      <!-- bg-zinc-900/90 dark:zinc-800/90 -->
       <header
-        class="z-50 h-7 flex items-center justify-between w-full px-4 bg-danos-primary md:bg-transparent dark:bg-danos-primary-inverted dark:md:bg-transparent border-b border-danos-primary dark:border-danos-primary-inverted md:border-none nav-text"
+        class="z-40 sticky top-0 bg-[#18181b]/90 dark:bg-[#27272a]/90 backdrop-blur font-sans text-sm text-danos-primary-inverted"
       >
-        <div class="flex items-center sm:gap-4">
-          <span class="inline-block py-1 font-semibold" aria-hidden="true">
-            {config.FULL_NAME}
-          </span>
-        </div>
-
-        <div>
-          <a class="flex items-center focusable" href="/feeds" title="Feeds">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentcolor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M3.75 3a.75.75 0 00-.75.75v.5c0 .414.336.75.75.75H4c6.075 0 11 4.925 11 11v.25c0 .414.336.75.75.75h.5a.75.75 0 00.75-.75V16C17 8.82 11.18 3 4 3h-.25z"
-              ></path>
-              <path
-                d="M3 8.75A.75.75 0 013.75 8H4a8 8 0 018 8v.25a.75.75 0 01-.75.75h-.5a.75.75 0 01-.75-.75V16a6 6 0 00-6-6h-.25A.75.75 0 013 9.25v-.5zM7 15a2 2 0 11-4 0 2 2 0 014 0z"
-              ></path>
-            </svg>
-          </a>
-        </div>
+        <Nav client:load title={config.FULL_NAME}>
+          <Link client:load href="/" pathname={pathname}>Home</Link>
+          <Link client:load href="/posts" pathname={pathname}>Posts</Link>
+          <Link client:load href="/feeds" pathname={pathname}>Feeds</Link>
+        </Nav>
       </header>
 
       <slot />
-
-      <nav
-        class="z-40 sticky md:fixed inset-x-0 bottom-0 md:bottom-2 xl:inset-x-auto xl:inset-y-0 xl:right-2 xl:flex xl:items-center"
-      >
-        <div
-          class="flex xl:flex-col items-center justify-center gap-4 p-1 xl:py-4 mx-auto md:max-w-[12.5rem] xl:w-[5.75rem] bg-danos-primary dark:bg-danos-primary-inverted border-t border-danos-primary dark:border-danos-primary-inverted md:border-none ring-0 md:ring-1 ring-danos-primary dark:ring-danos-primary-inverted md:rounded-sm"
-        >
-          <DockLink href="/" title="Home">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentcolor"
-              class="w-6 h-6"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M2.25 6a3 3 0 013-3h13.5a3 3 0 013 3v12a3 3 0 01-3 3H5.25a3 3 0 01-3-3V6zm3.97.97a.75.75 0 011.06 0l2.25 2.25a.75.75 0 010 1.06l-2.25 2.25a.75.75 0 01-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06zm4.28 4.28a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </DockLink>
-
-          <DockLink href="/posts" title="Posts">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentcolor"
-              class="w-6 h-6"
-            >
-              <path
-                d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z"
-              ></path>
-            </svg>
-          </DockLink>
-        </div>
-      </nav>
     </main>
   </body>
 </html>

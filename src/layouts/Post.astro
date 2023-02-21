@@ -163,7 +163,7 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
             "prose-pre:m-0 prose-pre:p-0 prose-pre:py-4 prose-pre:prose-base prose-pre:leading-normal prose-pre:rounded-none prose-pre:focusable",
 
             // Misc.
-            "prose-hr:my-6 prose-hr:sm:my-12",
+            "prose-hr:my-6 prose-hr:sm:my-12 prose-hr:border-dashed",
           ]}
         >
           <p>{description}</p>
@@ -228,7 +228,7 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
 
           {
             updatedAt && (
-              <p class="page-subtext text-center">
+              <p class="page-subtext text-center italic">
                 Post last updated <Time datetime={updatedAt.toISOString()} />
               </p>
             )

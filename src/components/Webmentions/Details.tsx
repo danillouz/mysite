@@ -7,7 +7,7 @@ const Details: FunctionalComponent<{
 }> = ({ open = false, summary, children }) => {
   return (
     <details open={open}>
-      <summary class="z-10 my-[2px] px-1 py-3 sticky top-[45px] md:top-[46px] bg-danos-primary dark:bg-danos-primary-inverted border-b border-danos-primary dark:border-danos-primary-inverted cursor-pointer focus:focusable page-subheading text-lg">
+      <summary class="z-10 px-1 py-3 sticky top-8 md:top-[46px] bg-danos-primary dark:bg-danos-primary-inverted border-b border-danos-primary dark:border-danos-primary-inverted cursor-pointer focus:focusable focus:ring-inset page-subheading text-lg">
         {summary}
       </summary>
 
