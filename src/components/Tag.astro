@@ -12,10 +12,11 @@ const { name, class: className, ...props } = Astro.props
   href={`/posts/tags/${name}`}
   class:list={[
     // Base styles.
-    "inline-block px-3 py-1 rounded-xl text-xs font-medium tracking-wide focusable",
+    "inline-block px-3 py-1 rounded-sm text-xs font-medium tracking-wide focusable",
 
     // Base color styles.
-    "font-sans text-danos-primary dark:text-danos-primary-inverted bg-danos-secondary dark:bg-danos-secondary-inverted ring-1 ring-danos-primary dark:ring-danos-primary-inverted",
+    // bg-zinc-900
+    "font-sans text-[#fff] dark:text-danos-primary-inverted bg-[#18181b] dark:bg-danos-secondary-inverted dark:ring-1 dark:ring-danos-primary-inverted",
 
     // Custom styles.
     className,
