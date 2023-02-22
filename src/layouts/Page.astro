@@ -2,7 +2,7 @@
 import "@fontsource/merriweather"
 import "@styles/base.css"
 import * as config from "@config"
-import { Nav, Link } from "@components/Nav"
+import Nav from "@components/Nav"
 
 interface Props {
   title?: string
@@ -105,11 +105,7 @@ const { pathname } = Astro.url
       <header
         class="z-40 sticky top-0 bg-[#18181b]/90 dark:bg-[#27272a]/90 backdrop-blur font-sans text-sm text-danos-primary-inverted"
       >
-        <Nav client:load title={config.FULL_NAME}>
-          <Link client:load href="/" pathname={pathname}>Home</Link>
-          <Link client:load href="/posts" pathname={pathname}>Posts</Link>
-          <Link client:load href="/feeds" pathname={pathname}>Feeds</Link>
-        </Nav>
+        <Nav client:load title={config.FULL_NAME} pathname={pathname} />
       </header>
 
       <slot />
