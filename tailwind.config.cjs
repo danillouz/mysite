@@ -43,6 +43,13 @@ module.exports = {
             "rgb(var(--color-text-highlight-inverted) / <alpha-value>)",
         },
       },
+      textDecorationColor: {
+        danos: {
+          primary: "rgb(var(--color-decoration-primary) / <alpha-value>)",
+          "primary-inverted":
+            "rgb(var(--color-decoration-primary-inverted) / <alpha-value>)",
+        },
+      },
       ringColor: {
         danos: {
           primary: "rgb(var(--color-border) / <alpha-value>)",

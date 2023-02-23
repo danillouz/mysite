@@ -31,6 +31,8 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --color-text-special-inverted: 228 228 231; /* zinc-200 */
     --color-text-highlight: 20 184 166; /* teal-500 */
     --color-text-highlight-inverted: 45 212 191; /* teal-400 */
+    --color-decoration-primary: 20 184 166; /* teal-500 */
+    --color-decoration-primary-inverted: 45 212 191; /* teal-400 */
     --color-border: 82 82 91; /* zinc-600 */
     --color-border-inverted: 63 63 70; /* zinc-700 */
     --color-focus: 20 184 166; /* teal-500 */
@@ -306,7 +308,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes 
   /* Link styles */
 
   .page-link {
-    @apply font-normal underline underline-offset-2 decoration-1 text-danos-link dark:text-danos-link-inverted focusable;
+    @apply font-normal underline underline-offset-4 decoration-1 decoration-danos-primary dark:decoration-danos-primary-inverted text-danos-link dark:text-danos-link-inverted focusable;
   }
 
   /* Focus styles */
