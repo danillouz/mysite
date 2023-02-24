@@ -5,24 +5,24 @@ export const EMAIL = "hi@danillouz.dev"
 
 export const PAGES = {
   HOME: {
-    TITLE: "Dan's site",
+    TITLE: FULL_NAME,
     DESCRIPTION: "Welcome to my site",
   },
   POSTS: {
-    TITLE: "Dan's posts",
+    TITLE: "Posts",
     DESCRIPTION: "Writing about things I learned and find interesting",
   },
   TAGS: {
-    TITLE: "Dan's tags",
+    TITLE: "Tags",
     DESCRIPTION: "Discover posts by topic",
   },
   TAG: {
-    TITLE: "Dan's posts tagged",
-    DESCRIPTION: "",
+    TITLE: "Tags:",
+    DESCRIPTION: "Posts tagged",
   },
   FEEDS: {
-    TITLE: "Dan's feeds",
-    DESCRIPTION: "Feeds for this site",
+    TITLE: "Feeds",
+    DESCRIPTION: "All feeds for this site",
   },
   NOT_FOUND: {
     TITLE: "404",

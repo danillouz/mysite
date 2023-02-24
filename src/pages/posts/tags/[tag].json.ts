@@ -27,7 +27,7 @@ export const get: APIRoute = async function get({ params }) {
   const feed: JSONFeed = {
     version: "https://jsonfeed.org/version/1.1",
     title: `${config.PAGES.TAG.TITLE} ${tag}`,
-    description: config.PAGES.TAG.DESCRIPTION,
+    description: `${config.PAGES.TAG.DESCRIPTION} ${tag}`,
     home_page_url: site,
     feed_url: `${site}/posts/tags/${tag}.json`,
     favicon: `${site}/favicon-32.png`,

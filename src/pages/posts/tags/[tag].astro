@@ -34,24 +34,24 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params
 const { posts } = Astro.props
+
+const pageTitle = `${config.PAGES.TAG.TITLE} ${tag}`
+const pageDescription = `${config.PAGES.TAG.DESCRIPTION} ${tag}`
 ---
 
-<PageLayout
-  title={`${config.PAGES.TAG.TITLE} ${String(tag)}`}
-  description={config.PAGES.TAG.DESCRIPTION}
->
+<PageLayout title={pageTitle} description={pageDescription}>
   <link
     slot="rss"
     rel="alternate"
     type="application/rss+xml"
-    title={`${config.PAGES.TAG.TITLE} ${tag}`}
+    title={pageTitle}
     href={new URL(`/posts/tags/${tag}.rss`, Astro.url)}
   />
   <link
     slot="rss"
     rel="alternate"
     type="application/feed+json"
-    title={`${config.PAGES.TAG.TITLE} ${tag}`}
+    title={pageTitle}
     href={new URL(`/posts/tags/${tag}.json`, Astro.url)}
   />
 
