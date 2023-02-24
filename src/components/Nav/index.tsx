@@ -3,6 +3,15 @@ import Link from "./Link"
 
 import type { FunctionalComponent } from "preact"
 
+// NOTE: this component used to accept Link as children, but that caused some
+// issues (it didn't load) in Safari after deploying:
+//   - Disabling the cache in Safari (network devtools) loaded the components
+//   - For some reason it did work locally (also when building + previewing)
+//
+// Perhaps I was using the `client:load` directories incorrectly (i.e. in Nav +
+// Link), or perhaps it was a bug. In any case, the Nav component currently
+// works without issues. But the downside is that the "component API" is now
+// less nice IMO..
 const Nav: FunctionalComponent<{
   title: string
   pathname: string
