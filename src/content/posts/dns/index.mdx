@@ -82,16 +82,17 @@ This hierarchy is reflected in domain names themselves:
 
 For example, the labels of the domain names:
 
-- `en.wikipedia.org`
+- `www.framer.com`
 - `github.com`
-- `www.cloudflare.com`
+- `www.danillouz.dev`
+- `en.wikipedia.org`
 
 Can be visualized in the domain name space like this:
 
 <figure>
   <Image
     src={import("../../../assets/posts/dns/domain-name-space.png")}
-    alt="The labels of the domain names github.com, www.cloudflare.com and en.wikipedia.org visualized in the domain name space."
+    alt="The labels of the domain names www.framer.com, github.com, www.danillouz.dev and en.wikipedia.org visualized in the domain name space."
   />
   <figcaption>Visualizing the domain name space.</figcaption>
 </figure>
@@ -109,16 +110,12 @@ When reading a domain name from left-to-right:
 
 [^5]: There are [6 types of TLDs](https://en.wikipedia.org/wiki/Top-level_domain): country code (ccTLD), generic (gTLD), generic restricted (grTLD), infrastructure (ARPA), sponsored (sTLD), and test (tTLD) top-level domains.
 
-For example:
+For example, for the domain name `www.bbc.co.uk`:
 
-- In the domain name `bbc.co.uk`:
-  - `uk` is the TLD (ccTLD).
-  - `co` is the 2LD.
-  - `bbc` is the 3LD.
-- In the domain name `www.framer.com`:
-  - `com` is the TLD (gTLD).
-  - `framer` is the 2LD.
-  - `www` is the 3LD (will usually just be called a subdomain).
+- `uk` is the TLD (ccTLD).
+- `co` is the 2LD.
+- `bbc` is the 3LD.
+- `www` is the 4LD.
 
 ### Name servers and resource records
 
