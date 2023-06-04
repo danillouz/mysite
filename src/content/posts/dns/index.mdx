@@ -168,9 +168,9 @@ The following occurs when a browser uses DNS to look up the IP address of a doma
 5. The resolver responds with the IP address of the domain name to the browser.
 6. The browser can now make an HTTP request to the IP address and fetch the website.
 
-> **Note that the steps above happen for uncached queries.** Since there can be a lot steps needed to look up information for a domain name, resolvers will cache the results of queries. So when a query is made for a domain name--which also includes domain names of a name servers!--that was recently looked up, the resolver can skip (some of) the steps above and return the cached result immediately. Caching can happen at every step above, on the name servers, resolver, on the browser and operating system.
+> **Note that the steps above happen for uncached queries.** Since there can be a lot steps needed to look up information for a domain name, resolvers will cache the results of queries. So when a query is made for a domain name that was recently looked up, the resolver can skip (some of) the steps above and return the cached result immediately. Caching can happen at every step above, on the name servers, resolver, on the browser and operating system.
 
-## Bonus: how is the entire system managed?
+## Bonus: how is the domain name system managed?
 
 We now know that DNS is basically a very large database that's split up into zones, and that zones are managed by operators. But how do operators work together? How do operators know about changes that occur in the domain name space (like when a new domain name is registered)? And who oversees all of this?
 
