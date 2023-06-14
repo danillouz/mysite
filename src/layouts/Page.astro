@@ -7,6 +7,7 @@ import Nav from "@components/Nav"
 interface Props {
   title?: string
   description?: string
+  author?: string
   socialImage?: string
   children: any
 }
@@ -14,6 +15,7 @@ interface Props {
 const {
   title = config.PAGES.HOME.TITLE,
   description = config.PAGES.HOME.DESCRIPTION,
+  author = config.FULL_NAME,
   socialImage = "/social-light.png",
 } = Astro.props
 
@@ -31,6 +33,7 @@ const { pathname } = Astro.url
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="author" content={author} />
 
     <!-- Theme metadata -->
     <meta
