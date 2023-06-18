@@ -60,6 +60,10 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply opacity-100;
   }
 
+  article img {
+    @apply border border-dashed border-danos-primary dark:border-none;
+  }
+
   .prose blockquote cite p::before {
     content: "\2014"; /* Em dash */
   }
