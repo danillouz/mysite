@@ -1,0 +1,88 @@
+---
+title: "TIL Caddy local CA"
+description: "Today I learned that Firefox does not recognize Caddy's local Certificate Authority by default."
+tags:
+  [
+    "caddy",
+    "certificate-authorities",
+    "firefox",
+    "tls-certificates",
+    "proxies",
+    "til",
+  ]
+publishedAt: "June 23 2023"
+---
+
+import { Image } from "@astrojs/image/components"
+
+When running [Caddy](https://caddyserver.com/) locally, it will also generate its own local Certificate Authority (CA). Caddy will use this CA to sign certificates for [local HTTPS](https://caddyserver.com/docs/automatic-https#local-https).
+
+This is pretty cool! But Caddy's local HTTPS does not work in Firefox by default. When running Caddy on `localhost`, Firefox will show the error code `SEC_ERROR_UNKNOWN_ISSUER` when visiting `https://localhost` (other browsers like Safari don't have this issue).
+
+<figure>
+  <Image
+    src={import("../../../assets/posts/til-caddy-ca/localhost-error.png")}
+    alt="SEC_ERROR_UNKNOWN_ISSUER error in Firefox when visiting https://localhost."
+  />
+  <figcaption>
+    Visiting `https://localhost` in Firefox when running Caddy on `localhost`.
+  </figcaption>
+</figure>
+
+Turns out that Firefox [does not recognize](https://caddy.community/t/ocsp-stapling-error-certificate-not-trusted-by-the-web-browser/7691/2) Caddy's local CA by default. And you have to [manually import](https://support.mozilla.org/en-US/questions/1175296) Caddy's local root certificate into Firefox.
+
+## How to import Caddy's local root certificate into Firefox?
+
+1. Open Firefox and go to `about:preferences#privacy`.
+
+2. Scroll down to the `Security > Certificates` section, and click `View Certificates`.
+
+<figure>
+  <Image
+    src={import("../../../assets/posts/til-caddy-ca/2-settings.png")}
+    alt="Certificate settings in Firefox."
+  />
+  <figcaption>Viewing certificates in Firefox.</figcaption>
+</figure>
+
+3. Select the `Authorities` tab, and click `Import`.
+
+<figure>
+  <Image
+    src={import("../../../assets/posts/til-caddy-ca/3-cert-import.png")}
+    alt="Authorities in Firefox's Certificate Manager."
+  />
+  <figcaption>Importing a new CA in Firefox.</figcaption>
+</figure>
+
+4. Find Caddy's local root certificate in its [data directory](https://caddyserver.com/docs/conventions#data-directory), and open it. On a Mac it's located at `~/Library/Application\ Support/Caddy/pki/authorities/local/root.crt`.
+
+<figure>
+  <Image
+    src={import("../../../assets/posts/til-caddy-ca/4-cert-open.png")}
+    alt="Caddy's local root certificate location on a Mac."
+  />
+  <figcaption>Finding Caddy's local root certificate on a Mac.</figcaption>
+</figure>
+
+5. Check the `Trust this CA to identify websites` checkbox, and click `OK`.
+
+<figure>
+  <Image
+    src={import("../../../assets/posts/til-caddy-ca/5-cert-trust.png")}
+    alt="Certificate trust dialog in Firefox."
+  />
+  <figcaption>Trusting Caddy's local CA.</figcaption>
+</figure>
+
+6. The `Caddy Local Authority` should now be listed in the `Authorities` tab.
+
+<figure>
+  <Image
+    src={import("../../../assets/posts/til-caddy-ca/6-cert-imported.png")}
+    alt="Caddy's local CA in Firefox's Certificate Manager."
+  />
+  <figcaption>Successfully importing Caddy's local CA.</figcaption>
+</figure>
+
+7. Restart Firefox, and accessing localhost over HTTPS will now work!
