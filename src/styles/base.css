@@ -143,7 +143,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     @apply grid;
   }
 
-  code .line {
+  code [data-line] {
     @apply px-5;
 
     padding-left: calc(1.25rem - var(--line-highlighted-border-width));
@@ -154,26 +154,26 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     border-left-color: transparent;
   }
 
-  code[data-line-numbers] .line {
+  code[data-line-numbers] [data-line] {
     @apply pl-0;
   }
   code[data-line-numbers] {
     counter-reset: line;
   }
-  code[data-line-numbers] > .line::before {
+  code[data-line-numbers] > [data-line]::before {
     @apply inline-block mr-4 w-4 text-right;
 
     counter-increment: line;
     content: counter(line);
   }
-  code[data-line-numbers-max-digits="2"] > .line::before {
+  code[data-line-numbers-max-digits="2"] > [data-line]::before {
     @apply w-8;
   }
-  code[data-line-numbers-max-digits="3"] > .line::before {
+  code[data-line-numbers-max-digits="3"] > [data-line]::before {
     @apply w-12;
   }
 
-  code .line.highlighted {
+  code [data-highlighted-line] {
     border-left-width: var(--line-highlighted-border-width);
     border-left-style: solid;
   }
@@ -215,18 +215,18 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
       display: none;
     }
 
-    code[data-line-numbers] > .line::before {
+    code[data-line-numbers] > [data-line]::before {
       color: var(--line-num-color);
     }
-    code[data-line-numbers] > .line.highlighted::before {
+    code[data-line-numbers] > [data-highlighted-line]::before {
       color: var(--line-num-highlighted-color);
     }
 
-    code .line.highlighted {
+    code [data-highlighted-line] {
       background: var(--line-highlighted-bg);
       border-left-color: var(--line-highlighted-border);
     }
-    code .line .highlighted-word {
+    code [data-highlighted-chars] {
       background: var(--line-highlighted-word-bg);
     }
   }
@@ -244,18 +244,18 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
       display: none;
     }
 
-    code[data-line-numbers] > .line::before {
+    code[data-line-numbers] > [data-line]::before {
       color: var(--line-num-color-inverted);
     }
-    code[data-line-numbers] > .line.highlighted::before {
+    code[data-line-numbers] > [data-highlighted-line]::before {
       color: var(--line-num-highlighted-color-inverted);
     }
 
-    code .line.highlighted {
+    code [data-highlighted-line] {
       background: var(--line-highlighted-bg-inverted);
       border-left-color: var(--line-highlighted-border-inverted);
     }
-    code .line .highlighted-word {
+    code [data-highlighted-chars] {
       background: var(--line-highlighted-word-bg-inverted);
     }
   }
