@@ -3,6 +3,7 @@ title: "SQLite CLI"
 description: "Learning about the SQLite Command Line Interface."
 tags: ["cli", "sqlite"]
 publishedAt: "July 15 2023"
+updatedAt: "July 16 2023"
 ---
 
 [SQLite](https://www.sqlite.org/index.html) provides a [Command Line Interface](https://www.sqlite.org/cli.html) (CLI) program named `sqlite3`. And it's already installed on most operating systems.
@@ -96,20 +97,20 @@ To see all databases in interactive mode:
 sqlite> .databases
 ```
 
-To see all tables (including [attached databases](https://www.sqlite.org/lang_attach.html)):
+To see all tables (including [attached databases](https://www.sqlite.org/lang_attach.html)) in interactive mode:
 
 ```sh
 sqlite> .tables
 ```
 
-To see all indexes:
+To see all indexes in interactive mode:
 
 ```sh
 sqlite> .indexes
 sqlite> .indexes tablename
 ```
 
-To see the complete schema of the database (including attached databases):
+To see the complete schema of the database (including attached databases) in interactive mode:
 
 ```sh
 sqlite> .schema
@@ -118,21 +119,19 @@ sqlite> .schema tablename
 
 ## Read SQL statements from a file
 
-In interactive mode the `.read` dot command can be used:
+In interactive mode the `.read` dot command can be used to read SQL statements (and dot commands) from a file:
 
 ```sh
 sqlite> .read script.sql
 ```
 
-Besides SQL statements, the file may also contain dot commands.
-
 ### Pipe input
 
-If the argument to `.read` begins with the pipe symbol `|`, then instead of opening the argument as a file, it runs the argument as a command, and uses the output of that command as its input.
+If the argument to `.read` begins with the pipe symbol (`|`), then instead of opening the argument as a file, it runs the argument as a command, and uses the output of that command as its input. This can be useful to run scripts that generate SQL.
 
 ## Write results to a file
 
-By default `sqlite3` sends all output to "standard output", but this can be changed via the `.output` and `.once` dot commands.
+By default `sqlite3` sends all output to "standard output", but this can be changed via the `.output` and `.once` dot commands in interactive mode.
 
 To output _all_ query results to a file:
 
@@ -140,8 +139,10 @@ To output _all_ query results to a file:
 sqlite> .mode list
 sqlite> .separator ,
 sqlite> .output books_and_authors.txt
-sqlite> select * from books;
-sqlite> select * from authors;
+sqlite>
+sqlite> SELECT * FROM books;
+sqlite> SELECT * FROM authors;
+sqlite>
 sqlite> .exit
 ```
 
@@ -149,11 +150,18 @@ To do the above just once, use the `.once` dot command instead.
 
 ### Pipe results
 
-If the argument to `.output` or `.once` begins with the pipe symbol `|`, then it runs the argument as a command, and the output is sent to that command.
+If the argument to `.output` or `.once` begins with the pipe symbol (`|`), then it runs the argument as a command, and the output is sent to that command.
+
+For example:
+
+```sh
+sqlite> .once | open -f
+sqlite> SELECT * FROM books;
+```
 
 ## Load file content into a table column
 
-The `readfile()` function loads file content as a `BLOB`:
+The `readfile()` function loads file content as a `BLOB` in interactive mode. For example:
 
 ```sh
 sqlite> CREATE TABLE images(
@@ -168,21 +176,25 @@ sqlite> VALUES('icon','png',readfile('icon.png'));
 
 ## Write a table column to a file
 
-The `writefile()` function writes a column value to a file:
+The `writefile()` function writes a column value to a file in interactive mode. For example:
 
 ```sh
 sqlite> SELECT writefile('icon.png',img) FROM images WHERE name='icon';
 ```
 
-## Import CSV
+## Import CSV into table
+
+To import a CSV file into a table in interactive mode:
 
 ```sh
 sqlite> .import -csv file.csv tablename
 ```
 
-To import into a table in a different database use `-schema`. This specifies that the table is part of another "schema" (useful for attached databases or to import into a temporary table).
+And to import into a table not part of the "main" database the `-schema` flag can be used. This specifies that the table is part of another "schema" (useful for attached databases or to import into a temporary table).
 
-## Export CSV
+## Export results to CSV
+
+To export results to a CSV file in interactive mode:
 
 ```sh
 sqlite> .headers on
@@ -191,7 +203,7 @@ sqlite> .once ~/data.csv
 sqlite>
 sqlite> SELECT * FROM table;
 sqlite>
-sqlite> .system open ~/data.csv
+sqlite> .exit
 ```
 
 ## Dump and restore a database
@@ -210,7 +222,7 @@ zcat mydb.dump.gz | sqlite3 mydb
 
 ## Configuration
 
-An `.sqliterc` resource file can be created in the "home directory" to configure dot command settings. For example to change the output format:
+An `.sqliterc` resource file can be created in the "home directory" to configure dot command settings. For example to change the output format for all queries:
 
 ```ini title="~/.sqliterc"
 .mode box
@@ -218,7 +230,7 @@ An `.sqliterc` resource file can be created in the "home directory" to configure
 
 After creating the `.sqliterc` file, it will be loaded on startup:
 
-```sh
+```sh {3}
 sqlite3 mydb
 
 -- Loading resources from /Users/daniel/.sqliterc
@@ -226,4 +238,26 @@ SQLite version 3.37.0 2021-12-09 01:34:53
 Enter ".help" for usage hints.
 
 sqlite>
+```
+
+## One-line commands
+
+It's possible to "bypass" interactive mode and run SQL statements directly when using the `sqlite3` command via the last argument:
+
+```sh
+sqlite3 mydb "SELECT * FROM table;"
+```
+
+And by using CLI flags like `-cmd` it's possible to shorten certain actions.
+
+### One-line import and query CSV
+
+```sh
+sqlite3 -csv -cmd ".import ~/data.csv data" :memory: "SELECT * FROM data;"
+```
+
+### One-line export results to CSV
+
+```sh
+sqlite3 -csv -header mydb "SELECT * FROM books;" > ~/books.csv
 ```
