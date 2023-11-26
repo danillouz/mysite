@@ -18,7 +18,7 @@ publishedAt: "June 19 2019"
 updatedAt: "February 3 2023"
 ---
 
-import { Image } from "@astrojs/image/components"
+import { Image } from "astro:assets"
 
 Auth is complicated. It can be difficult to reason about and can be hard to work with. The terminology can be complex as well, and terms are sometimes used interchangeably or can be ambiguous. Like saying "auth" to refer both to authentication (who are you?) and authorization (I know who you are, but what are you allowed to do?).
 
@@ -151,12 +151,13 @@ You can also find these values under the "Quick Start" tab of the API details sc
 
 I haven't explained what a Lambda Authorizer is yet. In short, it's a feature of APIG to control access to an API.
 
-> A Lambda authorizer is useful if you want to implement a custom authorization scheme that uses a bearer token authentication strategy such as OAuth.
->
-> <cite>
->   [AWS docs: Use API Gateway Lambda
->   authorizers](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
-> </cite>
+<blockquote>
+<p>A Lambda authorizer is useful if you want to implement a custom authorization scheme that uses a bearer token authentication strategy such as OAuth.</p>
+
+<cite>
+<p>[AWS docs: Use API Gateway Lambda authorizers](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)</p>
+</cite>
+</blockquote>
 
 There are actually two types of Lambda Authorizers:
 
@@ -230,9 +231,9 @@ You can configure scope in the Auth0 dashboard by adding permissions to the regi
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/serverless-auth/auth0/api-permissions.png"
-    )}
+    src={
+      import("../../../assets/posts/serverless-auth/auth0/api-permissions.png")
+    }
     alt="Image of the Auth0 API permissions tab."
   />
   <figcaption>Use Auth0 to add scopes to the Account API.</figcaption>
@@ -770,9 +771,9 @@ You can find the test application in the Auth0 dashboard by navigating to "Appli
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/serverless-auth/auth0/test-application.png"
-    )}
+    src={
+      import("../../../assets/posts/serverless-auth/auth0/test-application.png")
+    }
     alt="Image that shows the Auth0 Test Application."
   />
   <figcaption>
@@ -794,9 +795,9 @@ Navigate to the "APIs" tab in the "Test Application" details and click on the "r
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/serverless-auth/auth0/grant-scope-1.png"
-    )}
+    src={
+      import("../../../assets/posts/serverless-auth/auth0/grant-scope-1.png")
+    }
     alt="Image that shows the Auth0 test application authorization settings."
   />
   <figcaption>Select the Account API.</figcaption>
@@ -806,9 +807,9 @@ Then check the `get:profile` scope, click "Update" and click "Continue".
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/serverless-auth/auth0/grant-scope-2.png"
-    )}
+    src={
+      import("../../../assets/posts/serverless-auth/auth0/grant-scope-2.png")
+    }
     alt="Image that shows how to grant the Auth0 test application the get profile scope."
   />
   <figcaption>
@@ -946,9 +947,11 @@ Now go to the AWS Console and visit the "Lambda" service. Find `lambda-authorize
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/serverless-auth/aws/lambda-authorizer-arn.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/serverless-auth/aws/lambda-authorizer-arn.png"
+      )
+    }
     alt="Image that shows where to find the Lambda Authorizer ARN in the AWS Lambda Console."
   />
   <figcaption>Find the ARN of the Lambda Authorizer.</figcaption>
@@ -1246,9 +1249,11 @@ Do another release by running `npm run release`. And after Serverless finishes, 
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/serverless-auth/aws/lambda-authorizer-arn.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/serverless-auth/aws/lambda-authorizer-arn.png"
+      )
+    }
     alt="Image that shows the API Gateway resource configuration."
   />
   <figcaption>

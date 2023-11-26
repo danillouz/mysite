@@ -7,7 +7,7 @@ import type { APIRoute } from "astro"
 const MASTODON_USERNAME = "danillouz"
 const MASTODON_DOMAIN = "mastodon.social"
 
-export const get: APIRoute = async function get() {
+export const get: APIRoute = async function GET() {
   return {
     body: JSON.stringify({
       subject: `acct:${MASTODON_USERNAME}@${MASTODON_DOMAIN}`,

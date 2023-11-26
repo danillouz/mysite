@@ -1,11 +1,11 @@
-import { getCollection } from "astro:content"
 import rss from "@astrojs/rss"
 import * as config from "@config"
+import { renderPostContent, sortRssPostsRecentlyPublished } from "@utils/rss"
 import { getAlphabeticallySortedTagsFromPosts } from "@utils/tags"
-import { sortRssPostsRecentlyPublished, renderPostContent } from "@utils/rss"
+import { getCollection } from "astro:content"
 
-import type { APIRoute } from "astro"
 import type { RSSOptions } from "@astrojs/rss"
+import type { APIRoute } from "astro"
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts")

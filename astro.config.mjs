@@ -2,7 +2,6 @@ import { defineConfig } from "astro/config"
 import sitemap from "@astrojs/sitemap"
 import tailwind from "@astrojs/tailwind"
 import mdx from "@astrojs/mdx"
-import image from "@astrojs/image"
 import preact from "@astrojs/preact"
 import { rehypeHeadingIds } from "@astrojs/markdown-remark"
 
@@ -28,6 +27,13 @@ export default defineConfig({
     },
   },
 
+  // See: https://docs.astro.build/en/guides/images/
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/noop",
+    },
+  },
+
   integrations: [
     // See: https://docs.astro.build/en/guides/integrations-guide/sitemap/
     sitemap(),
@@ -43,11 +49,6 @@ export default defineConfig({
     mdx({
       remarkPlugins: [remarkReadingTime],
       rehypePlugins: [rehypeHeadingIds, autolinkHeadings, codeSnippets],
-    }),
-
-    // See: https://docs.astro.build/en/guides/integrations-guide/image/
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
     }),
 
     // See: https://docs.astro.build/en/guides/integrations-guide/preact/

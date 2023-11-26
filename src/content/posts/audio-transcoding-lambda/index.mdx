@@ -18,7 +18,7 @@ publishedAt: "October 27 2019"
 updatedAt: "February 3 2023"
 ---
 
-import { Image } from "@astrojs/image/components"
+import { Image } from "astro:assets"
 
 For a side project I'm converting WebM audio files to MP3. I initially started doing this with [Amazon Elastic Transcoder](https://aws.amazon.com/elastictranscoder). But after doing the same with [FFmpeg](https://www.ffmpeg.org) and [Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html), my initial testing showed that the latter is around **10 times cheaper** and **2 times faster** for **short audio** recordings (~3 minute / ~3 MB files).
 
@@ -139,9 +139,11 @@ Navigate to the Elastic Transcoder service in the AWS web console. Select a regi
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/create-pipeline.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/audio-transcoding-lambda/create-pipeline.png"
+      )
+    }
     alt="Elastic Transcoder pipeline creation form."
   />
   <figcaption>
@@ -153,9 +155,11 @@ Create the pipeline and take note of the ARN and Pipeline ID. We'll need both to
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/created-pipeline.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/audio-transcoding-lambda/created-pipeline.png"
+      )
+    }
     alt="Created Elastic Transcoder pipeline."
   />
   <figcaption>The created pipeline with its ARN and Pipeline ID.</figcaption>
@@ -458,9 +462,9 @@ To get more information about a scheduled job, navigate to the Elastic Transcode
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/created-job.png"
-    )}
+    src={
+      import("../../../assets/posts/audio-transcoding-lambda/created-job.png")
+    }
     alt="Information about the scheduled Elastic Transcoder job."
   />
   <figcaption>Information about the scheduled job.</figcaption>
@@ -583,9 +587,11 @@ When Serverless finishes deploying, navigate to the Lambda service in the AWS we
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/published-layer.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/audio-transcoding-lambda/published-layer.png"
+      )
+    }
     alt="Published FFmpeg layer."
   />
   <figcaption>Information about the published FFmpeg layer.</figcaption>
@@ -833,9 +839,9 @@ Here you should see the logs of the Lambda function.
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/logs-timeout.png"
-    )}
+    src={
+      import("../../../assets/posts/audio-transcoding-lambda/logs-timeout.png")
+    }
     alt="CloudWatch logs of the Lambda function that's timing out."
   />
   <figcaption>The Lambda function stops executing after ~6 seconds.</figcaption>
@@ -865,9 +871,9 @@ Deploy again. When Serverless is done, upload another WebM audio file, and check
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/logs-complete.png"
-    )}
+    src={
+      import("../../../assets/posts/audio-transcoding-lambda/logs-complete.png")
+    }
     alt="CloudWatch logs of the Lambda function that finishes executing."
   />
   <figcaption>
@@ -897,9 +903,11 @@ Deploy again. And when Serverless is done, upload another WebM audio file and ch
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/audio-transcoding-lambda/logs-double-memory.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/audio-transcoding-lambda/logs-double-memory.png"
+      )
+    }
     alt="CloudWatch logs of the Lambda function with twice the memory."
   />
   <figcaption>
@@ -1086,11 +1094,13 @@ With free tier it would cost:
 
 ### What about data transfer costs?
 
-> Data transferred between S3, Glacier, DynamoDB, SES, SQS, Kinesis, ECR, SNS, or SimpleDB and Lambda functions **in the same AWS Region is free**.
->
-> <cite>
->   <p>[AWS Lambda: Pricing](https://aws.amazon.com/lambda/pricing)</p>
-> </cite>
+<blockquote>
+<p>Data transferred between S3, Glacier, DynamoDB, SES, SQS, Kinesis, ECR, SNS, or SimpleDB and Lambda functions **in the same AWS Region is free**.</p>
+
+<cite>
+<p>[AWS Lambda: Pricing](https://aws.amazon.com/lambda/pricing)</p>
+</cite>
+</blockquote>
 
 Otherwise, data transferred into and out of Lambda functions will be charged at the [EC2 data transfer rates](https://aws.amazon.com/ec2/pricing/on-demand) as listed under the “Data transfer” section.
 

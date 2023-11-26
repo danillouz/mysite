@@ -1,6 +1,6 @@
-import { useState, useEffect } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
 
-import type { FunctionalComponent, ComponentChildren } from "preact"
+import type { ComponentChildren, FunctionalComponent } from "preact"
 
 const Link: FunctionalComponent<{
   href: string

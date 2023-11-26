@@ -16,7 +16,7 @@ A [bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet) is a browser bookmark
 You can create a bookmarklet by creating a new bookmark in your browser, but instead of providing a link to a website, you give it a `javascript` URI. For example:
 
 ```js
-javascript:alert("Go eat ice cream!")
+javascript: alert("Go eat ice cream!")
 ```
 
 So the bookmarklet above would show a "Go eat ice cream!" alert every time you click it (and I highly recommend you install it).
@@ -59,7 +59,7 @@ Feel free to remix the code below. And after changing the code, you can turn it 
  *
  * Uses jsDelivr to import npm dependencies as ESM modules.
  * @see {@link https://www.jsdelivr.com/?docs=esm}
- * 
+ *
  * Made into a bookmarklet with "Make Bookmarklets".
  * @see {@link https://make-bookmarklets.com/}
  */
@@ -67,7 +67,9 @@ Promise.all([
   // Dependencies.
   import("https://cdn.jsdelivr.net/npm/@mozilla/readability/+esm"),
   import("https://cdn.jsdelivr.net/npm/turndown/+esm"),
-  import("https://cdn.jsdelivr.net/npm/text-fragments-polyfill/dist/fragment-generation-utils.js/+esm"),
+  import(
+    "https://cdn.jsdelivr.net/npm/text-fragments-polyfill/dist/fragment-generation-utils.js/+esm"
+  ),
 
   // Config.
   Promise.resolve({
@@ -196,9 +198,7 @@ function _makeTextFragmentDirective(status, fragment) {
     ? `,-${encodeURIComponent(fragment.suffix)}`
     : ""
   const start = encodeURIComponent(fragment.textStart)
-  const end = fragment.textEnd
-    ? `,${encodeURIComponent(fragment.textEnd)}`
-    : ""
+  const end = fragment.textEnd ? `,${encodeURIComponent(fragment.textEnd)}` : ""
 
   return `#:~:text=${prefix}${start}${end}${suffix}`
 }

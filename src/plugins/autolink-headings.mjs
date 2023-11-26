@@ -1,5 +1,5 @@
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import { h } from "hastscript"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
 
 const options = {
   behavior: "append",

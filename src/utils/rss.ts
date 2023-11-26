@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content"
-import sanitizeHtml from "sanitize-html"
 import MarkdownIt from "markdown-it"
+import sanitizeHtml from "sanitize-html"
 
 const parser = new MarkdownIt()
 
@@ -18,7 +18,7 @@ export function renderPostContent(body: string) {
     exclusiveFilter: (node) => {
       if (
         node.tag === "p" &&
-        node.text.trim() === `import { Image } from "@astrojs/image/components"`
+        node.text.trim() === `import { Image } from 'astro:assets'`
       ) {
         // Remove Image import.
         return true

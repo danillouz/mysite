@@ -6,7 +6,7 @@ publishedAt: "January 3 2023"
 updatedAt: "February 3 2023"
 ---
 
-import { Image } from "@astrojs/image/components"
+import { Image } from "astro:assets"
 
 I'm not very active on social media, but I recently created a [Mastodon](https://joinmastodon.org/) account.
 
@@ -80,11 +80,13 @@ And from what I understand, Mastodon's internal implementation can't just use th
 
 The RFC mentions that WebFinger information is static:
 
-> The information is intended to be static in nature, and, as such, WebFinger is not intended to be used to return dynamic information like the temperature of a CPU or the current toner level in a laser printer.
->
-> <cite>
->   [RFC 7033: Introduction](https://www.rfc-editor.org/rfc/rfc7033#section-1)
-> </cite>
+<blockquote>
+<p>The information is intended to be static in nature, and, as such, WebFinger is not intended to be used to return dynamic information like the temperature of a CPU or the current toner level in a laser printer.</p>
+
+<cite>
+<p>[RFC 7033: Introduction](https://www.rfc-editor.org/rfc/rfc7033#section-1)</p>
+</cite>
+</blockquote>
 
 So if you can host some static JSON on your custom domain, you can add a WebFinger endpoint.
 
@@ -196,12 +198,13 @@ Like mentioned before, Mastodon is a bit different, where an account handle cons
 
 And the docs mention that you should include the server domain when sharing your handle with other people, because otherwise they won't be able to find you easily:
 
-> Mastodon allows you to skip the second part when addressing people on the same server as you, but you have to keep in mind when sharing your username with other people, you need to include the domain or they won't be able to find you as easily.
->
-> <cite>
->   [Mastodon docs: Your username and your
->   domain](https://docs.joinmastodon.org/user/signup/#address)
-> </cite>
+<blockquote>
+<p>Mastodon allows you to skip the second part when addressing people on the same server as you, but you have to keep in mind when sharing your username with other people, you need to include the domain or they won't be able to find you as easily.</p>
+
+<cite>
+<p>[Mastodon docs: Your username and your domain](https://docs.joinmastodon.org/user/signup/#address)</p>
+</cite>
+</blockquote>
 
 So in theory, setting up an alias allows you to create a handle that does not change when migrating to a different Mastodon server. And it might make your account easier to find if people know your custom domain.
 
@@ -241,12 +244,13 @@ The difference is that the query parameter `resolve` is set to `true` when signe
 
 And checking the v2 search API docs, we can see that `resolve` controls if a WebFinger lookup should happen or not:
 
-> Boolean. Attempt WebFinger lookup? Defaults to false.
->
-> <cite>
->   [Mastodon docs: Perform a
->   search](https://docs.joinmastodon.org/methods/search/#query-parameters)
-> </cite>
+<blockquote>
+<p>Boolean. Attempt WebFinger lookup? Defaults to false.</p>
+
+<cite>
+<p>[Mastodon docs: Perform a search](https://docs.joinmastodon.org/methods/search/#query-parameters)</p>
+</cite>
+</blockquote>
 
 ### The alias behaves like a "catch-all"
 

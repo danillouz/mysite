@@ -1,8 +1,8 @@
 ---
+import Prompt from "@components/Prompt.astro"
+import Window from "@components/Window.astro"
 import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
-import Window from "@components/Window.astro"
-import Prompt from "@components/Prompt.astro"
 
 const feedsCount = 2
 const footerText = `${feedsCount} ${feedsCount > 1 ? "feeds" : "feed"}`
@@ -132,8 +132,8 @@ const footerText = `${feedsCount} ${feedsCount > 1 ? "feeds" : "feed"}`
         <p>
           You can also try using a URL without the <code>.rss</code> or <code
             >.json</code
-          > postfix; your feed reader should automatically choose a format it likes
-          best.
+          > postfix; your feed reader should automatically choose a format it
+          likes best.
         </p>
 
         <br />

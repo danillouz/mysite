@@ -1,8 +1,8 @@
-import Heading from "./Heading"
 import Details from "./Details"
-import Reply from "./Reply"
-import Interactions from "./Interactions"
+import Heading from "./Heading"
 import Help from "./Help"
+import Interactions from "./Interactions"
+import Reply from "./Reply"
 import useFetchWebmentions from "./use-fetch-webmentions"
 
 import type { FunctionalComponent } from "preact"

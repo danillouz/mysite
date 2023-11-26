@@ -1,13 +1,13 @@
-import { getCollection } from "astro:content"
 import * as config from "@config"
-import { sortRssPostsRecentlyPublished, renderPostContent } from "@utils/rss"
+import { renderPostContent, sortRssPostsRecentlyPublished } from "@utils/rss"
+import { getCollection } from "astro:content"
 
 import type { APIRoute } from "astro"
 import type { JSONFeed } from "src/types"
 
 // See: https://docs.astro.build/en/guides/rss/
 
-export const get: APIRoute = async function get() {
+export const get: APIRoute = async function GET() {
   const site = import.meta.env.SITE
   const posts = await getCollection("posts")
   const postsSorted = sortRssPostsRecentlyPublished(posts)

@@ -1,16 +1,16 @@
 ---
-import { getCollection } from "astro:content"
+import PostsPreview from "@components/PostsPreview.astro"
+import Window from "@components/Window.astro"
 import * as config from "@config"
 import PageLayout from "@layouts/Page.astro"
-import Window from "@components/Window.astro"
-import PostsPreview from "@components/PostsPreview.astro"
 import { sortPostsRecentlyPublished } from "@utils/posts"
 import { getAlphabeticallySortedTagsFromPosts } from "@utils/tags"
+import { getCollection } from "astro:content"
 
 import type { CollectionEntry } from "astro:content"
 
 interface Props {
-  post: CollectionEntry<"posts">
+  posts: CollectionEntry<"posts">[]
 }
 
 export async function getStaticPaths() {

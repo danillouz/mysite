@@ -6,7 +6,7 @@ publishedAt: "May 30 2019"
 updatedAt: "February 3 2023"
 ---
 
-import { Image } from "@astrojs/image/components"
+import { Image } from "astro:assets"
 
 One of the more surprising things I learned recently while working with AWS Lambda is how it interacts with the Node.js event loop.
 
@@ -34,9 +34,9 @@ The frames in a stack are popped off in <abbr title="Last In First Out">LIFO</ab
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/call-stack.png"
-    )}
+    src={
+      import("../../../assets/posts/lambda-nodejs-event-loop/call-stack.png")
+    }
     alt="Call stack with 2 frames."
   />
   <figcaption>A call stack with 2 frames.</figcaption>
@@ -66,9 +66,9 @@ We can visualize the call stack over time like this.
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/1.png"
-    )}
+    src={
+      import("../../../assets/posts/lambda-nodejs-event-loop/call-stack/1.png")
+    }
     alt="Call stack progression over time for steps 1, 2 and 3."
   />
   <figcaption>
@@ -116,9 +116,9 @@ main()
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/2.png"
-    )}
+    src={
+      import("../../../assets/posts/lambda-nodejs-event-loop/call-stack/2.png")
+    }
     alt="Call stack progression over time for steps 4, 5 and 6."
   />
   <figcaption>
@@ -166,9 +166,9 @@ main()
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/3.png"
-    )}
+    src={
+      import("../../../assets/posts/lambda-nodejs-event-loop/call-stack/3.png")
+    }
     alt="Call stack progression over time for steps 7, 8 and 9."
   />
   <figcaption>
@@ -200,9 +200,9 @@ main()
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/call-stack/4.png"
-    )}
+    src={
+      import("../../../assets/posts/lambda-nodejs-event-loop/call-stack/4.png")
+    }
     alt="Call stack progression over time for steps 10 and 11."
   />
   <figcaption>Call stack progression over time for steps 10 and 11.</figcaption>
@@ -258,9 +258,9 @@ To summarize:
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/event-loop.png"
-    )}
+    src={
+      import("../../../assets/posts/lambda-nodejs-event-loop/event-loop.png")
+    }
     alt="The event loop can be visualized as a queue of tasks, which are picked up by a loop."
   />
   <figcaption>The event loop visualized.</figcaption>
@@ -381,30 +381,33 @@ After a Lambda function is called, Lambda maintains the execution context for so
 
 In the AWS docs we can find the following regarding this subject:
 
-> Background processes or callbacks initiated by your Lambda function that did not complete when the function ended resume **if AWS Lambda chooses to** reuse the Execution Context.
->
-> <cite>
->   [AWS docs: Lambda execution
->   environment](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html)
-> </cite>
+<blockquote>
+<p> Background processes or callbacks initiated by your Lambda function that did not complete when the function ended resume **if AWS Lambda chooses to** reuse the Execution Context.</p>
+
+<cite>
+<p>[AWS docs: Lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html)</p>
+</cite>
+</blockquote>
 
 As well as this somewhat hidden message:
 
-> When the callback is called (explicitly or implicitly), AWS Lambda continues the Lambda function invocation until the event loop is empty.
->
-> <cite>
->   [AWS docs: Lambda function handler in
->   Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html)
-> </cite>
+<blockquote>
+<p>When the callback is called (explicitly or implicitly), AWS Lambda continues the Lambda function invocation until the event loop is empty.</p>
+
+<cite>
+<p>[AWS docs: Lambda function handler in Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html)</p>
+</cite>
+</blockquote>
 
 Looking further, there's some documentation about the context object. Specifically about a property called `callbackWaitsForEmptyEventLoop`. This is what it does:
 
-> The default value is `true`. This property is useful only to modify the default behavior of the callback. **By default, the callback will wait until the event loop is empty before freezing the process and returning the results to the caller**.
->
-> <cite>
->   [AWS docs: Lambda context object in
->   Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html)
-> </cite>
+<blockquote>
+<p>The default value is `true`. This property is useful only to modify the default behavior of the callback. **By default, the callback will wait until the event loop is empty before freezing the process and returning the results to the caller**.</p>
+
+<cite>
+<p>[AWS docs: Lambda context object in Node.js](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html)</p>
+</cite>
+</blockquote>
 
 Okay, so with this information we can make sense of what happened when we executed the code in `timeout.js` before. Lets break it down and go over it step by step.
 
@@ -748,9 +751,11 @@ This happens because after the Lambda stopped executing, the execution context w
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-1.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-1.png"
+      )
+    }
     alt="The setTimeout callback is sent to the task queue after 5 seconds."
   />
   <figcaption>
@@ -763,9 +768,11 @@ When we execute the Lambda again (second run), the call stack is empty with a me
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-2.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-2.png"
+      )
+    }
     alt="The setTimeout callback is scheduled by the event loop."
   />
   <figcaption>
@@ -777,9 +784,11 @@ This results in `timeout cb fired after 5000 ms` being printed first, because it
 
 <figure>
   <Image
-    src={import(
-      "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-3.png"
-    )}
+    src={
+      import(
+        "../../../assets/posts/lambda-nodejs-event-loop/lambda/exec-context-3.png"
+      )
+    }
     alt="The setTimeout callback is executed before any other code in the Lambda."
   />
   <figcaption>
@@ -794,12 +803,13 @@ Obviously this is undesired behavior and you should _not_ write your code in the
 
 Like stated in the AWS docs, we need to make sure to complete processing _all_ callbacks before our handler exits:
 
-> You should make sure any background processes or callbacks (in case of Node.js) in your code are complete before the code exits.
->
-> <cite>
->   [AWS docs: Lambda execution
->   environment](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html)
-> </cite>
+<blockquote>
+<p>You should make sure any background processes or callbacks (in case of Node.js) in your code are complete before the code exits.</p>
+
+<cite>
+<p>[AWS docs: Lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html)</p>
+</cite>
+</blockquote>
 
 Therefore we'll make the following change to the code in `timeout.js`:
 

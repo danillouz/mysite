@@ -1,4 +1,4 @@
-import type { FunctionalComponent, ComponentChildren } from "preact"
+import type { ComponentChildren, FunctionalComponent } from "preact"
 
 const Details: FunctionalComponent<{
   open?: boolean

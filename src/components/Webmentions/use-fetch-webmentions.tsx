@@ -1,4 +1,4 @@
-import { useState, useEffect } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
 import { processWebmentions } from "./utils"
 
 import type { Webmention } from "./types"
