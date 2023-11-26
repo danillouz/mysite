@@ -13,7 +13,7 @@ export const get: APIRoute = async function GET() {
   const postsSorted = sortRssPostsRecentlyPublished(posts)
   const feed: JSONFeed = {
     version: "https://jsonfeed.org/version/1.1",
-    title: `${config.FULL_NAME} • ${config.PAGES.POSTS.TITLE}`,
+    title: config.FULL_NAME,
     description: config.PAGES.POSTS.DESCRIPTION,
     home_page_url: site,
     feed_url: `${site}/posts.json`,
