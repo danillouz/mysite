@@ -178,7 +178,7 @@ When a Lambda Authorizer is configured, and a client makes a request to APIG, AW
 
 Only when the token passes these checks should the Lambda Authorizer return an [IAM Policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) document with `"Effect"` set to `"Allow"`:
 
-```json
+```json showLineNumbers
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -195,7 +195,7 @@ It's this policy that tells APIG it's _allowed_ to invoke our downstream Lambda 
 
 Alternatively, the Lambda authorizer may _deny_ invoking the downstream handler by setting `"Effect"` to `"Deny"`:
 
-```json
+```json showLineNumbers
 {
   "Version": "2012-10-17",
   "Statement": [
