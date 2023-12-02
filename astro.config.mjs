@@ -1,14 +1,14 @@
-import { defineConfig } from "astro/config"
-import sitemap from "@astrojs/sitemap"
-import tailwind from "@astrojs/tailwind"
+import { rehypeHeadingIds } from "@astrojs/markdown-remark"
 import mdx from "@astrojs/mdx"
 import preact from "@astrojs/preact"
-import { rehypeHeadingIds } from "@astrojs/markdown-remark"
+import sitemap from "@astrojs/sitemap"
+import tailwind from "@astrojs/tailwind"
+import { defineConfig } from "astro/config"
 
 import * as config from "./src/config"
-import { remarkReadingTime } from "./src/plugins/reading-time"
 import { autolinkHeadings } from "./src/plugins/autolink-headings"
 import { codeSnippets } from "./src/plugins/code-snippets"
+import { remarkReadingTime } from "./src/plugins/reading-time"
 
 // See: https://astro.build/config
 export default defineConfig({
@@ -24,13 +24,6 @@ export default defineConfig({
       footnoteLabelProperties: {
         className: [],
       },
-    },
-  },
-
-  // See: https://docs.astro.build/en/guides/images/
-  image: {
-    service: {
-      entrypoint: "astro/assets/services/noop",
     },
   },
 
