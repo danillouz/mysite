@@ -18,9 +18,7 @@ export async function getStaticPaths() {
   })
 }
 
-// See: https://docs.astro.build/en/guides/rss/
-
-export const get: APIRoute = async function get({ params }) {
+export const GET: APIRoute = async function ({ params }) {
   const site = import.meta.env.SITE
   const { tag } = params
 
@@ -41,9 +39,11 @@ export const get: APIRoute = async function get({ params }) {
   }
 
   if (!tag) {
-    return {
-      body: JSON.stringify(feed),
-    }
+    return new Response(
+      JSON.stringify({
+        body: feed,
+      })
+    )
   }
 
   const posts = await getCollection("posts")
@@ -53,22 +53,24 @@ export const get: APIRoute = async function get({ params }) {
     return tags.includes(tag)
   })
 
-  return {
-    body: JSON.stringify({
-      ...feed,
-      items: postsForTag.map((post) => {
-        const url = `${site}/posts/${post.slug}/`
-        return {
-          id: url,
-          url,
-          title: post.data.title,
-          summary: post.data.description,
-          content_html: renderPostContent(post.body),
-          date_published: post.data.publishedAt.toISOString(),
-          date_modified: post.data?.updatedAt?.toISOString(),
-          tags: post.data.tags,
-        }
-      }),
-    }),
-  }
+  return new Response(
+    JSON.stringify({
+      body: {
+        ...feed,
+        items: postsForTag.map((post) => {
+          const url = `${site}/posts/${post.slug}/`
+          return {
+            id: url,
+            url,
+            title: post.data.title,
+            summary: post.data.description,
+            content_html: renderPostContent(post.body),
+            date_published: post.data.publishedAt.toISOString(),
+            date_modified: post.data?.updatedAt?.toISOString(),
+            tags: post.data.tags,
+          }
+        }),
+      },
+    })
+  )
 }

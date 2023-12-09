@@ -5,9 +5,7 @@ import { getCollection } from "astro:content"
 import type { APIRoute } from "astro"
 import type { JSONFeed } from "src/types"
 
-// See: https://docs.astro.build/en/guides/rss/
-
-export const get: APIRoute = async function GET() {
+export const GET: APIRoute = async function () {
   const site = import.meta.env.SITE
   const posts = await getCollection("posts")
   const postsSorted = sortRssPostsRecentlyPublished(posts)
@@ -38,7 +36,9 @@ export const get: APIRoute = async function GET() {
       }
     }),
   }
-  return {
-    body: JSON.stringify(feed),
-  }
+  return new Response(
+    JSON.stringify({
+      body: feed,
+    })
+  )
 }

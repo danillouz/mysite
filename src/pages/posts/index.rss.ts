@@ -7,7 +7,7 @@ import type { APIRoute } from "astro"
 
 // See: https://docs.astro.build/en/guides/rss/
 
-export const get: APIRoute = async function GET() {
+export const GET: APIRoute = async function () {
   const posts = await getCollection("posts")
   const postsSorted = sortRssPostsRecentlyPublished(posts)
   return rss({

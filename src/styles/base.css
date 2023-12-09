@@ -117,12 +117,27 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
 
   /* Code snippets */
 
-  div[data-rehype-pretty-code-fragment] {
+  span[data-rehype-pretty-code-figure] {
+    @apply text-danos-primary dark:text-danos-primary-inverted;
+  }
+
+  figure[data-rehype-pretty-code-figure] {
     @apply my-5 border border-danos-primary dark:border-danos-primary-inverted rounded-sm;
   }
 
-  div[data-rehype-pretty-code-title] {
-    @apply p-1 font-sans text-xs text-center text-danos-primary dark:text-danos-primary-inverted bg-danos-secondary/50 dark:bg-danos-secondary-inverted/50 border-b border-danos-primary dark:border-danos-primary-inverted;
+  figure[data-rehype-pretty-code-figure] code [data-line] {
+    @apply px-5;
+
+    padding-left: calc(1.25rem - var(--line-highlighted-border-width));
+
+    /* Prevent misalignment when line numbers are enabled. */
+    border-left-width: var(--line-highlighted-border-width);
+    border-left-style: solid;
+    border-left-color: transparent;
+  }
+
+  figcaption[data-rehype-pretty-code-title] {
+    @apply m-0 p-1 font-sans text-xs text-center text-danos-primary dark:text-danos-primary-inverted bg-danos-secondary/50 dark:bg-danos-secondary-inverted/50 border-b border-danos-primary dark:border-danos-primary-inverted;
   }
 
   pre > code {
@@ -139,26 +154,13 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     --line-highlighted-bg-inverted: #3392ff44;
     --line-highlighted-border-inverted: #79b8ff;
     --line-highlighted-word-bg-inverted: #3392ff44;
-
-    @apply grid;
   }
 
-  code [data-line] {
-    @apply px-5;
-
-    padding-left: calc(1.25rem - var(--line-highlighted-border-width));
-
-    /* Prevent misalignment when line numbers are enabled. */
-    border-left-width: var(--line-highlighted-border-width);
-    border-left-style: solid;
-    border-left-color: transparent;
-  }
-
-  code[data-line-numbers] [data-line] {
-    @apply pl-0;
-  }
   code[data-line-numbers] {
     counter-reset: line;
+  }
+  code[data-line-numbers] [data-line] {
+    @apply pl-0;
   }
   code[data-line-numbers] > [data-line]::before {
     @apply inline-block mr-4 w-4 text-right;
@@ -166,14 +168,7 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     counter-increment: line;
     content: counter(line);
   }
-  code[data-line-numbers-max-digits="2"] > [data-line]::before {
-    @apply w-8;
-  }
-  code[data-line-numbers-max-digits="3"] > [data-line]::before {
-    @apply w-12;
-  }
-
-  code [data-highlighted-line] {
+  code span[data-highlighted-line] {
     border-left-width: var(--line-highlighted-border-width);
     border-left-style: solid;
   }
@@ -204,29 +199,25 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     }
   }
 
-  /* Dark/light mode overrides */
-
   @media (prefers-color-scheme: light) {
     /* Code snippets */
 
-    div[data-rehype-pretty-code-title][data-theme="dark"],
-    pre[data-theme="dark"],
-    code[data-theme="dark"] {
-      display: none;
+    code[data-theme*=" "],
+    code[data-theme*=" "] span {
+      color: var(--shiki-light);
+      background-color: var(--shiki-light-bg);
     }
-
     code[data-line-numbers] > [data-line]::before {
       color: var(--line-num-color);
     }
-    code[data-line-numbers] > [data-highlighted-line]::before {
+    code[data-line-numbers] span[data-highlighted-line]::before {
       color: var(--line-num-highlighted-color);
     }
-
-    code [data-highlighted-line] {
+    figure[data-rehype-pretty-code-figure] code span[data-highlighted-line] {
       background: var(--line-highlighted-bg);
       border-left-color: var(--line-highlighted-border);
     }
-    code [data-highlighted-chars] {
+    code mark[data-highlighted-chars] {
       background: var(--line-highlighted-word-bg);
     }
   }
@@ -238,24 +229,22 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
 
     /* Code snippets */
 
-    div[data-rehype-pretty-code-title][data-theme="light"],
-    pre[data-theme="light"],
-    code[data-theme="light"] {
-      display: none;
+    code[data-theme*=" "],
+    code[data-theme*=" "] span {
+      color: var(--shiki-dark);
+      background-color: var(--shiki-dark-bg);
     }
-
     code[data-line-numbers] > [data-line]::before {
       color: var(--line-num-color-inverted);
     }
-    code[data-line-numbers] > [data-highlighted-line]::before {
+    code[data-line-numbers] span[data-highlighted-line]::before {
       color: var(--line-num-highlighted-color-inverted);
     }
-
-    code [data-highlighted-line] {
+    figure[data-rehype-pretty-code-figure] code span[data-highlighted-line] {
       background: var(--line-highlighted-bg-inverted);
       border-left-color: var(--line-highlighted-border-inverted);
     }
-    code [data-highlighted-chars] {
+    code mark[data-highlighted-chars] {
       background: var(--line-highlighted-word-bg-inverted);
     }
   }

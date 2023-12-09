@@ -968,7 +968,7 @@ These are the timing results of the test runs:
 
 So the average transcoding time of the audio file would be:
 
-```sh
+```
 7638 + 6663 + 7729 + 6595 + 8752 + 7216 + 7167 + 6605 + 6718 + 8700 = 73 783 ms
 
 73783 / 10 = 7378,3 ms
@@ -978,7 +978,7 @@ So the average transcoding time of the audio file would be:
 
 Lets say we would be transcoding `100 000` of these audio files per month, that would amount to a total transcoding time of:
 
-```sh
+```
 7,3783 * 100 000 = 737 830 sec
 
 737 830 / 60 = 12 297,166 666 667 min
@@ -986,13 +986,13 @@ Lets say we would be transcoding `100 000` of these audio files per month, that 
 
 Since we pay `$0,00522` per minute, the costs without free tier would be:
 
-```sh
+```
 12 297,166 666 667 * 0,00522 = $64,191 21
 ```
 
 And with free tier it would cost:
 
-```sh
+```
 (12 297,166 666 667 - 20) * 0,00522 = $64,086 81
 ```
 
@@ -1021,7 +1021,7 @@ These are the Lambda durations (with 128 MB memory) for the accompanying transco
 
 The average billed duration would be:
 
-```sh
+```
 500 + 200 + 200 + 200 + 200 + 300 + 200 + 200 + 400 + 300 = 2700 ms
 
 2700 / 10 = 270 ms
@@ -1033,7 +1033,7 @@ In region `eu-west-1`, we'll currently pay `$0,000 016 6667` for every GB per se
 
 For `100 000` transcoding jobs per month (with 128 MB memory) that would be:
 
-```sh
+```
 100 000 * 0,27 = 27000 sec
 
 (128 / 1024) * 27000 = 3375 GB/sec
@@ -1041,7 +1041,7 @@ For `100 000` transcoding jobs per month (with 128 MB memory) that would be:
 
 Currently you get `400 000` GB/sec for free every month, so depending on your scale you may or may not have to include it in your calculations. But without free tier it would cost:
 
-```sh
+```
 3375 * 0,000 016 6667 = $0,056 250 113
 ```
 
@@ -1064,7 +1064,7 @@ These are the Lambda durations (with 2048 MB memory) of the test runs:
 
 The average _billed duration_ would be:
 
-```sh
+```
 4100 + 3900 + 4000 + 3800 + 3900 + 3900 + 3900 + 3800 + 3900 + 3900 = 39100 ms
 
 39100 / 10 = 3910 ms
@@ -1074,7 +1074,7 @@ The average _billed duration_ would be:
 
 In region `eu-west-1`, we'll currently pay `$0,000 016 6667` for every GB/sec. For `100 000` transcoding jobs (with 2048 MB memory) that would be:
 
-```sh
+```
 100 000 * 3,91 = 391 000 sec
 
 (2048 / 1024) * 391 000 = 782 000 GB/sec
@@ -1082,13 +1082,13 @@ In region `eu-west-1`, we'll currently pay `$0,000 016 6667` for every GB/sec. F
 
 Without free tier it would cost:
 
-```sh
+```
 782 000 * 0,000 016 6667 = $13,033 3594
 ```
 
 With free tier it would cost:
 
-```sh
+```
 (782 000 - 400 000) * 0,000 016 6667 = $6,366 6794
 ```
 

@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 
 // See: https://docs.astro.build/en/guides/rss/
 
-export const get: APIRoute = async function get({ params }) {
+export const GET: APIRoute = async function ({ params }) {
   const { tag } = params
 
   const options: RSSOptions = {
