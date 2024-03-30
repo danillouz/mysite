@@ -1,6 +1,9 @@
 import rehypePrettyCode from "rehype-pretty-code"
 
-// https://rehype-pretty-code.netlify.app/#options
+// Needs shiki as a dependency
+// See: https://rehype-pretty.pages.dev/#installation
+
+// See: https://rehype-pretty-code.netlify.app/#options
 const options = {
   defaultLang: "plaintext",
   keepBackground: false,
