@@ -4,7 +4,6 @@ import Window from "@components/Window.astro"
 import ToC from "@components/ToC.astro"
 import Time from "@components/Time.astro"
 import Tag from "@components/Tag.astro"
-import Webmentions from "@components/Webmentions"
 import { sortTagsAlphabetically } from "@utils/tags"
 
 import type { MarkdownHeading } from "astro"
@@ -47,15 +46,7 @@ const headingIds = [
   "introduction",
 
   ...headings.map((h) => h.slug),
-
-  // Used in ToC.
-  "webmentions",
 ]
-
-const makePostLink = (baseUrl: string, postUrl: string): string => {
-  const postLink = new URL(postUrl, baseUrl)
-  return postLink.toString()
-}
 
 const makeIssueLink = (baseUrl: string, postUrl: string): string => {
   const postLink = new URL(postUrl, baseUrl)
@@ -108,17 +99,6 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
                 )
               })
             }
-
-            <!-- Custom webmentions heading. -->
-            <a
-              href={`${url}#webmentions`}
-              id="toc-webmentions"
-              class="block p-1 truncate focusable"
-              data-indent="0"
-              title="Webmentions"
-            >
-              Webmentions
-            </a>
           </>
         </ToC>
       </toc-highlight>
@@ -210,17 +190,12 @@ const makeIssueLink = (baseUrl: string, postUrl: string): string => {
 
           <slot />
 
-          <Webmentions
-            client:visible
-            source={makePostLink(Astro.url.toString(), url)}
-          />
-
           <hr />
 
           <p class="page-subtext text-center">
             Thanks for reading!
             <br />
-             If you have ideas how to improve this post, let me know on <a
+            If you have ideas how to improve this post, let me know on <a
               href={makeIssueLink(Astro.url.toString(), url)}
               title="Open issue on GitHub">GitHub</a
             >.

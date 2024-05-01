@@ -1,6 +1,5 @@
 export const SITE_DOMAIN = "www.danillouz.dev"
 export const FULL_NAME = "Daniël Illouz"
-export const WEBMENTION_USERNAME = "www.danillouz.dev"
 export const EMAIL = "hi@danillouz.dev"
 
 export const PAGES = {

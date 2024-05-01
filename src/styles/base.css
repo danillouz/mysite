@@ -173,12 +173,6 @@ See: https://tailwindcss.com/docs/adding-custom-styles#adding-base-styles
     border-left-style: solid;
   }
 
-  /* Webmentions */
-
-  .wm-reply-content p {
-    @apply my-3;
-  }
-
   /* Animations */
 
   @keyframes blink {
